@@ -1,6 +1,7 @@
 "use client";
 
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { use } from "react";
 import { PHRASE_CATEGORIES } from "@/lib/phrases-data"; // Correct import source
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
@@ -20,6 +21,7 @@ export default function PhraseLearnPage({ params }: PageProps) {
     const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setMounted(true);
     }, []);
 
@@ -48,7 +50,7 @@ export default function PhraseLearnPage({ params }: PageProps) {
             </div>
 
             <div className="z-10 w-full max-w-md flex-1 flex flex-col items-center justify-center p-4">
-                <PhraseSwipeContainer items={category.items} categoryId={category.id} />
+                <PhraseSwipeContainer items={category.items} />
             </div>
         </main>
     );

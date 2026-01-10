@@ -5,7 +5,6 @@ import { GRAMMAR_DATA } from "@/lib/grammar-data";
 import { ArrowLeft, Book } from "lucide-react";
 import { BlurFade } from "@/components/ui/blur-fade";
 import { useI18n } from "@/lib/i18n-context";
-import { cn } from "@/lib/utils";
 import { ShineBorder } from "@/components/ui/shine-border";
 
 export default function GrammarPage() {

@@ -21,22 +21,21 @@ export default function PhraseQuizPage({ params }: PageProps) {
     const category = PHRASE_CATEGORIES.find((c) => c.id === categoryId);
 
     const { t, lang } = useI18n();
-
-    // Stable Quiz State
-    const [questions, setQuestions] = useState<{ item: typeof PHRASE_CATEGORIES[0]['items'][0], options?: string[] }[]>([]);
+    const [mounted, setMounted] = useState(false);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [score, setScore] = useState(0);
     const [isFinished, setIsFinished] = useState(false);
-    const [mounted, setMounted] = useState(false);
+
+
+    const [questions, setQuestions] = useState<{ item: typeof PHRASE_CATEGORIES[0]['items'][0], options?: string[] }[]>([]);
 
     useEffect(() => {
-        if (category) {
+        if (category && questions.length === 0) {
             // 1. Shuffle items
             const shuffled = [...category.items].sort(() => Math.random() - 0.5);
 
             // 2. Pre-calculate options
-            const preparedQuestions = shuffled.map((item) => {
-                // Generate distractors from OTHER phrases in the same category or others
+            const prepared = shuffled.map((item) => {
                 const otherItems = PHRASE_CATEGORIES
                     .flatMap(c => c.items)
                     .filter(i => i.id !== item.id)
@@ -44,19 +43,16 @@ export default function PhraseQuizPage({ params }: PageProps) {
                     .slice(0, 3)
                     .map(i => i.cn);
 
-                // Shuffle options
                 const options = [item.cn, ...otherItems].sort(() => Math.random() - 0.5);
 
-                return {
-                    item,
-                    options
-                };
+                return { item, options };
             });
-
-            setQuestions(preparedQuestions);
-            setMounted(true);
+            // eslint-disable-next-line react-hooks/set-state-in-effect
+            setQuestions(prepared);
         }
-    }, [category]);
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        setMounted(true);
+    }, [category, questions.length]);
 
     if (!category) {
         return notFound();

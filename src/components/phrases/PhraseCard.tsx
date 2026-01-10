@@ -1,8 +1,8 @@
 "use client";
 
-import { use, useState, useEffect } from "react";
+import { useCallback, useState, useEffect } from "react";
 import { PhraseItem, SyntaxPart } from "@/lib/phrases-data";
-import { Volume2, RotateCcw } from "lucide-react";
+import { Volume2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { speak } from "@/lib/tts";
 import { cn } from "@/lib/utils";
@@ -29,19 +29,20 @@ export function PhraseCard({ item, autoPlay = false }: PhraseCardProps) {
     const [selectedPart, setSelectedPart] = useState<SyntaxPart | null>(null);
     const { t, lang } = useI18n();
 
+    const handlePlay = useCallback(() => {
+        setIsPlaying(true);
+        speak(item.english, {
+            onEnd: () => setIsPlaying(false)
+        });
+    }, [item.english]);
+
     useEffect(() => {
         if (autoPlay) {
             handlePlay();
         }
         setSelectedPart(null); // Reset selection on item change
-    }, [item]);
-
-    const handlePlay = () => {
-        setIsPlaying(true);
-        speak(item.english, {
-            onEnd: () => setIsPlaying(false)
-        });
-    };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [item, autoPlay]); // handlePlay is now stable
 
     return (
         <ShineBorder className="bg-white dark:bg-slate-900 w-full max-w-md aspect-[3/4] relative flex flex-col items-center justify-between p-8 shadow-xl" color={["#A07CFE", "#FE8FB5", "#FFBE7B"]}>

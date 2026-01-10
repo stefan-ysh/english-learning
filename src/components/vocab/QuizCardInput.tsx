@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { VocabItem } from "@/lib/vocab-data";
-import { CheckCircle, Trophy, RefreshCcw } from "lucide-react";
+import { RefreshCcw } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
 

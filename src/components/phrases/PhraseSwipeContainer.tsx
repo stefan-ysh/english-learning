@@ -5,14 +5,12 @@ import { motion, AnimatePresence, PanInfo } from "framer-motion";
 import { PhraseItem } from "@/lib/phrases-data";
 import { PhraseCard } from "./PhraseCard";
 import { ArrowLeft, ArrowRight, RotateCcw } from "lucide-react";
-import Link from "next/link";
 
 interface PhraseSwipeContainerProps {
     items: PhraseItem[];
-    categoryId: string;
 }
 
-export function PhraseSwipeContainer({ items, categoryId }: PhraseSwipeContainerProps) {
+export function PhraseSwipeContainer({ items }: PhraseSwipeContainerProps) {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [direction, setDirection] = useState(0); // -1 for left, 1 for right
 

@@ -42,7 +42,7 @@ export const GRAMMAR_DATA: GrammarTopic[] = [
         cnTitle: "形容词",
         description: "Words that describe nouns.",
         cnDescription: "用来修饰名词的词。",
-        imageUrl: "https://images.unsplash.com/photo-1490730141103-6cac27aaab94?w=800&q=80",
+        imageUrl: "https://images.unsplash.com/photo-1508062878650-88b52897f298?q=80&w=1227&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         examples: [
             {
                 en: "A red car.",

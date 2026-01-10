@@ -16,6 +16,7 @@ export type Category = {
   title: string;      // 厨房篇
   icon: string;
   color: string;      // bg-rose-400
+  cover: string;
   items: VocabItem[];
 };
 
@@ -25,13 +26,14 @@ export const VOCAB_DATA: Category[] = [
     title: "Housekeeping",
     icon: "broom",
     color: "bg-blue-400",
+    cover: "https://plus.unsplash.com/premium_photo-1679920025550-75324e59680f?q=80&w=2669&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     items: [
       {
         id: "hk-1",
         word: "Broom",
         phonetic: "/bruːm/",
         cn: "扫帚",
-        image: "https://images.unsplash.com/photo-1585938389774-7f90371a3c79?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1684705419854-9c2fc7c56770?q=80&w=1336&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         exampleEn: "I use a broom to sweep the floor.",
         exampleCn: "我用扫帚扫地。",
         distractors: ["Mop", "Bucket", "Vacuum"]
@@ -41,7 +43,7 @@ export const VOCAB_DATA: Category[] = [
         word: "Mop",
         phonetic: "/mɒp/",
         cn: "拖把",
-        image: "https://images.unsplash.com/photo-1596516109370-29001ec8ec36?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1664008760004-182420e58e7c?q=80&w=2273&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         exampleEn: "Please mop the kitchen floor.",
         exampleCn: "请拖一下厨房的地板。",
         distractors: ["Brush", "Towel", "Soap"]
@@ -51,7 +53,7 @@ export const VOCAB_DATA: Category[] = [
         word: "Vacuum Cleaner",
         phonetic: "/ˈvækjuːm ˈkliːnə/",
         cn: "吸尘器",
-        image: "https://images.unsplash.com/photo-1558317374-a309d9354981?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1701651545983-c3b357a8387f?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         exampleEn: "The vacuum cleaner is very loud.",
         exampleCn: "这个吸尘器声音很大。",
         distractors: ["Iron", "Washer", "Dryer"]
@@ -61,7 +63,7 @@ export const VOCAB_DATA: Category[] = [
         word: "Detergent",
         phonetic: "/dɪˈtɜːdʒənt/",
         cn: "清洁剂",
-        image: "https://images.unsplash.com/photo-1516961642265-531546e84af2?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1642505172378-a6f5e5b15580?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         exampleEn: "Add some detergent to the water.",
         exampleCn: "往水里加点清洁剂。",
         distractors: ["Oil", "Sauce", "Salt"]
@@ -71,7 +73,7 @@ export const VOCAB_DATA: Category[] = [
         word: "Bucket",
         phonetic: "/ˈbʌkɪt/",
         cn: "水桶",
-        image: "https://images.unsplash.com/photo-1591101955416-58eb8d584347?w=800&q=80",
+        image: "https://plus.unsplash.com/premium_photo-1678304224487-0c1087aaaefd?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         exampleEn: "Fill the bucket with warm water.",
         exampleCn: "把水桶装满温水。",
         distractors: ["Plate", "Cup", "Bowl"]
@@ -83,6 +85,7 @@ export const VOCAB_DATA: Category[] = [
     title: "Vegetables",
     icon: "carrot",
     color: "bg-green-400",
+    cover: "https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?w=800&q=80",
     items: [
       {
         id: "veg-1",
@@ -109,7 +112,7 @@ export const VOCAB_DATA: Category[] = [
         word: "Potato",
         phonetic: "/pəˈteɪtəʊ/",
         cn: "土豆",
-        image: "https://images.unsplash.com/photo-1518977676605-dc156152e1d3?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1590165482129-1b8b27698780?q=80&w=1227&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         exampleEn: "Baked potatoes are delicious.",
         exampleCn: "烤土豆很好吃。",
         distractors: ["Corn", "Peas", "Beans"]
@@ -119,7 +122,7 @@ export const VOCAB_DATA: Category[] = [
         word: "Onion",
         phonetic: "/ˈʌnjən/",
         cn: "洋葱",
-        image: "https://images.unsplash.com/photo-1504569251293-d03b53332454?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1585849834908-3481231155e8?q=80&w=2671&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         exampleEn: "Cutting onions makes me cry.",
         exampleCn: "切洋葱让我流泪。",
         distractors: ["Garlic", "Ginger", "Chili"]
@@ -129,7 +132,7 @@ export const VOCAB_DATA: Category[] = [
         word: "Cucumber",
         phonetic: "/ˈkjuːkʌmbə/",
         cn: "黄瓜",
-        image: "https://images.unsplash.com/photo-1449300079323-02e209d9d3a6?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1589621316382-008455b857cd?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         exampleEn: "Slice the cucumber for the salad.",
         exampleCn: "把黄瓜切片做沙拉。",
         distractors: ["Zucchini", "Melon", "Pumpkin"]
@@ -141,13 +144,14 @@ export const VOCAB_DATA: Category[] = [
     title: "Travel",
     icon: "default",
     color: "bg-indigo-400",
+    cover: "https://images.unsplash.com/photo-1504598318550-17eba1008a68?q=80&w=1286&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     items: [
       {
         id: "tr-1",
         word: "Passport",
         phonetic: "/ˈpɑːspɔːt/",
         cn: "护照",
-        image: "https://images.unsplash.com/photo-1544207914-17db233e705b?w=800&q=80", // Alternative passport image
+        image: "https://images.unsplash.com/photo-1655722724447-2d2a3071e7f8?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", // Alternative passport image
         exampleEn: "Don't forget your passport!",
         exampleCn: "别忘了你的护照！",
         distractors: ["Ticket", "Map", "Bag"]
@@ -167,7 +171,7 @@ export const VOCAB_DATA: Category[] = [
         word: "Luggage",
         phonetic: "/ˈlʌɡɪdʒ/",
         cn: "行李",
-        image: "https://images.unsplash.com/photo-1565514020176-db936c464459?w=800&q=80", // Suitcases
+        image: "https://images.unsplash.com/photo-1502301197179-65228ab57f78?q=80&w=1285&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", // Suitcases
         exampleEn: "My luggage is very heavy.",
         exampleCn: "我的行李很重。",
         distractors: ["Ticket", "Visa", "Seat"]
@@ -177,7 +181,7 @@ export const VOCAB_DATA: Category[] = [
         word: "Ticket",
         phonetic: "/ˈtɪkɪt/",
         cn: "票",
-        image: "https://images.unsplash.com/photo-1550742512-427c3f86b764?w=800&q=80", // Tickets
+        image: "https://images.unsplash.com/photo-1600134637836-9d015f520941?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", // Tickets
         exampleEn: "Here is my plane ticket.",
         exampleCn: "这是我的机票。",
         distractors: ["Money", "Card", "Bag"]
@@ -189,13 +193,14 @@ export const VOCAB_DATA: Category[] = [
     title: "Restaurant",
     icon: "utensils",
     color: "bg-orange-400",
+    cover: "https://images.unsplash.com/photo-1559339352-11d035aa65de?w=800&q=80",
     items: [
       {
         id: "res-1",
         word: "Menu",
         phonetic: "/ˈmɛnjuː/",
         cn: "菜单",
-        image: "https://images.unsplash.com/photo-1559339352-11d035aa65de?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1579042877201-21342f2083a5?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         exampleEn: "Can I have the menu please?",
         exampleCn: "请给我菜单。",
         distractors: ["Plate", "Fork", "Bill"]
@@ -237,6 +242,7 @@ export const VOCAB_DATA: Category[] = [
     title: "Animals",
     icon: "default",
     color: "bg-yellow-400",
+    cover: "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=800&q=80",
     items: [
       {
         id: "ani-1",
@@ -263,7 +269,7 @@ export const VOCAB_DATA: Category[] = [
         word: "Elephant",
         phonetic: "/ˈɛlɪfənt/",
         cn: "大象",
-        image: "https://images.unsplash.com/photo-1557050543-4d5f4e641c5c?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1581852017103-68ac65514cf7?q=80&w=2673&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         exampleEn: "Elephants are very big.",
         exampleCn: "大象非常大。",
         distractors: ["Lion", "Tiger", "Bear"]
@@ -273,7 +279,7 @@ export const VOCAB_DATA: Category[] = [
         word: "Lion",
         phonetic: "/ˈlaɪən/",
         cn: "狮子",
-        image: "https://images.unsplash.com/photo-1614027164847-1b28cfe1df60?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1546182990-dffeafbe841d?q=80&w=2659&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         exampleEn: "The lion is the king of the jungle.",
         exampleCn: "狮子是丛林之王。",
         distractors: ["Tiger", "Cat", "Dog"]
@@ -285,13 +291,14 @@ export const VOCAB_DATA: Category[] = [
     title: "Colors",
     icon: "default",
     color: "bg-purple-400",
+    cover: "https://images.unsplash.com/photo-1525909002-1b05e0c869d8?q=80&w=1335&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     items: [
       {
         id: "col-1",
         word: "Red",
         phonetic: "/rɛd/",
         cn: "红色",
-        image: "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?w=800&q=80", // Red flowers/texture
+        image: "https://images.unsplash.com/photo-1507471509451-1d04d60f896d?q=80&w=1335&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", // Red flowers/texture
         exampleEn: "Apples are red.",
         exampleCn: "苹果是红色的。",
         distractors: ["Blue", "Green", "Yellow"]
@@ -301,7 +308,7 @@ export const VOCAB_DATA: Category[] = [
         word: "Blue",
         phonetic: "/bluː/",
         cn: "蓝色",
-        image: "https://images.unsplash.com/photo-1615484477745-a43300d3eccc?w=800&q=80", // Blue texture
+        image: "https://images.unsplash.com/photo-1508311603478-ce574376c3cf?q=80&w=2671&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", // Blue texture
         exampleEn: "The sky is blue.",
         exampleCn: "天空是蓝色的。",
         distractors: ["Red", "Pink", "Black"]
@@ -311,7 +318,7 @@ export const VOCAB_DATA: Category[] = [
         word: "Green",
         phonetic: "/ɡriːn/",
         cn: "绿色",
-        image: "https://images.unsplash.com/photo-1518531933037-9a8476317b16?w=800&q=80", // Green leaves
+        image: "https://images.unsplash.com/photo-1553307236-8783cc0a3b9e?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", // Green leaves
         exampleEn: "Grass is green.",
         exampleCn: "草是绿色的。",
         distractors: ["Red", "Blue", "White"]
@@ -321,7 +328,7 @@ export const VOCAB_DATA: Category[] = [
         word: "Yellow",
         phonetic: "/ˈjɛləʊ/",
         cn: "黄色",
-        image: "https://images.unsplash.com/photo-1490750967868-58cb75069ed6?w=800&q=80", // Yellow flowers
+        image: "https://images.unsplash.com/photo-1615457938971-3ab61c1c0d57?q=80&w=1335&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", // Yellow flowers
         exampleEn: "Sunflowers are yellow.",
         exampleCn: "向日葵是黄色的。",
         distractors: ["Purple", "Orange", "Red"]
@@ -333,13 +340,14 @@ export const VOCAB_DATA: Category[] = [
     title: "Feelings",
     icon: "smile",
     color: "bg-pink-400",
+    cover: "https://images.unsplash.com/photo-1524293568345-75d62c3664f7?q=80&w=1311&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     items: [
       {
         id: "feel-1",
         word: "Happy",
         phonetic: "/ˈhæpi/",
         cn: "开心",
-        image: "https://images.unsplash.com/photo-1545249390-6bdfa286032f?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1542596594-649edbc13630?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         exampleEn: "Moving home makes me happy.",
         exampleCn: "搬家让我很开心。",
         distractors: ["Sad", "Angry", "Tired"]
@@ -349,7 +357,7 @@ export const VOCAB_DATA: Category[] = [
         word: "Sad",
         phonetic: "/sæd/",
         cn: "悲伤",
-        image: "https://images.unsplash.com/photo-1534073828943-f801091bb18c?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1564396797585-82f726d7d39a?q=80&w=2671&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         exampleEn: "The ending of the movie was very sad.",
         exampleCn: "电影的结局非常悲伤。",
         distractors: ["Happy", "Excited", "Angry"]

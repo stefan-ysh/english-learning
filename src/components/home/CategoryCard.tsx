@@ -27,7 +27,7 @@ export function CategoryCard({ category }: CategoryCardProps) {
             <div className={cn(
                 "relative flex h-full transform items-end border-2 border-black bg-white transition-transform group-hover:-translate-x-2 group-hover:-translate-y-2 text-left",
                 "dark:bg-slate-900 dark:border-white"
-            )}>
+            )} style={{ backgroundImage: `url(${category.cover})`, backgroundSize: "cover", backgroundPosition: "center" }}>
                 <div className={cn(
                     "p-4 !pt-0 transition-opacity group-hover:absolute group-hover:opacity-0 sm:p-6 lg:p-8",
                     category.color // Apply background color class if needed, or just accents

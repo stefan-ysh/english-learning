@@ -1,6 +1,7 @@
 "use client";
 
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { use } from "react";
 import { VOCAB_DATA } from "@/lib/vocab-data";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
@@ -20,6 +21,7 @@ export default function LearnPage({ params }: PageProps) {
     const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setMounted(true);
     }, []);
 
