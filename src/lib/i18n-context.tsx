@@ -7,11 +7,12 @@ type Language = "en" | "cn";
 interface I18nContextType {
     lang: Language;
     toggleLang: () => void;
-    t: (key: string) => string;
+    t: (key: string, vars?: Record<string, string | number>) => string;
 }
 
 const UI_STRINGS: Record<string, Record<Language, string>> = {
     "app.title": { en: "Jingyan English", cn: "语妍英语" },
+    "home.subtitle": { en: "Learn fast with flashcards, phrases, grammar, and reading.", cn: "用词卡、短语、语法与阅读高效学习英语。" },
     "module.vocab": { en: "Vocabulary", cn: "高频词汇" },
     "module.phrases": { en: "Phrases", cn: "实用短句" },
     "module.grammar": { en: "Grammar", cn: "语法" },
@@ -37,12 +38,85 @@ const UI_STRINGS: Record<string, Record<Language, string>> = {
     "roadmap.title": { en: "Development Roadmap", cn: "开发计划" },
     "vocab.select": { en: "Vocabulary Selection", cn: "选择词汇类别" },
     "grammar.title": { en: "Grammar Visuals", cn: "语法可视化分析" },
+    "grammar.show_examples": { en: "Show Examples", cn: "展开示例" },
+    "grammar.hide_examples": { en: "Hide Examples", cn: "收起示例" },
+    "grammar.listen": { en: "Listen", cn: "朗读" },
+    "grammar.show_translation": { en: "Show Translation", cn: "显示译文" },
+    "grammar.hide_translation": { en: "Hide Translation", cn: "隐藏译文" },
+    "grammar.show_analysis": { en: "Show Analysis", cn: "显示解析" },
+    "grammar.hide_analysis": { en: "Hide Analysis", cn: "隐藏解析" },
+    "grammar.tap_reveal_cn": { en: "Tap to reveal translation", cn: "点击显示译文" },
+    "grammar.tap_reveal_exp": { en: "Tap to reveal analysis", cn: "点击显示解析" },
+    "grammar.practice": { en: "Practice", cn: "练一练" },
     "phrases.title": { en: "Common Phrases", cn: "常用短语大全" },
     "learn.vocab.desc": { en: "Swipe cards to learn new words", cn: "滑动卡片学习新单词" },
     "quiz.vocab.desc": { en: "Test your memory with a quiz", cn: "通过测试检验记忆" },
     "quiz.loading": { en: "Loading Quiz...", cn: "正在加载测试..." },
     "quiz.question": { en: "Question", cn: "题目" },
     "quiz.select_meaning": { en: "SELECT MEANING", cn: "选择正确含义" },
+    "quiz.spell_word": { en: "SPELL THE WORD", cn: "拼写单词" },
+    "quiz.correct": { en: "Correct!", cn: "答对了！" },
+    "quiz.incorrect": { en: "Incorrect", cn: "答错了" },
+    "learn.completed": { en: "Completed! Streak updated.", cn: "完成学习，已打卡" },
+    "learn.back_home": { en: "Back Home", cn: "返回首页" },
+    "quiz.image_hint": { en: "Image hint", cn: "图片提示" },
+    "quiz.reset": { en: "Reset", cn: "重新拼写" },
+    "quiz.hint": { en: "Hint", cn: "提示一字母" },
+    "quiz.backspace": { en: "Backspace", cn: "退格" },
+    "quiz.show_hint": { en: "Show Hint", cn: "显示提示" },
+    "quiz.hide_hint": { en: "Hide Hint", cn: "隐藏提示" },
+    "quiz.hint_example": { en: "Example", cn: "示例" },
+    "quiz.hint_starts_with": { en: "Starts with", cn: "首字母" },
+    "quiz.hint_word_count": { en: "Word count", cn: "词数" },
+    "quiz.hint_length": { en: "Length", cn: "长度" },
+    "practice.title": { en: "Practice Hub", cn: "练习中心" },
+    "practice.dictation": { en: "Dictation", cn: "听写" },
+    "practice.dictation_desc": { en: "Listen and type the sentence", cn: "听音写句子" },
+    "practice.patterns": { en: "Pattern Practice", cn: "句型替换" },
+    "practice.patterns_desc": { en: "Replace with correct pattern", cn: "同句型变体训练" },
+    "practice.quick": { en: "Quick Check", cn: "轻量测验" },
+    "practice.quick_desc": { en: "2–3 minute mixed quiz", cn: "2-3 分钟综合检测" },
+    "practice.mistakes": { en: "Mistake Review", cn: "错题本" },
+    "practice.mistakes_desc": { en: "Review frequent mistakes", cn: "按错误类型复习" },
+    "practice.progress": { en: "Progress", cn: "进度" },
+    "practice.play_audio": { en: "Play Audio", cn: "播放音频" },
+    "practice.type_here": { en: "Type what you hear...", cn: "写下你听到的句子..." },
+    "practice.check": { en: "Check", cn: "检查" },
+    "practice.next": { en: "Next", cn: "下一题" },
+    "practice.show_answer": { en: "Show Answer", cn: "显示答案" },
+    "practice.hide_answer": { en: "Hide Answer", cn: "隐藏答案" },
+    "practice.answer": { en: "Answer", cn: "答案" },
+    "practice.complete": { en: "Practice Complete", cn: "练习完成" },
+    "practice.dictation_done": { en: "Great job finishing dictation.", cn: "听写完成，继续保持！" },
+    "practice.back_hub": { en: "Back to Hub", cn: "返回练习中心" },
+    "practice.quick_done": { en: "Quick Check Done", cn: "轻量测验完成" },
+    "practice.no_mistakes": { en: "No mistakes yet. Keep it up!", cn: "暂无错题，继续保持！" },
+    "practice.clear_all": { en: "Clear All", cn: "清空全部" },
+    "practice.correct": { en: "Correct", cn: "正确答案" },
+    "practice.last_answer": { en: "Last Answer", cn: "上次答案" },
+    "practice.mistake_count": { en: "Mistake Count", cn: "错误次数" },
+    "practice.remove": { en: "Remove", cn: "移除" },
+    "practice.duration": { en: "{minutes} min", cn: "{minutes} 分钟" },
+    "reading.title": { en: "Reading", cn: "阅读" },
+    "reading.desc": { en: "Learn through short articles", cn: "通过短文学习英语" },
+    "reading.minutes": { en: "{minutes} min read", cn: "约 {minutes} 分钟" },
+    "reading.show_translation": { en: "Show Translation", cn: "显示译文" },
+    "reading.hide_translation": { en: "Hide Translation", cn: "隐藏译文" },
+    "reading.vocab": { en: "Key Vocabulary", cn: "重点词汇" },
+    "reading.tap_word": { en: "Tap highlighted words for meaning", cn: "点击高亮词查看释义" },
+    "reading.definition": { en: "Definition", cn: "释义" },
+    "reading.example": { en: "Example", cn: "示例" },
+    "reading.phrases": { en: "Key Phrases", cn: "重点短语" },
+    "reading.quiz": { en: "Reading Quiz", cn: "阅读小测" },
+    "reading.comprehension": { en: "Comprehension", cn: "理解题" },
+    "reading.vocab_quiz": { en: "Vocabulary", cn: "词汇回忆" },
+    "reading.bookmark": { en: "Bookmark", cn: "收藏" },
+    "reading.bookmarked": { en: "Bookmarked", cn: "已收藏" },
+    "reading.read": { en: "Read", cn: "已读" },
+    "reading.reading": { en: "Reading", cn: "阅读中" },
+    "reading.filter_all": { en: "All", cn: "全部" },
+    "reading.filter_read": { en: "Read", cn: "已读" },
+    "reading.filter_bookmarked": { en: "Bookmarked", cn: "已收藏" },
     "vocab.learn_count": { en: "words to learn", cn: "个词汇待学习" },
     "common.loading": { en: "Loading...", cn: "加载中..." },
     "learn.grammar_hint": { en: "Tap words to see grammar analysis", cn: "点击单词查看语法分析" },
@@ -53,6 +127,12 @@ const UI_STRINGS: Record<string, Record<Language, string>> = {
     "cat.animals": { en: "Animals", cn: "动物世界" },
     "cat.colors": { en: "Colors", cn: "色彩缤纷" },
     "cat.feelings": { en: "Feelings", cn: "情绪表达" },
+    "cat.daily_life": { en: "Daily Life", cn: "家庭日常" },
+    "cat.school": { en: "School & Classroom", cn: "学校课堂" },
+    "cat.work": { en: "Work & Business", cn: "职场商务" },
+    "cat.medical": { en: "Medical", cn: "医疗看病" },
+    "cat.travel_advanced": { en: "Travel Advanced", cn: "旅行进阶" },
+    "cat.technology": { en: "Technology", cn: "科技数码" },
     "cat.greeting": { en: "Greetings", cn: "日常问候" },
     "cat.travel_essentials": { en: "Travel Essentials", cn: "旅行必备" },
     "cat.dining_out": { en: "Dining Out", cn: "外出就餐" },
@@ -69,8 +149,14 @@ export function I18nProvider({ children }: { children: ReactNode }) {
         setLang((prev) => (prev === "en" ? "cn" : "en"));
     };
 
-    const t = (key: string) => {
-        return UI_STRINGS[key]?.[lang] || key;
+    const t = (key: string, vars?: Record<string, string | number>) => {
+        let text = UI_STRINGS[key]?.[lang] || key;
+        if (vars) {
+            Object.entries(vars).forEach(([k, v]) => {
+                text = text.replaceAll(`{${k}}`, String(v));
+            });
+        }
+        return text;
     };
 
     return (

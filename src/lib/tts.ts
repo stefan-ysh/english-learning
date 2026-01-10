@@ -11,8 +11,19 @@ export const speak = (text: string, options: TTSOptions = {}) => {
         return;
     }
 
+    const now = Date.now();
+    // Avoid rapid repeats of the same utterance
+    if ((window as unknown as { __lastSpeakText?: string; __lastSpeakAt?: number }).__lastSpeakText === text) {
+        const lastAt = (window as unknown as { __lastSpeakAt?: number }).__lastSpeakAt || 0;
+        if (now - lastAt < 700) {
+            return;
+        }
+    }
+
     // Cancel any ongoing speech
     window.speechSynthesis.cancel();
+    (window as unknown as { __lastSpeakText?: string; __lastSpeakAt?: number }).__lastSpeakText = text;
+    (window as unknown as { __lastSpeakAt?: number }).__lastSpeakAt = now;
 
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = "en-US";

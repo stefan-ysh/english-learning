@@ -7,6 +7,7 @@ import { Volume2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ShineBorder } from "@/components/ui/shine-border";
 import { speak } from "@/lib/tts";
+import Image from "next/image";
 
 interface FlashCardProps {
     item: VocabItem;
@@ -15,8 +16,11 @@ interface FlashCardProps {
 
 export function FlashCard({ item, autoPlay = false }: FlashCardProps) {
     const [isFlipped, setIsFlipped] = useState(false);
+    const [isSpeaking, setIsSpeaking] = useState(false);
 
     useEffect(() => {
+        setIsFlipped(false);
+        setIsSpeaking(false);
         if (autoPlay) {
             playAudio();
         }
@@ -24,7 +28,10 @@ export function FlashCard({ item, autoPlay = false }: FlashCardProps) {
     }, [item]);
 
     const playAudio = () => {
-        speak(item.word);
+        speak(item.word, {
+            onStart: () => setIsSpeaking(true),
+            onEnd: () => setIsSpeaking(false),
+        });
     };
 
     const handleFlip = () => {
@@ -46,17 +53,19 @@ export function FlashCard({ item, autoPlay = false }: FlashCardProps) {
                 )}>
                     <ShineBorder className="w-full h-full p-6 flex flex-col items-center justify-between bg-white dark:bg-slate-900" color={["#A07CFE", "#FE8FB5", "#FFBE7B"]}>
                         <div className="w-full h-4/5 relative rounded-2xl overflow-hidden mb-4">
-                            {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img
+                            <Image
                                 src={item.image}
                                 alt={item.word}
-                                className="w-full h-full object-cover"
+                                fill
+                                sizes="(max-width: 768px) 100vw, 50vw"
+                                className="object-cover"
                             />
                             <button
                                 onClick={(e) => { e.stopPropagation(); playAudio(); }}
-                                className="absolute bottom-4 right-4 p-4 bg-white/90 rounded-full shadow-lg hover:scale-110 transition-transform dark:bg-black/80 dark:text-white"
+                                aria-pressed={isSpeaking}
+                                className={`absolute bottom-4 right-4 p-4 bg-white/90 rounded-full shadow-lg hover:scale-110 active:scale-95 transition-transform dark:bg-black/80 dark:text-white ${isSpeaking ? "ring-2 ring-pink-300" : ""}`}
                             >
-                                <Volume2 className="w-6 h-6 text-pink-500" />
+                                <Volume2 className={`w-6 h-6 text-pink-500 ${isSpeaking ? "animate-pulse" : ""}`} />
                             </button>
                         </div>
 
@@ -83,9 +92,10 @@ export function FlashCard({ item, autoPlay = false }: FlashCardProps) {
 
                     <button
                         onClick={(e) => { e.stopPropagation(); playAudio(); }}
-                        className="mt-8 flex items-center gap-2 text-pink-500 font-bold"
+                        aria-pressed={isSpeaking}
+                        className={`mt-8 flex items-center gap-2 text-pink-500 font-bold active:scale-95 transition-transform ${isSpeaking ? "opacity-80" : ""}`}
                     >
-                        <Volume2 className="w-5 h-5" /> Listen Again
+                        <Volume2 className={`w-5 h-5 ${isSpeaking ? "animate-pulse" : ""}`} /> Listen Again
                     </button>
                 </div>
             </motion.div>

@@ -52,8 +52,9 @@ export function PhraseCard({ item, autoPlay = false }: PhraseCardProps) {
                 <div className="text-sm font-bold text-gray-400">{t("phrase")}</div>
                 <button
                     onClick={handlePlay}
+                    aria-pressed={isPlaying}
                     className={cn(
-                        "p-3 rounded-full transition-all duration-300",
+                        "p-3 rounded-full transition-all duration-300 active:scale-95",
                         isPlaying
                             ? "bg-pink-500 text-white scale-110 shadow-lg ring-4 ring-pink-200 dark:ring-pink-900"
                             : "bg-gray-100 dark:bg-slate-800 text-gray-600 hover:bg-pink-100 hover:text-pink-500"

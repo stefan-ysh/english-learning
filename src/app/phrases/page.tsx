@@ -23,17 +23,17 @@ export default function PhrasesPage() {
             <div className="grid w-full max-w-5xl gap-8 sm:grid-cols-2 lg:grid-cols-2">
                 {PHRASE_CATEGORIES.map((category, index) => (
                     <BlurFade key={category.id} delay={index * 0.1}>
-                        <Link href={`/phrases/${category.id}`} className="group relative block h-64 sm:h-80 w-full">
+                        <Link href={`/phrases/${category.id}`} className="group relative block h-64 sm:h-80 w-full active:scale-[0.99] transition-transform">
                             <span className="absolute inset-0 border-2 border-dashed border-black dark:border-white rounded-3xl"></span>
 
                             <div className={cn(
-                                "relative flex h-full w-full flex-col justify-between border-2 border-black bg-white transition-transform group-hover:-translate-x-2 group-hover:-translate-y-2 rounded-3xl overflow-hidden",
+                                "relative flex h-full w-full flex-col justify-between border-2 border-black bg-white transition-transform md:group-hover:-translate-x-2 md:group-hover:-translate-y-2 rounded-3xl overflow-hidden",
                                 "dark:bg-slate-900 dark:border-white"
                             )}>
                                 {/* Image Background with Overlay */}
                                 <div className="absolute inset-0 z-0">
-                                    <img src={category.image} alt={category.title} className="w-full h-full object-cover opacity-20 group-hover:opacity-30 transition-opacity" />
-                                    <div className={cn("absolute inset-0 opacity-20", category.color)}></div>
+                                    <img src={category.image} alt={category.title} className="w-full h-full object-cover opacity-20 md:group-hover:opacity-30 transition-opacity" />
+                                    <div className={cn("absolute inset-0 opacity-20 md:group-hover:opacity-30 transition-opacity", category.color)}></div>
                                 </div>
 
                                 <div className="relative z-10 p-6 flex flex-col h-full">

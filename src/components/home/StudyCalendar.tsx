@@ -1,7 +1,6 @@
 "use client";
 
 import { useActivityStore } from "@/lib/use-activity-store";
-import { useEffect } from "react";
 import { Flame, Calendar as CalendarIcon } from "lucide-react"; // Import CalendarIcon as alias
 import { useI18n } from "@/lib/i18n-context";
 
@@ -9,14 +8,8 @@ import { useI18n } from "@/lib/i18n-context";
 const getDaysInMonth = (year: number, month: number) => new Date(year, month + 1, 0).getDate();
 
 export function StudyCalendar() {
-    const { loginDates, currentStreak, recordActivity, hasHydrated } = useActivityStore();
+    const { loginDates, currentStreak, hasHydrated } = useActivityStore();
     const { t } = useI18n();
-
-    useEffect(() => {
-        if (hasHydrated) {
-            recordActivity();
-        }
-    }, [hasHydrated, recordActivity]);
 
     if (!hasHydrated) {
         return (

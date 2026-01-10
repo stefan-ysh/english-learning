@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { ArrowRight, Utensils, Carrot, Sparkles, BookOpen } from "lucide-react";
+import { ArrowRight, Utensils, Carrot, Sparkles, BookOpen, Home, GraduationCap, Briefcase, Stethoscope, Plane, Cpu } from "lucide-react";
 import { Category } from "@/lib/vocab-data";
 import { useI18n } from "@/lib/i18n-context";
 
@@ -9,6 +9,12 @@ const IconMap: Record<string, React.ReactNode> = {
     broom: <Sparkles className="w-8 h-8 text-white" />,
     carrot: <Carrot className="w-8 h-8 text-white" />,
     utensils: <Utensils className="w-8 h-8 text-white" />,
+    home: <Home className="w-8 h-8 text-white" />,
+    school: <GraduationCap className="w-8 h-8 text-white" />,
+    briefcase: <Briefcase className="w-8 h-8 text-white" />,
+    medical: <Stethoscope className="w-8 h-8 text-white" />,
+    plane: <Plane className="w-8 h-8 text-white" />,
+    cpu: <Cpu className="w-8 h-8 text-white" />,
     default: <BookOpen className="w-8 h-8 text-white" />,
 };
 
@@ -25,29 +31,29 @@ export function CategoryCard({ category }: CategoryCardProps) {
             <span className="absolute inset-0 border-2 border-dashed border-black dark:border-white"></span>
 
             <div className={cn(
-                "relative flex h-full transform items-end border-2 border-black bg-white transition-transform group-hover:-translate-x-2 group-hover:-translate-y-2 text-left",
+                "relative flex h-full transform items-end border-2 border-black bg-white transition-transform md:group-hover:-translate-x-2 md:group-hover:-translate-y-2 text-left",
                 "dark:bg-slate-900 dark:border-white"
             )} style={{ backgroundImage: `url(${category.cover})`, backgroundSize: "cover", backgroundPosition: "center" }}>
+                <div className="absolute inset-0 bg-black/25 md:bg-black/0 md:group-hover:bg-black/35 transition-colors"></div>
+                <div className={cn("absolute top-6 right-6 p-3 rounded-full shadow-sm z-10", category.color)}>
+                    {Icon}
+                </div>
                 <div className={cn(
-                    "p-4 !pt-0 transition-opacity group-hover:absolute group-hover:opacity-0 sm:p-6 lg:p-8",
+                    "relative p-4 !pt-0 transition-opacity opacity-0 md:opacity-100 md:group-hover:absolute md:group-hover:opacity-0 sm:p-6 lg:p-8",
                     category.color // Apply background color class if needed, or just accents
                 )}>
-                    {/* Decorative background circle or simple color block could go here */}
-                    <div className={cn("absolute top-6 right-6 p-3 rounded-full shadow-sm", category.color)}>
-                        {Icon}
-                    </div>
 
                     <h2 className="mt-4 text-xl font-medium sm:text-2xl">{t(`cat.${category.id}`)}</h2>
                 </div>
 
-                <div className="absolute p-4 opacity-0 transition-opacity group-hover:relative group-hover:opacity-100 sm:p-6 lg:p-8">
-                    <h3 className="mt-4 text-xl font-medium sm:text-2xl">{t(`cat.${category.id}`)}</h3>
+                <div className="absolute p-4 opacity-100 md:opacity-0 transition-opacity md:group-hover:relative md:group-hover:opacity-100 sm:p-6 lg:p-8 text-white">
+                    <h3 className="mt-4 text-xl font-semibold sm:text-2xl drop-shadow-sm">{t(`cat.${category.id}`)}</h3>
 
-                    <p className="mt-4 text-sm sm:text-base text-gray-600 dark:text-gray-300">
+                    <p className="mt-4 text-sm sm:text-base text-white/80">
                         {category.items.length} {t("vocab.learn_count")}
                     </p>
 
-                    <p className="mt-8 font-bold inline-flex items-center gap-2">
+                    <p className="mt-8 inline-flex items-center gap-2 text-white text-sm font-bold bg-white/15 px-3 py-1.5 rounded-full">
                         {t("btn.start")} <ArrowRight className="w-4 h-4" />
                     </p>
                 </div>

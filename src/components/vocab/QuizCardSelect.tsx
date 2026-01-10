@@ -13,12 +13,15 @@ interface QuizCardSelectProps {
     item: VocabItem;
     options: string[]; // Options are Chinese meanings
     onAnswer: (isCorrect: boolean) => void;
+    onMistake?: (selected: string) => void;
 }
 
-export function QuizCardSelect({ item, options, onAnswer }: QuizCardSelectProps) {
+export function QuizCardSelect({ item, options, onAnswer, onMistake }: QuizCardSelectProps) {
     const { t } = useI18n();
     const [selectedOption, setSelectedOption] = useState<string | null>(null);
     const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
+    const [isSpeaking, setIsSpeaking] = useState(false);
+    const [showHint, setShowHint] = useState(false);
 
     useEffect(() => {
         // Play audio on mount
@@ -26,11 +29,16 @@ export function QuizCardSelect({ item, options, onAnswer }: QuizCardSelectProps)
         // Reset state when item changes
         setSelectedOption(null);
         setIsCorrect(null);
+        setIsSpeaking(false);
+        setShowHint(false);
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [item]);
+    }, [item.id]);
 
     const playAudio = () => {
-        speak(item.word);
+        speak(item.word, {
+            onStart: () => setIsSpeaking(true),
+            onEnd: () => setIsSpeaking(false),
+        });
     };
 
     const handleSelect = (option: string) => {
@@ -39,12 +47,23 @@ export function QuizCardSelect({ item, options, onAnswer }: QuizCardSelectProps)
         setSelectedOption(option);
         const correct = option === item.cn;
         setIsCorrect(correct);
+        if (!correct && onMistake) {
+            onMistake(option);
+        }
 
-        // Wait a bit before triggering next question
+        // Short delay to show feedback before moving on
         setTimeout(() => {
             onAnswer(correct);
-        }, 1500);
+        }, 600);
     };
+
+    const words = item.word.trim().split(/\s+/);
+    const hintLines = [
+        item.exampleEn ? `${t("quiz.hint_example")}: ${item.exampleEn}` : null,
+        `${t("quiz.hint_starts_with")}: ${item.word.slice(0, 1)}`,
+        `${t("quiz.hint_word_count")}: ${words.length}`,
+        `${t("quiz.hint_length")}: ${item.word.length}`,
+    ].filter(Boolean) as string[];
 
     return (
         <div className="w-full max-w-md bg-white dark:bg-slate-900 rounded-3xl p-8 shadow-xl border-2 border-gray-100 dark:border-slate-800 flex flex-col items-center">
@@ -53,14 +72,39 @@ export function QuizCardSelect({ item, options, onAnswer }: QuizCardSelectProps)
                 <div className="flex flex-col items-center gap-4">
                     <button
                         onClick={playAudio}
-                        className="w-16 h-16 rounded-full bg-pink-100 dark:bg-pink-900/30 flex items-center justify-center text-pink-500 hover:scale-110 transition-transform"
+                        aria-pressed={isSpeaking}
+                        className={`w-16 h-16 rounded-full bg-pink-100 dark:bg-pink-900/30 flex items-center justify-center text-pink-500 hover:scale-110 active:scale-95 transition-transform ${isSpeaking ? "ring-2 ring-pink-300" : ""}`}
                     >
-                        <Volume2 className="w-8 h-8" />
+                        <Volume2 className={`w-8 h-8 ${isSpeaking ? "animate-pulse" : ""}`} />
                     </button>
                     <h3 className="text-4xl font-bold">{item.word}</h3>
                     <p className="text-gray-400 font-mono">{item.phonetic}</p>
                 </div>
             </div>
+
+            {selectedOption && (
+                <div className={cn(
+                    "mb-4 px-3 py-1 rounded-full text-sm font-bold",
+                    isCorrect ? "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400" : "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400"
+                )}>
+                    {isCorrect ? t("quiz.correct") : t("quiz.incorrect")}
+                </div>
+            )}
+
+            <button
+                onClick={() => setShowHint((prev) => !prev)}
+                className="mb-4 px-3 py-1 rounded-full text-xs font-bold bg-gray-100 dark:bg-slate-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-slate-700 active:scale-95 transition-transform"
+            >
+                {showHint ? t("quiz.hide_hint") : t("quiz.show_hint")}
+            </button>
+
+            {showHint && (
+                <div className="mb-4 w-full text-xs text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-slate-800 rounded-xl p-3">
+                    {hintLines.map((line) => (
+                        <div key={line}>{line}</div>
+                    ))}
+                </div>
+            )}
 
             <div className="w-full space-y-3">
                 {options.map((option, index) => {

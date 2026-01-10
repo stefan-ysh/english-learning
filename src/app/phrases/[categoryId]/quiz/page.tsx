@@ -9,6 +9,8 @@ import { QuizCardSelect } from "@/components/vocab/QuizCardSelect";
 import { useI18n } from "@/lib/i18n-context";
 import { motion, AnimatePresence } from "framer-motion";
 import confetti from "canvas-confetti"; // Will utilize confetti here
+import { useActivityStore } from "@/lib/use-activity-store";
+import { usePracticeStore } from "@/lib/practice-store";
 
 interface PageProps {
     params: Promise<{
@@ -21,10 +23,14 @@ export default function PhraseQuizPage({ params }: PageProps) {
     const category = PHRASE_CATEGORIES.find((c) => c.id === categoryId);
 
     const { t, lang } = useI18n();
+    const recordActivity = useActivityStore((state) => state.recordActivity);
+    const hasHydrated = useActivityStore((state) => state.hasHydrated);
+    const recordMistake = usePracticeStore((state) => state.recordMistake);
     const [mounted, setMounted] = useState(false);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [score, setScore] = useState(0);
     const [isFinished, setIsFinished] = useState(false);
+    const [pendingRecord, setPendingRecord] = useState(false);
 
 
     const [questions, setQuestions] = useState<{ item: typeof PHRASE_CATEGORIES[0]['items'][0], options?: string[] }[]>([]);
@@ -54,11 +60,18 @@ export default function PhraseQuizPage({ params }: PageProps) {
         setMounted(true);
     }, [category, questions.length]);
 
+    useEffect(() => {
+        if (hasHydrated && pendingRecord) {
+            recordActivity();
+            setPendingRecord(false);
+        }
+    }, [hasHydrated, pendingRecord, recordActivity]);
+
     if (!category) {
         return notFound();
     }
 
-    if (!mounted) {
+    if (!mounted || questions.length === 0) {
         return <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-950">
             <div className="animate-pulse text-gray-400">{t("quiz.loading")}</div>
         </div>;
@@ -86,17 +99,20 @@ export default function PhraseQuizPage({ params }: PageProps) {
             setScore((prev) => prev + 1);
         }
 
-        setTimeout(() => {
-            if (currentIndex < questions.length - 1) {
-                setCurrentIndex((prev) => prev + 1);
-            } else {
-                finishQuiz(score + (isCorrect ? 1 : 0));
-            }
-        }, 1500);
+        if (currentIndex < questions.length - 1) {
+            setCurrentIndex((prev) => prev + 1);
+        } else {
+            finishQuiz(score + (isCorrect ? 1 : 0));
+        }
     };
 
     const finishQuiz = (finalScore: number) => {
         setIsFinished(true);
+        if (hasHydrated) {
+            recordActivity();
+        } else {
+            setPendingRecord(true);
+        }
         // Trigger confetti
         if (finalScore === questions.length) {
             confetti({
@@ -170,6 +186,15 @@ export default function PhraseQuizPage({ params }: PageProps) {
                             item={vocabularyItemAdapter}
                             options={currentQuestion.options!}
                             onAnswer={handleAnswer}
+                            onMistake={(selected) =>
+                                recordMistake({
+                                    key: `phrase:${currentQuestion.item.id}`,
+                                    type: "phrase-quiz",
+                                    prompt: currentQuestion.item.english,
+                                    correct: currentQuestion.item.cn,
+                                    userAnswer: selected,
+                                })
+                            }
                         />
                     </motion.div>
                 </AnimatePresence>

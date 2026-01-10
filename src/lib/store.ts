@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 
 interface LearningState {
     completedItems: string[]; // List of item IDs that have been learned/mastered
@@ -9,18 +10,25 @@ interface LearningState {
     resetProgress: () => void;
 }
 
-export const useLearningStore = create<LearningState>()((set) => ({
-    completedItems: [],
-    quizScores: {},
+export const useLearningStore = create<LearningState>()(
+    persist(
+        (set) => ({
+            completedItems: [],
+            quizScores: {},
 
-    markAsCompleted: (itemId) => set((state) => {
-        if (state.completedItems.includes(itemId)) return state;
-        return { completedItems: [...state.completedItems, itemId] };
-    }),
+            markAsCompleted: (itemId) => set((state) => {
+                if (state.completedItems.includes(itemId)) return state;
+                return { completedItems: [...state.completedItems, itemId] };
+            }),
 
-    setQuizScore: (categoryId, score) => set((state) => ({
-        quizScores: { ...state.quizScores, [categoryId]: score }
-    })),
+            setQuizScore: (categoryId, score) => set((state) => ({
+                quizScores: { ...state.quizScores, [categoryId]: score }
+            })),
 
-    resetProgress: () => set({ completedItems: [], quizScores: {} }),
-}));
+            resetProgress: () => set({ completedItems: [], quizScores: {} }),
+        }),
+        {
+            name: 'learning-storage',
+        }
+    )
+);

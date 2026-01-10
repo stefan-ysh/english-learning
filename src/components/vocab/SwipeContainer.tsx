@@ -1,11 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence, PanInfo } from "framer-motion";
 import { VocabItem } from "@/lib/vocab-data";
 import { FlashCard } from "./FlashCard";
 import { RotateCcw, ArrowLeft, ArrowRight } from "lucide-react";
 import Link from "next/link";
+import { useActivityStore } from "@/lib/use-activity-store";
+import { useI18n } from "@/lib/i18n-context";
 
 interface SwipeContainerProps {
     items: VocabItem[];
@@ -15,6 +17,10 @@ interface SwipeContainerProps {
 export function SwipeContainer({ items, categoryId }: SwipeContainerProps) {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [direction, setDirection] = useState(0); // -1 for left, 1 for right
+    const [hasRecorded, setHasRecorded] = useState(false);
+    const recordActivity = useActivityStore((state) => state.recordActivity);
+    const hasHydrated = useActivityStore((state) => state.hasHydrated);
+    const { t } = useI18n();
 
     if (!items || items.length === 0) {
         return <div>No items found.</div>;
@@ -22,7 +28,21 @@ export function SwipeContainer({ items, categoryId }: SwipeContainerProps) {
 
     const currentItem = items[currentIndex];
     // Calculate completion percentage
-    const progress = ((currentIndex) / items.length) * 100;
+    const progress = ((currentIndex + 1) / items.length) * 100;
+
+    useEffect(() => {
+        setHasRecorded(false);
+        setCurrentIndex(0);
+        setDirection(0);
+    }, [categoryId]);
+
+    useEffect(() => {
+        if (!hasHydrated) return;
+        if (!hasRecorded && currentIndex === items.length - 1) {
+            recordActivity();
+            setHasRecorded(true);
+        }
+    }, [currentIndex, hasRecorded, hasHydrated, items.length, recordActivity]);
 
     const handleDragEnd = (event: globalThis.MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
         if (info.offset.x < -100) {
@@ -89,6 +109,21 @@ export function SwipeContainer({ items, categoryId }: SwipeContainerProps) {
                     </motion.div>
                 </AnimatePresence>
             </div>
+
+            {/* Completion Banner */}
+            {hasRecorded && currentIndex === items.length - 1 && (
+                <motion.div
+                    initial={{ opacity: 0, y: 12, scale: 0.98 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    transition={{ duration: 0.3 }}
+                    className="absolute bottom-24 px-4 py-3 bg-green-600 text-white text-sm font-bold rounded-2xl shadow-lg flex items-center gap-3"
+                >
+                    <span>{t("learn.completed")}</span>
+                    <Link href="/" className="px-3 py-1 bg-white/20 rounded-full hover:bg-white/30 transition-colors">
+                        {t("learn.back_home")}
+                    </Link>
+                </motion.div>
+            )}
 
             {/* Controls */}
             <div className="absolute bottom-8 flex gap-8 items-center z-20">

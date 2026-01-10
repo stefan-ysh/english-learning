@@ -31,7 +31,16 @@ export default function PhraseLearnPage({ params }: PageProps) {
         notFound();
     }
 
-    if (!mounted) return null;
+    if (!mounted) {
+        return (
+            <main className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-950">
+                <div className="w-full max-w-md p-6 bg-white dark:bg-slate-900 rounded-3xl border border-gray-100 dark:border-slate-800 animate-pulse">
+                    <div className="h-6 bg-gray-200 dark:bg-slate-800 rounded mb-4"></div>
+                    <div className="h-64 bg-gray-200 dark:bg-slate-800 rounded-2xl"></div>
+                </div>
+            </main>
+        );
+    }
 
     return (
         <main className="flex min-h-screen flex-col items-center bg-gray-50 dark:bg-gray-950 overflow-hidden relative">

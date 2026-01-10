@@ -11,6 +11,8 @@ import { useLearningStore } from "@/lib/store";
 import { useI18n } from "@/lib/i18n-context";
 import { motion, AnimatePresence } from "framer-motion";
 import confetti from "canvas-confetti";
+import { useActivityStore } from "@/lib/use-activity-store";
+import { usePracticeStore } from "@/lib/practice-store";
 
 
 interface PageProps {
@@ -25,12 +27,16 @@ export default function QuizPage({ params }: PageProps) {
 
     // Hooks should be unconditional
     const setQuizScore = useLearningStore((state) => state.setQuizScore);
+    const recordActivity = useActivityStore((state) => state.recordActivity);
+    const hasHydrated = useActivityStore((state) => state.hasHydrated);
+    const recordMistake = usePracticeStore((state) => state.recordMistake);
     const { t } = useI18n();
 
     // Stable Quiz State
     const [currentIndex, setCurrentIndex] = useState(0);
     const [score, setScore] = useState(0);
     const [isFinished, setIsFinished] = useState(false);
+    const [pendingRecord, setPendingRecord] = useState(false);
 
     const [questions, setQuestions] = useState<{ item: typeof VOCAB_DATA[0]['items'][0], options?: string[] }[]>([]);
 
@@ -60,11 +66,18 @@ export default function QuizPage({ params }: PageProps) {
         setMounted(true);
     }, [category, questions.length]);
 
+    useEffect(() => {
+        if (hasHydrated && pendingRecord) {
+            recordActivity();
+            setPendingRecord(false);
+        }
+    }, [hasHydrated, pendingRecord, recordActivity]);
+
     if (!category) {
         return notFound();
     }
 
-    if (!mounted) {
+    if (!mounted || questions.length === 0) {
         return <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-950">
             <div className="animate-pulse text-gray-400">{t("quiz.loading")}</div>
         </div>;
@@ -78,19 +91,21 @@ export default function QuizPage({ params }: PageProps) {
             setScore((prev) => prev + 1);
         }
 
-        // Delay to show feedback before moving to next
-        setTimeout(() => {
-            if (currentIndex < questions.length - 1) {
-                setCurrentIndex((prev) => prev + 1);
-            } else {
-                finishQuiz(score + (isCorrect ? 1 : 0));
-            }
-        }, 1500);
+        if (currentIndex < questions.length - 1) {
+            setCurrentIndex((prev) => prev + 1);
+        } else {
+            finishQuiz(score + (isCorrect ? 1 : 0));
+        }
     };
 
     const finishQuiz = (finalScore: number) => {
         setIsFinished(true);
         setQuizScore(categoryId, finalScore);
+        if (hasHydrated) {
+            recordActivity();
+        } else {
+            setPendingRecord(true);
+        }
 
         if (finalScore === questions.length) {
             confetti({
@@ -169,12 +184,30 @@ export default function QuizPage({ params }: PageProps) {
                                 item={item}
                                 options={currentQuestion.options!}
                                 onAnswer={handleAnswer}
+                                onMistake={(selected) =>
+                                    recordMistake({
+                                        key: `vocab:${item.id}`,
+                                        type: "vocab-quiz",
+                                        prompt: item.word,
+                                        correct: item.cn,
+                                        userAnswer: selected,
+                                    })
+                                }
                             />
                         ) : (
                             <QuizCardInput
                                 key={item.id}
                                 item={item}
                                 onAnswer={handleAnswer}
+                                onMistake={(answer) =>
+                                    recordMistake({
+                                        key: `vocab:${item.id}:spell`,
+                                        type: "vocab-quiz",
+                                        prompt: item.cn,
+                                        correct: item.word,
+                                        userAnswer: answer,
+                                    })
+                                }
                             />
                         )}
                     </motion.div>
