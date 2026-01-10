@@ -20,7 +20,7 @@ export const GRAMMAR_DATA: GrammarTopic[] = [
         cnTitle: "主语 + 谓语 + 宾语",
         description: "The basic sentence structure in English for simple statements.",
         cnDescription: "英语中最常见的基础句子结构，用于表达简单陈述。",
-        imageUrl: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=800&q=80",
+        imageUrl: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=800&q=20",
         examples: [
             {
                 en: "I love cats.",
@@ -48,7 +48,7 @@ export const GRAMMAR_DATA: GrammarTopic[] = [
         cnTitle: "形容词",
         description: "Words that describe nouns or follow linking verbs.",
         cnDescription: "用来修饰名词或放在系动词后作表语的词。",
-        imageUrl: "https://images.unsplash.com/photo-1508062878650-88b52897f298?q=80&w=1227&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        imageUrl: "https://images.unsplash.com/photo-1508062878650-88b52897f298?q=20&w=1227&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         examples: [
             {
                 en: "A red car.",
@@ -76,7 +76,7 @@ export const GRAMMAR_DATA: GrammarTopic[] = [
         cnTitle: "现在进行时",
         description: "Actions happening right now or around now.",
         cnDescription: "表示正在发生或近期正在进行的动作。",
-        imageUrl: "https://plus.unsplash.com/premium_photo-1674605365723-15e6749630f4?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", // Running image or something active
+        imageUrl: "https://plus.unsplash.com/premium_photo-1674605365723-15e6749630f4?q=20&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", // Running image or something active
         examples: [
             {
                 en: "She is running.",
@@ -104,7 +104,7 @@ export const GRAMMAR_DATA: GrammarTopic[] = [
         cnTitle: "一般过去时",
         description: "Completed actions in the past with a clear time reference.",
         cnDescription: "描述过去已完成的动作，常带有时间点。",
-        imageUrl: "https://plus.unsplash.com/premium_photo-1682090420277-0d7ba9e03e23?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        imageUrl: "https://plus.unsplash.com/premium_photo-1682090420277-0d7ba9e03e23?q=20&w=1000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         examples: [
             {
                 en: "I walked home.",
@@ -132,7 +132,7 @@ export const GRAMMAR_DATA: GrammarTopic[] = [
         cnTitle: "一般将来时",
         description: "Actions that will happen in the future or predictions.",
         cnDescription: "表示将来要发生的动作或预测。",
-        imageUrl: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        imageUrl: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=20&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         examples: [
             {
                 en: "I will call you tonight.",
@@ -160,7 +160,7 @@ export const GRAMMAR_DATA: GrammarTopic[] = [
         cnTitle: "地点介词",
         description: "Show where something is with in/on/under/next to.",
         cnDescription: "表示位置关系，如 in/on/under/next to。",
-        imageUrl: "https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        imageUrl: "https://images.unsplash.com/photo-1519681393784-d120267933ba?q=20&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         examples: [
             {
                 en: "The book is on the table.",
@@ -188,7 +188,7 @@ export const GRAMMAR_DATA: GrammarTopic[] = [
         cnTitle: "冠词 (a/an/the)",
         description: "Use articles to show general or specific nouns.",
         cnDescription: "用冠词表示泛指或特指。",
-        imageUrl: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        imageUrl: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?q=20&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         examples: [
             {
                 en: "I saw a dog.",
@@ -210,7 +210,7 @@ export const GRAMMAR_DATA: GrammarTopic[] = [
         cnTitle: "比较级与最高级",
         description: "Compare two or more things using -er/-est or more/most.",
         cnDescription: "使用比较级/最高级比较事物。",
-        imageUrl: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        imageUrl: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=20&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         examples: [
             {
                 en: "This bag is smaller than that one.",
@@ -232,7 +232,7 @@ export const GRAMMAR_DATA: GrammarTopic[] = [
         cnTitle: "时间介词",
         description: "Use at/on/in to talk about time.",
         cnDescription: "使用 at/on/in 表示时间。",
-        imageUrl: "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        imageUrl: "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?q=20&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         examples: [
             {
                 en: "The class starts at 9.",

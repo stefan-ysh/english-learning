@@ -34,7 +34,7 @@ export const PHRASE_CATEGORIES: PhraseCategory[] = [
         cnTitle: "日常问候",
         description: "Common ways to say hello and goodbye.",
         cnDescription: "常用的打招呼和道别方式。",
-        image: "https://images.unsplash.com/photo-1516726817505-f5ed825624d8?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1516726817505-f5ed825624d8?w=800&q=20",
         color: "bg-orange-400",
         items: [
             {
@@ -119,7 +119,7 @@ export const PHRASE_CATEGORIES: PhraseCategory[] = [
         cnTitle: "旅行必备",
         description: "Useful phrases for traveling.",
         cnDescription: "旅行中常用的句子。",
-        image: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=800&q=20",
         color: "bg-blue-400",
         items: [
             {
@@ -209,7 +209,7 @@ export const PHRASE_CATEGORIES: PhraseCategory[] = [
         cnTitle: "外出就餐",
         description: "Ordering food and paying bills.",
         cnDescription: "点餐和结账。",
-        image: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&q=20",
         color: "bg-red-400",
         items: [
             {
@@ -298,7 +298,7 @@ export const PHRASE_CATEGORIES: PhraseCategory[] = [
         cnTitle: "购物",
         description: "Buying things and bargaining.",
         cnDescription: "买东西和讲价。",
-        image: "https://images.unsplash.com/photo-1483985988355-763728e1935b?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1483985988355-763728e1935b?w=800&q=20",
         color: "bg-pink-400",
         items: [
             {
@@ -391,7 +391,7 @@ export const PHRASE_CATEGORIES: PhraseCategory[] = [
         cnTitle: "紧急情况",
         description: "Crucial phrases for urgent help.",
         cnDescription: "寻求紧急帮助时用到的关键短语。",
-        image: "https://images.unsplash.com/photo-1588543385566-413e13a51a24?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        image: "https://images.unsplash.com/photo-1588543385566-413e13a51a24?q=20&w=1000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         color: "bg-red-600",
         items: [
             {
@@ -488,7 +488,7 @@ export const PHRASE_CATEGORIES: PhraseCategory[] = [
         cnTitle: "家庭日常",
         description: "Everyday phrases at home.",
         cnDescription: "家里日常会用到的表达。",
-        image: "https://images.unsplash.com/photo-1505691938895-1758d7feb511?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1505691938895-1758d7feb511?w=800&q=20",
         color: "bg-emerald-400",
         items: [
             {
@@ -577,7 +577,7 @@ export const PHRASE_CATEGORIES: PhraseCategory[] = [
         cnTitle: "学校课堂",
         description: "Useful phrases for class.",
         cnDescription: "课堂上常用的表达。",
-        image: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&q=20",
         color: "bg-sky-400",
         items: [
             {
@@ -667,7 +667,7 @@ export const PHRASE_CATEGORIES: PhraseCategory[] = [
         cnTitle: "职场商务",
         description: "Common phrases at work.",
         cnDescription: "职场沟通常用表达。",
-        image: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=800&q=20",
         color: "bg-slate-400",
         items: [
             {
@@ -758,7 +758,7 @@ export const PHRASE_CATEGORIES: PhraseCategory[] = [
         cnTitle: "医疗看病",
         description: "Phrases for clinics and hospitals.",
         cnDescription: "医院看病常用表达。",
-        image: "https://images.unsplash.com/photo-1505751172876-fa1923c5c528?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1505751172876-fa1923c5c528?w=800&q=20",
         color: "bg-red-400",
         items: [
             {
@@ -849,7 +849,7 @@ export const PHRASE_CATEGORIES: PhraseCategory[] = [
         cnTitle: "旅行进阶",
         description: "More advanced travel situations.",
         cnDescription: "更复杂的旅行场景表达。",
-        image: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=800&q=20",
         color: "bg-indigo-500",
         items: [
             {
@@ -939,7 +939,7 @@ export const PHRASE_CATEGORIES: PhraseCategory[] = [
         cnTitle: "科技数码",
         description: "Useful phrases about devices and apps.",
         cnDescription: "数码设备与应用相关表达。",
-        image: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&q=20",
         color: "bg-cyan-500",
         items: [
             {

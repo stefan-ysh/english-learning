@@ -14,7 +14,7 @@ interface QuizCardInputProps {
     onMistake?: (answer: string) => void;
 }
 
-export function QuizCardInput({ item, onAnswer }: QuizCardInputProps) {
+export function QuizCardInput({ item, onAnswer, onMistake }: QuizCardInputProps) {
     const { t } = useI18n();
     const buildShuffledLetters = (word: string) => {
         const letters = word.split('').map((char, index) => ({
