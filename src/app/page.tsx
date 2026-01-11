@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, Book, BookOpen, MessageCircle } from "lucide-react";
+import { ArrowRight, Book, BookOpen, MessageCircle, Type, AudioLines } from "lucide-react";
 import { BlurFade } from "@/components/ui/blur-fade";
 import { useI18n } from "@/lib/i18n-context";
 import { StudyCalendar } from "@/components/home/StudyCalendar";
@@ -25,8 +25,46 @@ export default function Home() {
       </div>
 
       <div className="grid w-full max-w-6xl gap-6 sm:gap-8 sm:grid-cols-2 lg:grid-cols-3">
-        {/* Vocabulary Module - Active */}
+        {/* Alphabet Module */}
         <BlurFade delay={0.1}>
+          <Link href="/vocab/alphabet" className="group relative block h-64 sm:h-80 lg:h-96 active:scale-[0.99] transition-transform">
+            <span className="absolute inset-0 border border-gray-200 dark:border-slate-700 sm:border-2 sm:border-dashed sm:border-black sm:dark:border-white rounded-3xl"></span>
+            <div className="relative flex h-full items-center justify-center border-2 border-black bg-white dark:bg-slate-900 dark:border-white rounded-3xl transition-transform md:group-hover:-translate-x-2 md:group-hover:-translate-y-2 md:group-hover:shadow-2xl">
+              <div className="text-center p-5 sm:p-8">
+                <div className="bg-emerald-100 dark:bg-emerald-900/30 p-3 sm:p-6 rounded-full inline-block mb-3 sm:mb-6">
+                  <Type className="w-9 h-9 sm:w-12 sm:h-12 text-emerald-600" />
+                </div>
+                <h2 className="text-xl sm:text-3xl font-bold mb-2">{t("module.alphabet")}</h2>
+                <p className="text-xs sm:text-base text-gray-500 dark:text-gray-400">{t("alphabet.desc")}</p>
+                <div className="mt-5 sm:mt-8 inline-flex items-center gap-2 px-4 py-2 sm:px-5 sm:py-2.5 bg-black text-white dark:bg-white dark:text-black rounded-full text-xs sm:text-sm font-bold">
+                  {t("btn.start")} <ArrowRight className="w-4 h-4" />
+                </div>
+              </div>
+            </div>
+          </Link>
+        </BlurFade>
+
+        {/* Phonetics Module */}
+        <BlurFade delay={0.2}>
+          <Link href="/vocab/phonetics" className="group relative block h-64 sm:h-80 lg:h-96 active:scale-[0.99] transition-transform">
+            <span className="absolute inset-0 border border-gray-200 dark:border-slate-700 sm:border-2 sm:border-dashed sm:border-black sm:dark:border-white rounded-3xl"></span>
+            <div className="relative flex h-full items-center justify-center border-2 border-black bg-white dark:bg-slate-900 dark:border-white rounded-3xl transition-transform md:group-hover:-translate-x-2 md:group-hover:-translate-y-2 md:group-hover:shadow-2xl">
+              <div className="text-center p-5 sm:p-8">
+                <div className="bg-cyan-100 dark:bg-cyan-900/30 p-3 sm:p-6 rounded-full inline-block mb-3 sm:mb-6">
+                  <AudioLines className="w-9 h-9 sm:w-12 sm:h-12 text-cyan-600" />
+                </div>
+                <h2 className="text-xl sm:text-3xl font-bold mb-2">{t("module.phonetics")}</h2>
+                <p className="text-xs sm:text-base text-gray-500 dark:text-gray-400">{t("phonetics.desc")}</p>
+                <div className="mt-5 sm:mt-8 inline-flex items-center gap-2 px-4 py-2 sm:px-5 sm:py-2.5 bg-black text-white dark:bg-white dark:text-black rounded-full text-xs sm:text-sm font-bold">
+                  {t("btn.start")} <ArrowRight className="w-4 h-4" />
+                </div>
+              </div>
+            </div>
+          </Link>
+        </BlurFade>
+
+        {/* Vocabulary Module - Active */}
+        <BlurFade delay={0.3}>
           <Link href="/vocab" className="group relative block h-64 sm:h-80 lg:h-96 active:scale-[0.99] transition-transform">
             <span className="absolute inset-0 border border-gray-200 dark:border-slate-700 sm:border-2 sm:border-dashed sm:border-black sm:dark:border-white rounded-3xl"></span>
             <div className="relative flex h-full items-center justify-center border-2 border-black bg-white dark:bg-slate-900 dark:border-white rounded-3xl transition-transform md:group-hover:-translate-x-2 md:group-hover:-translate-y-2 md:group-hover:shadow-2xl">
@@ -45,7 +83,7 @@ export default function Home() {
         </BlurFade>
 
         {/* Phrases Module - Active */}
-        <BlurFade delay={0.2}>
+        <BlurFade delay={0.4}>
           <Link href="/phrases" className="group relative block h-64 sm:h-80 lg:h-96 active:scale-[0.99] transition-transform">
             <span className="absolute inset-0 border border-gray-200 dark:border-slate-700 sm:border-2 sm:border-dashed sm:border-black sm:dark:border-white rounded-3xl"></span>
             <div className="relative flex h-full items-center justify-center border-2 border-black bg-white dark:bg-slate-900 dark:border-white rounded-3xl transition-transform md:group-hover:-translate-x-2 md:group-hover:-translate-y-2 md:group-hover:shadow-2xl">
@@ -64,7 +102,7 @@ export default function Home() {
         </BlurFade>
 
         {/* Grammar Module - Active */}
-        <BlurFade delay={0.3}>
+        <BlurFade delay={0.5}>
           <Link href="/grammar" className="group relative block h-64 sm:h-80 lg:h-96 active:scale-[0.99] transition-transform">
             <span className="absolute inset-0 border border-gray-200 dark:border-slate-700 sm:border-2 sm:border-dashed sm:border-black sm:dark:border-white rounded-3xl"></span>
             <div className="relative flex h-full items-center justify-center border-2 border-black bg-white dark:bg-slate-900 dark:border-white rounded-3xl transition-transform md:group-hover:-translate-x-2 md:group-hover:-translate-y-2 md:group-hover:shadow-2xl">
@@ -83,7 +121,7 @@ export default function Home() {
         </BlurFade>
 
         {/* Reading Module */}
-        <BlurFade delay={0.4}>
+        <BlurFade delay={0.6}>
           <Link href="/reading" className="group relative block h-64 sm:h-80 lg:h-96 active:scale-[0.99] transition-transform">
             <span className="absolute inset-0 border border-gray-200 dark:border-slate-700 sm:border-2 sm:border-dashed sm:border-black sm:dark:border-white rounded-3xl"></span>
             <div className="relative flex h-full items-center justify-center border-2 border-black bg-white dark:bg-slate-900 dark:border-white rounded-3xl transition-transform md:group-hover:-translate-x-2 md:group-hover:-translate-y-2 md:group-hover:shadow-2xl">

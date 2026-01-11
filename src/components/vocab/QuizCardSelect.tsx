@@ -35,7 +35,14 @@ export function QuizCardSelect({ item, options, onAnswer, onMistake }: QuizCardS
     }, [item.id]);
 
     const playAudio = () => {
-        speak(item.word, {
+        if (item.audio && (item.audio.startsWith("http") || item.audio.startsWith("/"))) {
+            const audio = new Audio(item.audio);
+            setIsSpeaking(true);
+            audio.addEventListener("ended", () => setIsSpeaking(false), { once: true });
+            audio.play();
+            return;
+        }
+        speak(item.audio || item.word, {
             onStart: () => setIsSpeaking(true),
             onEnd: () => setIsSpeaking(false),
         });

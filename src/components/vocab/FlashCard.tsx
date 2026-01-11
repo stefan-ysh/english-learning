@@ -28,7 +28,14 @@ export function FlashCard({ item, autoPlay = false }: FlashCardProps) {
     }, [item]);
 
     const playAudio = () => {
-        speak(item.word, {
+        if (item.audio && (item.audio.startsWith("http") || item.audio.startsWith("/"))) {
+            const audio = new Audio(item.audio);
+            setIsSpeaking(true);
+            audio.addEventListener("ended", () => setIsSpeaking(false), { once: true });
+            audio.play();
+            return;
+        }
+        speak(item.audio || item.word, {
             onStart: () => setIsSpeaking(true),
             onEnd: () => setIsSpeaking(false),
         });

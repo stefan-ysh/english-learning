@@ -1,3 +1,4 @@
+import { OXFORD_5000 } from "./oxford-5000";
 
 export type VocabItem = {
   id: string;
@@ -5,7 +6,7 @@ export type VocabItem = {
   phonetic: string;   // /'æpl/
   cn: string;         // 苹果
   image: string;      // /images/apple.png
-  audio?: string;     // Optional, default using Web Speech API
+  audio?: string;     // Optional: URL or text for speech
   exampleEn?: string; // I eat an apple.
   exampleCn?: string; // 我吃一个苹果。
   distractors?: string[];
@@ -20,7 +21,7 @@ export type Category = {
   items: VocabItem[];
 };
 
-export const VOCAB_DATA: Category[] = [
+const BASE_VOCAB_DATA: Category[] = [
   {
     id: "housekeeping",
     title: "Housekeeping",
@@ -825,7 +826,7 @@ export const VOCAB_DATA: Category[] = [
         word: "Teacher",
         phonetic: "/ˈtiːtʃə/",
         cn: "老师",
-        image: "https://images.unsplash.com/photo-1664382953518-4a664ab8a8c9?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        image: "https://images.unsplash.com/photo-1664382953518-4a664ab8a8c9?q=10&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         exampleEn: "The teacher is kind.",
         exampleCn: "老师很友善。",
         distractors: ["Student", "Parent", "Coach"]
@@ -1307,5 +1308,1524 @@ export const VOCAB_DATA: Category[] = [
         distractors: ["Delay", "Transit", "Arrival"]
       }
     ]
+  },
+  {
+    id: "numbers",
+    title: "Numbers & Ordinals",
+    icon: "default",
+    color: "bg-indigo-500",
+    cover: "https://images.unsplash.com/photo-1509228627159-6452c53e7b8f?q=20&w=1200&auto=format&fit=crop",
+    items: [
+      {
+        id: "num-1",
+        word: "One",
+        phonetic: "/wʌn/",
+        cn: "一",
+        image: "https://images.unsplash.com/photo-1509228627159-6452c53e7b8f?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "I have one apple.",
+        exampleCn: "我有一个苹果。",
+        distractors: ["Two", "Three", "Five"]
+      },
+      {
+        id: "num-2",
+        word: "Two",
+        phonetic: "/tuː/",
+        cn: "二",
+        image: "https://images.unsplash.com/photo-1509228627159-6452c53e7b8f?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "Two birds are flying.",
+        exampleCn: "两只鸟在飞。",
+        distractors: ["One", "Four", "Six"]
+      },
+      {
+        id: "num-3",
+        word: "Three",
+        phonetic: "/θriː/",
+        cn: "三",
+        image: "https://images.unsplash.com/photo-1509228627159-6452c53e7b8f?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "She has three books.",
+        exampleCn: "她有三本书。",
+        distractors: ["Two", "Four", "Five"]
+      },
+      {
+        id: "num-4",
+        word: "Ten",
+        phonetic: "/ten/",
+        cn: "十",
+        image: "https://images.unsplash.com/photo-1509228627159-6452c53e7b8f?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "There are ten students.",
+        exampleCn: "有十个学生。",
+        distractors: ["Nine", "Twelve", "Twenty"]
+      },
+      {
+        id: "num-5",
+        word: "Twenty",
+        phonetic: "/ˈtwenti/",
+        cn: "二十",
+        image: "https://images.unsplash.com/photo-1509228627159-6452c53e7b8f?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "I can count to twenty.",
+        exampleCn: "我会数到二十。",
+        distractors: ["Thirty", "Twelve", "Forty"]
+      },
+      {
+        id: "num-6",
+        word: "Hundred",
+        phonetic: "/ˈhʌndrəd/",
+        cn: "百",
+        image: "https://images.unsplash.com/photo-1509228627159-6452c53e7b8f?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "A hundred people came.",
+        exampleCn: "一百人来了。",
+        distractors: ["Thousand", "Ten", "Million"]
+      },
+      {
+        id: "num-7",
+        word: "Thousand",
+        phonetic: "/ˈθaʊzənd/",
+        cn: "千",
+        image: "https://images.unsplash.com/photo-1509228627159-6452c53e7b8f?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "There are a thousand seats.",
+        exampleCn: "有一千个座位。",
+        distractors: ["Hundred", "Million", "Billion"]
+      },
+      {
+        id: "num-8",
+        word: "First",
+        phonetic: "/fɜːst/",
+        cn: "第一",
+        image: "https://images.unsplash.com/photo-1509228627159-6452c53e7b8f?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "She finished first.",
+        exampleCn: "她获得第一名。",
+        distractors: ["Second", "Third", "Last"]
+      },
+      {
+        id: "num-9",
+        word: "Second",
+        phonetic: "/ˈsekənd/",
+        cn: "第二",
+        image: "https://images.unsplash.com/photo-1509228627159-6452c53e7b8f?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "This is the second floor.",
+        exampleCn: "这是二楼。",
+        distractors: ["First", "Third", "Fifth"]
+      },
+      {
+        id: "num-10",
+        word: "Third",
+        phonetic: "/θɜːd/",
+        cn: "第三",
+        image: "https://images.unsplash.com/photo-1509228627159-6452c53e7b8f?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "He is in the third row.",
+        exampleCn: "他在第三排。",
+        distractors: ["First", "Second", "Fourth"]
+      }
+    ]
+  },
+  {
+    id: "prepositions",
+    title: "Prepositions",
+    icon: "default",
+    color: "bg-slate-600",
+    cover: "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?q=20&w=1200&auto=format&fit=crop",
+    items: [
+      {
+        id: "prep-1",
+        word: "In",
+        phonetic: "/ɪn/",
+        cn: "在……里",
+        image: "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "The key is in the bag.",
+        exampleCn: "钥匙在包里。",
+        distractors: ["On", "Under", "Behind"]
+      },
+      {
+        id: "prep-2",
+        word: "On",
+        phonetic: "/ɒn/",
+        cn: "在……上",
+        image: "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "The book is on the table.",
+        exampleCn: "书在桌子上。",
+        distractors: ["In", "Under", "Behind"]
+      },
+      {
+        id: "prep-3",
+        word: "Under",
+        phonetic: "/ˈʌndə/",
+        cn: "在……下面",
+        image: "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "The cat is under the chair.",
+        exampleCn: "猫在椅子下面。",
+        distractors: ["On", "Near", "Behind"]
+      },
+      {
+        id: "prep-4",
+        word: "Near",
+        phonetic: "/nɪə/",
+        cn: "在……附近",
+        image: "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "The park is near my home.",
+        exampleCn: "公园在我家附近。",
+        distractors: ["Under", "Over", "Behind"]
+      },
+      {
+        id: "prep-5",
+        word: "Behind",
+        phonetic: "/bɪˈhaɪnd/",
+        cn: "在……后面",
+        image: "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "The bike is behind the door.",
+        exampleCn: "自行车在门后面。",
+        distractors: ["In front of", "Near", "Over"]
+      },
+      {
+        id: "prep-6",
+        word: "Next to",
+        phonetic: "/nekst tuː/",
+        cn: "在……旁边",
+        image: "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "She sits next to me.",
+        exampleCn: "她坐在我旁边。",
+        distractors: ["Behind", "Under", "Over"]
+      },
+      {
+        id: "prep-7",
+        word: "Over",
+        phonetic: "/ˈəʊvə/",
+        cn: "在……上方",
+        image: "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "The lamp hangs over the table.",
+        exampleCn: "灯挂在桌子上方。",
+        distractors: ["Under", "In", "Behind"]
+      },
+      {
+        id: "prep-8",
+        word: "In front of",
+        phonetic: "/ɪn frʌnt əv/",
+        cn: "在……前面",
+        image: "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "The bus stops in front of the school.",
+        exampleCn: "公交车停在学校前面。",
+        distractors: ["Behind", "Next to", "Over"]
+      }
+    ]
+  },
+  {
+    id: "body_parts",
+    title: "Body Parts",
+    icon: "default",
+    color: "bg-rose-500",
+    cover: "https://images.unsplash.com/photo-1519996529931-28324d5a630e?q=20&w=1200&auto=format&fit=crop",
+    items: [
+      {
+        id: "body-1",
+        word: "Neck",
+        phonetic: "/nek/",
+        cn: "脖子",
+        image: "https://images.unsplash.com/photo-1519996529931-28324d5a630e?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "He hurt his neck.",
+        exampleCn: "他伤到了脖子。",
+        distractors: ["Shoulder", "Chest", "Back"]
+      },
+      {
+        id: "body-2",
+        word: "Shoulder",
+        phonetic: "/ˈʃəʊldə/",
+        cn: "肩膀",
+        image: "https://images.unsplash.com/photo-1519996529931-28324d5a630e?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "My shoulder is sore.",
+        exampleCn: "我的肩膀酸痛。",
+        distractors: ["Elbow", "Knee", "Wrist"]
+      },
+      {
+        id: "body-3",
+        word: "Elbow",
+        phonetic: "/ˈelbəʊ/",
+        cn: "肘",
+        image: "https://images.unsplash.com/photo-1519996529931-28324d5a630e?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "She bumped her elbow.",
+        exampleCn: "她撞到了胳膊肘。",
+        distractors: ["Wrist", "Ankle", "Knee"]
+      },
+      {
+        id: "body-4",
+        word: "Wrist",
+        phonetic: "/rɪst/",
+        cn: "手腕",
+        image: "https://images.unsplash.com/photo-1519996529931-28324d5a630e?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "He wears a watch on his wrist.",
+        exampleCn: "他手腕上戴着手表。",
+        distractors: ["Neck", "Ankle", "Thumb"]
+      },
+      {
+        id: "body-5",
+        word: "Knee",
+        phonetic: "/niː/",
+        cn: "膝盖",
+        image: "https://images.unsplash.com/photo-1519996529931-28324d5a630e?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "My knee hurts after running.",
+        exampleCn: "跑步后我的膝盖疼。",
+        distractors: ["Elbow", "Wrist", "Heel"]
+      },
+      {
+        id: "body-6",
+        word: "Ankle",
+        phonetic: "/ˈæŋkəl/",
+        cn: "脚踝",
+        image: "https://images.unsplash.com/photo-1519996529931-28324d5a630e?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "She twisted her ankle.",
+        exampleCn: "她扭伤了脚踝。",
+        distractors: ["Knee", "Toe", "Wrist"]
+      },
+      {
+        id: "body-7",
+        word: "Eye",
+        phonetic: "/aɪ/",
+        cn: "眼睛",
+        image: "https://images.unsplash.com/photo-1519996529931-28324d5a630e?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "Her eyes are bright.",
+        exampleCn: "她的眼睛很明亮。",
+        distractors: ["Ear", "Nose", "Mouth"]
+      },
+      {
+        id: "body-8",
+        word: "Ear",
+        phonetic: "/ɪə/",
+        cn: "耳朵",
+        image: "https://images.unsplash.com/photo-1519996529931-28324d5a630e?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "I whisper in his ear.",
+        exampleCn: "我在他耳边低语。",
+        distractors: ["Eye", "Nose", "Chin"]
+      },
+      {
+        id: "body-9",
+        word: "Mouth",
+        phonetic: "/maʊθ/",
+        cn: "嘴巴",
+        image: "https://images.unsplash.com/photo-1519996529931-28324d5a630e?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "Open your mouth.",
+        exampleCn: "张开嘴。",
+        distractors: ["Ear", "Eye", "Cheek"]
+      },
+      {
+        id: "body-10",
+        word: "Heart",
+        phonetic: "/hɑːt/",
+        cn: "心脏",
+        image: "https://images.unsplash.com/photo-1519996529931-28324d5a630e?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "The heart is an organ.",
+        exampleCn: "心脏是一个器官。",
+        distractors: ["Liver", "Brain", "Lung"]
+      },
+      {
+        id: "body-11",
+        word: "Lung",
+        phonetic: "/lʌŋ/",
+        cn: "肺",
+        image: "https://images.unsplash.com/photo-1519996529931-28324d5a630e?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "We breathe with our lungs.",
+        exampleCn: "我们用肺呼吸。",
+        distractors: ["Heart", "Kidney", "Stomach"]
+      },
+      {
+        id: "body-12",
+        word: "Brain",
+        phonetic: "/breɪn/",
+        cn: "大脑",
+        image: "https://images.unsplash.com/photo-1519996529931-28324d5a630e?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "The brain controls the body.",
+        exampleCn: "大脑控制身体。",
+        distractors: ["Skeleton", "Liver", "Kidney"]
+      }
+    ]
+  },
+  {
+    id: "school_supplies",
+    title: "School Supplies",
+    icon: "school",
+    color: "bg-emerald-500",
+    cover: "https://images.unsplash.com/photo-1456735190827-d1262f71b8a3?q=20&w=1200&auto=format&fit=crop",
+    items: [
+      {
+        id: "sup-1",
+        word: "Pen",
+        phonetic: "/pen/",
+        cn: "钢笔",
+        image: "https://images.unsplash.com/photo-1456735190827-d1262f71b8a3?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "I write with a pen.",
+        exampleCn: "我用钢笔写字。",
+        distractors: ["Pencil", "Ruler", "Eraser"]
+      },
+      {
+        id: "sup-2",
+        word: "Pencil",
+        phonetic: "/ˈpensəl/",
+        cn: "铅笔",
+        image: "https://images.unsplash.com/photo-1456735190827-d1262f71b8a3?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "Sharpen your pencil.",
+        exampleCn: "削一削你的铅笔。",
+        distractors: ["Pen", "Crayon", "Marker"]
+      },
+      {
+        id: "sup-3",
+        word: "Ruler",
+        phonetic: "/ˈruːlə/",
+        cn: "尺子",
+        image: "https://images.unsplash.com/photo-1456735190827-d1262f71b8a3?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "Use a ruler to draw a line.",
+        exampleCn: "用尺子画直线。",
+        distractors: ["Notebook", "Bag", "Eraser"]
+      },
+      {
+        id: "sup-4",
+        word: "Eraser",
+        phonetic: "/ɪˈreɪzə/",
+        cn: "橡皮",
+        image: "https://images.unsplash.com/photo-1456735190827-d1262f71b8a3?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "I need an eraser.",
+        exampleCn: "我需要一块橡皮。",
+        distractors: ["Pencil", "Ruler", "Sharpener"]
+      },
+      {
+        id: "sup-5",
+        word: "Sharpener",
+        phonetic: "/ˈʃɑːpənə/",
+        cn: "卷笔刀",
+        image: "https://images.unsplash.com/photo-1456735190827-d1262f71b8a3?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "The sharpener is on the desk.",
+        exampleCn: "卷笔刀在桌上。",
+        distractors: ["Notebook", "Pencil case", "Bag"]
+      },
+      {
+        id: "sup-6",
+        word: "Pencil Case",
+        phonetic: "/ˈpensəl keɪs/",
+        cn: "铅笔盒",
+        image: "https://images.unsplash.com/photo-1456735190827-d1262f71b8a3?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "My pencil case is blue.",
+        exampleCn: "我的铅笔盒是蓝色的。",
+        distractors: ["Schoolbag", "Notebook", "Dictionary"]
+      },
+      {
+        id: "sup-7",
+        word: "Notebook",
+        phonetic: "/ˈnəʊtbʊk/",
+        cn: "笔记本",
+        image: "https://images.unsplash.com/photo-1456735190827-d1262f71b8a3?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "Write it in your notebook.",
+        exampleCn: "把它写在笔记本里。",
+        distractors: ["Dictionary", "Book", "Bag"]
+      },
+      {
+        id: "sup-8",
+        word: "Schoolbag",
+        phonetic: "/ˈskuːlbæɡ/",
+        cn: "书包",
+        image: "https://images.unsplash.com/photo-1456735190827-d1262f71b8a3?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "My schoolbag is heavy.",
+        exampleCn: "我的书包很重。",
+        distractors: ["Pencil case", "Notebook", "Ruler"]
+      },
+      {
+        id: "sup-9",
+        word: "Dictionary",
+        phonetic: "/ˈdɪkʃənəri/",
+        cn: "词典",
+        image: "https://images.unsplash.com/photo-1456735190827-d1262f71b8a3?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "Look it up in the dictionary.",
+        exampleCn: "在词典里查一下。",
+        distractors: ["Notebook", "Magazine", "Ruler"]
+      },
+      {
+        id: "sup-10",
+        word: "Crayon",
+        phonetic: "/ˈkreɪən/",
+        cn: "蜡笔",
+        image: "https://images.unsplash.com/photo-1456735190827-d1262f71b8a3?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "The kids draw with crayons.",
+        exampleCn: "孩子们用蜡笔画画。",
+        distractors: ["Pen", "Pencil", "Marker"]
+      }
+    ]
+  },
+  {
+    id: "people",
+    title: "People",
+    icon: "default",
+    color: "bg-pink-500",
+    cover: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=20&w=1200&auto=format&fit=crop",
+    items: [
+      {
+        id: "peo-1",
+        word: "Boy",
+        phonetic: "/bɔɪ/",
+        cn: "男孩",
+        image: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "The boy is running.",
+        exampleCn: "男孩在跑。",
+        distractors: ["Girl", "Man", "Baby"]
+      },
+      {
+        id: "peo-2",
+        word: "Girl",
+        phonetic: "/ɡɜːl/",
+        cn: "女孩",
+        image: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "The girl is smiling.",
+        exampleCn: "女孩在微笑。",
+        distractors: ["Boy", "Woman", "Baby"]
+      },
+      {
+        id: "peo-3",
+        word: "Mother",
+        phonetic: "/ˈmʌðə/",
+        cn: "母亲",
+        image: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "My mother is kind.",
+        exampleCn: "我的妈妈很亲切。",
+        distractors: ["Father", "Sister", "Aunt"]
+      },
+      {
+        id: "peo-4",
+        word: "Father",
+        phonetic: "/ˈfɑːðə/",
+        cn: "父亲",
+        image: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "My father cooks dinner.",
+        exampleCn: "我爸爸做晚饭。",
+        distractors: ["Brother", "Uncle", "Mother"]
+      },
+      {
+        id: "peo-5",
+        word: "Sister",
+        phonetic: "/ˈsɪstə/",
+        cn: "姐姐/妹妹",
+        image: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "My sister is reading.",
+        exampleCn: "我姐姐在看书。",
+        distractors: ["Brother", "Cousin", "Friend"]
+      },
+      {
+        id: "peo-6",
+        word: "Brother",
+        phonetic: "/ˈbrʌðə/",
+        cn: "哥哥/弟弟",
+        image: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "My brother plays football.",
+        exampleCn: "我哥哥踢足球。",
+        distractors: ["Sister", "Father", "Friend"]
+      },
+      {
+        id: "peo-7",
+        word: "Friend",
+        phonetic: "/frend/",
+        cn: "朋友",
+        image: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "She is my best friend.",
+        exampleCn: "她是我最好的朋友。",
+        distractors: ["Teacher", "Neighbor", "Doctor"]
+      },
+      {
+        id: "peo-8",
+        word: "Parents",
+        phonetic: "/ˈpeərənts/",
+        cn: "父母",
+        image: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "My parents are at home.",
+        exampleCn: "我父母在家。",
+        distractors: ["Children", "Friends", "Teachers"]
+      },
+      {
+        id: "peo-9",
+        word: "Grandparents",
+        phonetic: "/ˈɡrændˌpeərənts/",
+        cn: "祖父母",
+        image: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "I visit my grandparents.",
+        exampleCn: "我去看望祖父母。",
+        distractors: ["Parents", "Cousins", "Neighbors"]
+      },
+      {
+        id: "peo-10",
+        word: "Baby",
+        phonetic: "/ˈbeɪbi/",
+        cn: "婴儿",
+        image: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "The baby is sleeping.",
+        exampleCn: "婴儿在睡觉。",
+        distractors: ["Boy", "Girl", "Man"]
+      }
+    ]
+  },
+  {
+    id: "jobs",
+    title: "Jobs",
+    icon: "briefcase",
+    color: "bg-amber-500",
+    cover: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=20&w=1200&auto=format&fit=crop",
+    items: [
+      {
+        id: "job-1",
+        word: "Teacher",
+        phonetic: "/ˈtiːtʃə/",
+        cn: "教师",
+        image: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "The teacher is helpful.",
+        exampleCn: "老师很乐于助人。",
+        distractors: ["Student", "Doctor", "Nurse"]
+      },
+      {
+        id: "job-2",
+        word: "Doctor",
+        phonetic: "/ˈdɒktə/",
+        cn: "医生",
+        image: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "The doctor examines patients.",
+        exampleCn: "医生检查病人。",
+        distractors: ["Nurse", "Teacher", "Driver"]
+      },
+      {
+        id: "job-3",
+        word: "Nurse",
+        phonetic: "/nɜːs/",
+        cn: "护士",
+        image: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "The nurse is kind.",
+        exampleCn: "护士很亲切。",
+        distractors: ["Doctor", "Teacher", "Chef"]
+      },
+      {
+        id: "job-4",
+        word: "Driver",
+        phonetic: "/ˈdraɪvə/",
+        cn: "司机",
+        image: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "The driver starts the bus.",
+        exampleCn: "司机启动公交车。",
+        distractors: ["Pilot", "Teacher", "Waiter"]
+      },
+      {
+        id: "job-5",
+        word: "Farmer",
+        phonetic: "/ˈfɑːmə/",
+        cn: "农民",
+        image: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "The farmer grows crops.",
+        exampleCn: "农民种庄稼。",
+        distractors: ["Doctor", "Engineer", "Singer"]
+      },
+      {
+        id: "job-6",
+        word: "Engineer",
+        phonetic: "/ˌendʒɪˈnɪə/",
+        cn: "工程师",
+        image: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "An engineer builds bridges.",
+        exampleCn: "工程师建造桥梁。",
+        distractors: ["Teacher", "Writer", "Nurse"]
+      },
+      {
+        id: "job-7",
+        word: "Writer",
+        phonetic: "/ˈraɪtə/",
+        cn: "作家",
+        image: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "The writer publishes a book.",
+        exampleCn: "作家出版书。",
+        distractors: ["Singer", "Driver", "Chef"]
+      },
+      {
+        id: "job-8",
+        word: "Singer",
+        phonetic: "/ˈsɪŋə/",
+        cn: "歌手",
+        image: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "The singer is on stage.",
+        exampleCn: "歌手在舞台上。",
+        distractors: ["Actor", "Doctor", "Teacher"]
+      },
+      {
+        id: "job-9",
+        word: "Accountant",
+        phonetic: "/əˈkaʊntənt/",
+        cn: "会计",
+        image: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "The accountant checks the books.",
+        exampleCn: "会计核对账本。",
+        distractors: ["Engineer", "Artist", "Nurse"]
+      },
+      {
+        id: "job-10",
+        word: "Police Officer",
+        phonetic: "/pəˈliːs ˈɒfɪsə/",
+        cn: "警察",
+        image: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "The police officer helps people.",
+        exampleCn: "警察帮助人们。",
+        distractors: ["Driver", "Doctor", "Teacher"]
+      }
+    ]
+  },
+  {
+    id: "vehicles",
+    title: "Vehicles",
+    icon: "plane",
+    color: "bg-blue-500",
+    cover: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=20&w=1200&auto=format&fit=crop",
+    items: [
+      {
+        id: "veh-1",
+        word: "Bike",
+        phonetic: "/baɪk/",
+        cn: "自行车",
+        image: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "I ride a bike to school.",
+        exampleCn: "我骑自行车上学。",
+        distractors: ["Bus", "Car", "Train"]
+      },
+      {
+        id: "veh-2",
+        word: "Bus",
+        phonetic: "/bʌs/",
+        cn: "公交车",
+        image: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "The bus arrives at nine.",
+        exampleCn: "公交车九点到。",
+        distractors: ["Taxi", "Train", "Boat"]
+      },
+      {
+        id: "veh-3",
+        word: "Train",
+        phonetic: "/treɪn/",
+        cn: "火车",
+        image: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "The train is fast.",
+        exampleCn: "火车很快。",
+        distractors: ["Bus", "Plane", "Ship"]
+      },
+      {
+        id: "veh-4",
+        word: "Boat",
+        phonetic: "/bəʊt/",
+        cn: "小船",
+        image: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "We take a boat across the river.",
+        exampleCn: "我们坐小船过河。",
+        distractors: ["Ship", "Car", "Bus"]
+      },
+      {
+        id: "veh-5",
+        word: "Ship",
+        phonetic: "/ʃɪp/",
+        cn: "轮船",
+        image: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "The ship sails at night.",
+        exampleCn: "轮船在夜里航行。",
+        distractors: ["Boat", "Train", "Plane"]
+      },
+      {
+        id: "veh-6",
+        word: "Car",
+        phonetic: "/kɑː/",
+        cn: "汽车",
+        image: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "My father drives a car.",
+        exampleCn: "我爸爸开车。",
+        distractors: ["Bus", "Taxi", "Bike"]
+      },
+      {
+        id: "veh-7",
+        word: "Taxi",
+        phonetic: "/ˈtæksi/",
+        cn: "出租车",
+        image: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "We take a taxi to the hotel.",
+        exampleCn: "我们坐出租车去酒店。",
+        distractors: ["Bus", "Car", "Train"]
+      },
+      {
+        id: "veh-8",
+        word: "Subway",
+        phonetic: "/ˈsʌbweɪ/",
+        cn: "地铁",
+        image: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "The subway is crowded.",
+        exampleCn: "地铁很拥挤。",
+        distractors: ["Bus", "Train", "Taxi"]
+      },
+      {
+        id: "veh-9",
+        word: "Airplane",
+        phonetic: "/ˈeəpleɪn/",
+        cn: "飞机",
+        image: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "The airplane takes off.",
+        exampleCn: "飞机起飞。",
+        distractors: ["Train", "Ship", "Bus"]
+      },
+      {
+        id: "veh-10",
+        word: "Motorcycle",
+        phonetic: "/ˈməʊtəsaɪkəl/",
+        cn: "摩托车",
+        image: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "He rides a motorcycle.",
+        exampleCn: "他骑摩托车。",
+        distractors: ["Bike", "Car", "Bus"]
+      }
+    ]
+  },
+  {
+    id: "directions",
+    title: "Directions",
+    icon: "default",
+    color: "bg-cyan-500",
+    cover: "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?q=20&w=1200&auto=format&fit=crop",
+    items: [
+      {
+        id: "dir-1",
+        word: "North",
+        phonetic: "/nɔːθ/",
+        cn: "北",
+        image: "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "The wind comes from the north.",
+        exampleCn: "风从北方来。",
+        distractors: ["South", "East", "West"]
+      },
+      {
+        id: "dir-2",
+        word: "South",
+        phonetic: "/saʊθ/",
+        cn: "南",
+        image: "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "We travel south.",
+        exampleCn: "我们向南旅行。",
+        distractors: ["North", "East", "West"]
+      },
+      {
+        id: "dir-3",
+        word: "East",
+        phonetic: "/iːst/",
+        cn: "东",
+        image: "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "The sun rises in the east.",
+        exampleCn: "太阳从东方升起。",
+        distractors: ["West", "South", "North"]
+      },
+      {
+        id: "dir-4",
+        word: "West",
+        phonetic: "/west/",
+        cn: "西",
+        image: "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "We live in the west.",
+        exampleCn: "我们住在西边。",
+        distractors: ["East", "North", "South"]
+      },
+      {
+        id: "dir-5",
+        word: "Left",
+        phonetic: "/left/",
+        cn: "左边",
+        image: "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "Turn left at the corner.",
+        exampleCn: "在拐角处左转。",
+        distractors: ["Right", "North", "South"]
+      },
+      {
+        id: "dir-6",
+        word: "Right",
+        phonetic: "/raɪt/",
+        cn: "右边",
+        image: "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "The bank is on the right.",
+        exampleCn: "银行在右边。",
+        distractors: ["Left", "East", "West"]
+      }
+    ]
+  },
+  {
+    id: "seasons",
+    title: "Seasons",
+    icon: "default",
+    color: "bg-lime-500",
+    cover: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=20&w=1200&auto=format&fit=crop",
+    items: [
+      {
+        id: "sea-1",
+        word: "Spring",
+        phonetic: "/sprɪŋ/",
+        cn: "春",
+        image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "Spring is warm and green.",
+        exampleCn: "春天温暖又绿色。",
+        distractors: ["Summer", "Autumn", "Winter"]
+      },
+      {
+        id: "sea-2",
+        word: "Summer",
+        phonetic: "/ˈsʌmə/",
+        cn: "夏",
+        image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "Summer is hot.",
+        exampleCn: "夏天很热。",
+        distractors: ["Spring", "Autumn", "Winter"]
+      },
+      {
+        id: "sea-3",
+        word: "Autumn",
+        phonetic: "/ˈɔːtəm/",
+        cn: "秋",
+        image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "Autumn leaves fall.",
+        exampleCn: "秋天树叶落下。",
+        distractors: ["Spring", "Summer", "Winter"]
+      },
+      {
+        id: "sea-4",
+        word: "Winter",
+        phonetic: "/ˈwɪntə/",
+        cn: "冬",
+        image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "Winter is cold.",
+        exampleCn: "冬天很冷。",
+        distractors: ["Spring", "Summer", "Autumn"]
+      }
+    ]
+  },
+  {
+    id: "weather",
+    title: "Weather",
+    icon: "default",
+    color: "bg-sky-500",
+    cover: "https://images.unsplash.com/photo-1501594907352-04cda38ebc29?q=20&w=1200&auto=format&fit=crop",
+    items: [
+      {
+        id: "wea-1",
+        word: "Cold",
+        phonetic: "/kəʊld/",
+        cn: "寒冷的",
+        image: "https://images.unsplash.com/photo-1501594907352-04cda38ebc29?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "It is cold today.",
+        exampleCn: "今天很冷。",
+        distractors: ["Hot", "Warm", "Sunny"]
+      },
+      {
+        id: "wea-2",
+        word: "Warm",
+        phonetic: "/wɔːm/",
+        cn: "温暖的",
+        image: "https://images.unsplash.com/photo-1501594907352-04cda38ebc29?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "The weather is warm.",
+        exampleCn: "天气很温暖。",
+        distractors: ["Cold", "Cool", "Windy"]
+      },
+      {
+        id: "wea-3",
+        word: "Cool",
+        phonetic: "/kuːl/",
+        cn: "凉爽的",
+        image: "https://images.unsplash.com/photo-1501594907352-04cda38ebc29?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "It is cool in the evening.",
+        exampleCn: "傍晚很凉爽。",
+        distractors: ["Hot", "Cold", "Sunny"]
+      },
+      {
+        id: "wea-4",
+        word: "Sunny",
+        phonetic: "/ˈsʌni/",
+        cn: "晴朗的",
+        image: "https://images.unsplash.com/photo-1501594907352-04cda38ebc29?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "It is sunny today.",
+        exampleCn: "今天阳光明媚。",
+        distractors: ["Cloudy", "Rainy", "Snowy"]
+      },
+      {
+        id: "wea-5",
+        word: "Rainy",
+        phonetic: "/ˈreɪni/",
+        cn: "下雨的",
+        image: "https://images.unsplash.com/photo-1501594907352-04cda38ebc29?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "It is rainy outside.",
+        exampleCn: "外面在下雨。",
+        distractors: ["Sunny", "Cloudy", "Windy"]
+      },
+      {
+        id: "wea-6",
+        word: "Windy",
+        phonetic: "/ˈwɪndi/",
+        cn: "有风的",
+        image: "https://images.unsplash.com/photo-1501594907352-04cda38ebc29?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "It is windy near the sea.",
+        exampleCn: "海边风很大。",
+        distractors: ["Sunny", "Rainy", "Snowy"]
+      },
+      {
+        id: "wea-7",
+        word: "Cloudy",
+        phonetic: "/ˈklaʊdi/",
+        cn: "多云的",
+        image: "https://images.unsplash.com/photo-1501594907352-04cda38ebc29?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "The sky is cloudy.",
+        exampleCn: "天空多云。",
+        distractors: ["Sunny", "Rainy", "Windy"]
+      },
+      {
+        id: "wea-8",
+        word: "Snowy",
+        phonetic: "/ˈsnəʊi/",
+        cn: "下雪的",
+        image: "https://images.unsplash.com/photo-1501594907352-04cda38ebc29?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "It is snowy in winter.",
+        exampleCn: "冬天会下雪。",
+        distractors: ["Sunny", "Cloudy", "Windy"]
+      },
+      {
+        id: "wea-9",
+        word: "Hot",
+        phonetic: "/hɒt/",
+        cn: "炎热的",
+        image: "https://images.unsplash.com/photo-1501594907352-04cda38ebc29?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "The afternoon is hot.",
+        exampleCn: "下午很热。",
+        distractors: ["Cold", "Cool", "Windy"]
+      }
+    ]
   }
+  ,
+  {
+    id: "alphabet",
+    title: "Alphabet",
+    icon: "default",
+    color: "bg-fuchsia-500",
+    cover: "https://images.unsplash.com/photo-1517841905240-472988babdf9?q=20&w=1200&auto=format&fit=crop",
+    items: [
+      {
+        id: "alpha-1",
+        word: "A",
+        phonetic: "/eɪ/",
+        cn: "字母 A",
+        image: "https://images.unsplash.com/photo-1511548774318-563182fe8d03?q=10&w=1169&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        exampleEn: "A is for apple.",
+        exampleCn: "A 代表苹果。",
+        distractors: ["B", "C", "D"]
+      },
+      {
+        id: "alpha-2",
+        word: "B",
+        phonetic: "/biː/",
+        cn: "字母 B",
+        image: "https://images.unsplash.com/photo-1758384076914-049dd2e220b6?q=10&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        exampleEn: "B is for book.",
+        exampleCn: "B 代表书。",
+        distractors: ["A", "C", "D"]
+      },
+      {
+        id: "alpha-3",
+        word: "C",
+        phonetic: "/siː/",
+        cn: "字母 C",
+        image: "https://images.unsplash.com/photo-1527957557037-d079c24f24be?q=10&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        exampleEn: "C is for cat.",
+        exampleCn: "C 代表猫。",
+        distractors: ["A", "B", "D"]
+      },
+      {
+        id: "alpha-4",
+        word: "D d",
+        phonetic: "/diː/",
+        cn: "字母 D",
+        image: "https://images.unsplash.com/photo-1649147433713-af1eed038f6a?q=10&w=1364&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        exampleEn: "D is for dog.",
+        exampleCn: "D 代表狗。",
+        distractors: ["A", "B", "C"]
+      },
+      {
+        id: "alpha-5",
+        word: "E",
+        phonetic: "/iː/",
+        cn: "字母 E",
+        image: "https://images.unsplash.com/photo-1589779137147-3d388746b765?q=10&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        exampleEn: "E is for egg.",
+        exampleCn: "E 代表鸡蛋。",
+        distractors: ["F", "G", "H"]
+      },
+      {
+        id: "alpha-6",
+        word: "F",
+        phonetic: "/ef/",
+        cn: "字母 F",
+        image: "https://images.unsplash.com/photo-1547387557-21339915455f?q=10&w=1335&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        exampleEn: "F is for fish.",
+        exampleCn: "F 代表鱼。",
+        distractors: ["E", "G", "H"]
+      },
+      {
+        id: "alpha-7",
+        word: "G",
+        phonetic: "/dʒiː/",
+        cn: "字母 G",
+        image: "https://images.unsplash.com/photo-1545601445-9242104e5d79?q=10&w=1335&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        exampleEn: "G is for game.",
+        exampleCn: "G 代表游戏。",
+        distractors: ["F", "H", "I"]
+      },
+      {
+        id: "alpha-8",
+        word: "H",
+        phonetic: "/eɪtʃ/",
+        cn: "字母 H",
+        image: "https://images.unsplash.com/photo-1520520684368-858301bc90da?q=10&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        exampleEn: "H is for house.",
+        exampleCn: "H 代表房子。",
+        distractors: ["F", "G", "I"]
+      },
+      {
+        id: "alpha-9",
+        word: "I",
+        phonetic: "/aɪ/",
+        cn: "字母 I",
+        image: "https://images.unsplash.com/photo-1627641674091-12f5ef523f95?q=10&w=2667&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        exampleEn: "I is for ice.",
+        exampleCn: "I 代表冰。",
+        distractors: ["H", "J", "K"]
+      },
+      {
+        id: "alpha-10",
+        word: "J",
+        phonetic: "/dʒeɪ/",
+        cn: "字母 J",
+        image: "https://images.unsplash.com/photo-1667842439048-8467075e8dc0?q=10&w=1760&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        exampleEn: "J is for jam.",
+        exampleCn: "J 代表果酱。",
+        distractors: ["I", "K", "L"]
+      },
+      {
+        id: "alpha-11",
+        word: "K",
+        phonetic: "/keɪ/",
+        cn: "字母 K",
+        image: "https://images.unsplash.com/photo-1614893565772-931853451397?q=10&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        exampleEn: "K is for kite.",
+        exampleCn: "K 代表风筝。",
+        distractors: ["J", "L", "M"]
+      },
+      {
+        id: "alpha-12",
+        word: "L",
+        phonetic: "/el/",
+        cn: "字母 L",
+        image: "https://images.unsplash.com/photo-1650926888011-124cd4b28519?q=10&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        exampleEn: "L is for lamp.",
+        exampleCn: "L 代表台灯。",
+        distractors: ["K", "M", "N"]
+      },
+      {
+        id: "alpha-13",
+        word: "M",
+        phonetic: "/em/",
+        cn: "字母 M",
+        image: "https://images.unsplash.com/photo-1509218079444-d511376ba8be?q=10&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        exampleEn: "M is for milk.",
+        exampleCn: "M 代表牛奶。",
+        distractors: ["L", "N", "O"]
+      },
+      {
+        id: "alpha-14",
+        word: "N",
+        phonetic: "/en/",
+        cn: "字母 N",
+        image: "https://images.unsplash.com/photo-1627873649417-c67f701f1949?q=10&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        exampleEn: "N is for nest.",
+        exampleCn: "N 代表鸟巢。",
+        distractors: ["M", "O", "P"]
+      },
+      {
+        id: "alpha-15",
+        word: "O",
+        phonetic: "/əʊ/",
+        cn: "字母 O",
+        image: "https://images.unsplash.com/photo-1613905392914-2ca5fbab0923?q=10&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        exampleEn: "O is for orange.",
+        exampleCn: "O 代表橙子。",
+        distractors: ["N", "P", "Q"]
+      },
+      {
+        id: "alpha-16",
+        word: "P",
+        phonetic: "/piː/",
+        cn: "字母 P",
+        image: "https://images.unsplash.com/photo-1604608619749-7dc84887834f?q=10&w=2608&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        exampleEn: "P is for pen.",
+        exampleCn: "P 代表钢笔。",
+        distractors: ["O", "Q", "R"]
+      },
+      {
+        id: "alpha-17",
+        word: "Q",
+        phonetic: "/kjuː/",
+        cn: "字母 Q",
+        image: "https://images.unsplash.com/photo-1599344941304-e766751011ec?q=10&w=2207&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        exampleEn: "Q is for queen.",
+        exampleCn: "Q 代表女王。",
+        distractors: ["P", "R", "S"]
+      },
+      {
+        id: "alpha-18",
+        word: "R",
+        phonetic: "/ɑː/",
+        cn: "字母 R",
+        image: "https://images.unsplash.com/photo-1697282027835-007785735652?q=10&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        exampleEn: "R is for rabbit.",
+        exampleCn: "R 代表兔子。",
+        distractors: ["Q", "S", "T"]
+      },
+      {
+        id: "alpha-19",
+        word: "S",
+        phonetic: "/es/",
+        cn: "字母 S",
+        image: "https://images.unsplash.com/photo-1598942352906-6b6c7051b6dd?q=10&w=1364&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        exampleEn: "S is for sun.",
+        exampleCn: "S 代表太阳。",
+        distractors: ["R", "T", "U"]
+      },
+      {
+        id: "alpha-20",
+        word: "T",
+        phonetic: "/tiː/",
+        cn: "字母 T",
+        image: "https://images.unsplash.com/photo-1558522189-cf1b298644c9?q=10&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        exampleEn: "T is for tree.",
+        exampleCn: "T 代表树。",
+        distractors: ["S", "U", "V"]
+      },
+      {
+        id: "alpha-21",
+        word: "U",
+        phonetic: "/juː/",
+        cn: "字母 U",
+        image: "https://images.unsplash.com/photo-1604854577019-d96a524e60c8?q=10&w=1227&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        exampleEn: "U is for umbrella.",
+        exampleCn: "U 代表雨伞。",
+        distractors: ["T", "V", "W"]
+      },
+      {
+        id: "alpha-22",
+        word: "V",
+        phonetic: "/viː/",
+        cn: "字母 V",
+        image: "https://images.unsplash.com/photo-1584985839340-d95cbff1ed2c?q=10&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        exampleEn: "V is for violin.",
+        exampleCn: "V 代表小提琴。",
+        distractors: ["U", "W", "X"]
+      },
+      {
+        id: "alpha-23",
+        word: "W",
+        phonetic: "/ˈdʌbəljuː/",
+        cn: "字母 W",
+        image: "https://images.unsplash.com/photo-1582836187212-8e11b734fb71?q=10&w=1335&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        exampleEn: "W is for water.",
+        exampleCn: "W 代表水。",
+        distractors: ["V", "X", "Y"]
+      },
+      {
+        id: "alpha-24",
+        word: "X",
+        phonetic: "/eks/",
+        cn: "字母 X",
+        image: "https://images.unsplash.com/photo-1690138871282-b84c8bb4244d?q=10&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        exampleEn: "X is for xylophone.",
+        exampleCn: "X 代表木琴。",
+        distractors: ["W", "Y", "Z"]
+      },
+      {
+        id: "alpha-25",
+        word: "Y",
+        phonetic: "/waɪ/",
+        cn: "字母 Y",
+        image: "https://images.unsplash.com/photo-1703571935210-0435d952ba49?q=10&w=1334&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        exampleEn: "Y is for yellow.",
+        exampleCn: "Y 代表黄色。",
+        distractors: ["X", "Z", "W"]
+      },
+      {
+        id: "alpha-26",
+        word: "Z",
+        phonetic: "/zed/",
+        cn: "字母 Z",
+        image: "https://images.unsplash.com/photo-1600869517025-2bb47d1ca659?q=10&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        exampleEn: "Z is for zebra.",
+        exampleCn: "Z 代表斑马。",
+        distractors: ["X", "Y", "A"]
+      }
+    ]
+  },
+  {
+    id: "phonetics",
+    title: "Phonetics",
+    icon: "default",
+    color: "bg-indigo-600",
+    cover: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?q=20&w=1200&auto=format&fit=crop",
+    items: [
+      {
+        id: "ph-1",
+        word: "/iː/",
+        phonetic: "long ee",
+        cn: "长元音 iː",
+        audio: "see",
+        image: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "see, meet, green",
+        exampleCn: "示例：see, meet, green",
+        distractors: ["/ɪ/", "/e/", "/æ/"]
+      },
+      {
+        id: "ph-2",
+        word: "/ɪ/",
+        phonetic: "short i",
+        cn: "短元音 ɪ",
+        audio: "sit",
+        image: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "sit, big, fish",
+        exampleCn: "示例：sit, big, fish",
+        distractors: ["/iː/", "/ʊ/", "/e/"]
+      },
+      {
+        id: "ph-3",
+        word: "/e/",
+        phonetic: "short e",
+        cn: "短元音 e",
+        audio: "bed",
+        image: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "bed, ten, red",
+        exampleCn: "示例：bed, ten, red",
+        distractors: ["/ɪ/", "/æ/", "/ʌ/"]
+      },
+      {
+        id: "ph-4",
+        word: "/æ/",
+        phonetic: "short a",
+        cn: "短元音 æ",
+        audio: "cat",
+        image: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "cat, hat, map",
+        exampleCn: "示例：cat, hat, map",
+        distractors: ["/e/", "/ʌ/", "/ɑː/"]
+      },
+      {
+        id: "ph-5",
+        word: "/ʌ/",
+        phonetic: "short u",
+        cn: "短元音 ʌ",
+        audio: "cup",
+        image: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "cup, luck, sun",
+        exampleCn: "示例：cup, luck, sun",
+        distractors: ["/ɑː/", "/ɒ/", "/ə/"]
+      },
+      {
+        id: "ph-6",
+        word: "/ɑː/",
+        phonetic: "long a",
+        cn: "长元音 ɑː",
+        audio: "car",
+        image: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "car, start, palm",
+        exampleCn: "示例：car, start, palm",
+        distractors: ["/æ/", "/ʌ/", "/ɒ/"]
+      },
+      {
+        id: "ph-7",
+        word: "/ɒ/",
+        phonetic: "short o",
+        cn: "短元音 ɒ",
+        audio: "hot",
+        image: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "hot, box, dog",
+        exampleCn: "示例：hot, box, dog",
+        distractors: ["/ɔː/", "/ʌ/", "/ɑː/"]
+      },
+      {
+        id: "ph-8",
+        word: "/ɔː/",
+        phonetic: "long o",
+        cn: "长元音 ɔː",
+        audio: "door",
+        image: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "door, small, talk",
+        exampleCn: "示例：door, small, talk",
+        distractors: ["/ɒ/", "/ʊ/", "/əʊ/"]
+      },
+      {
+        id: "ph-9",
+        word: "/ʊ/",
+        phonetic: "short oo",
+        cn: "短元音 ʊ",
+        audio: "book",
+        image: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "book, good, foot",
+        exampleCn: "示例：book, good, foot",
+        distractors: ["/uː/", "/ɒ/", "/ɔː/"]
+      },
+      {
+        id: "ph-10",
+        word: "/uː/",
+        phonetic: "long oo",
+        cn: "长元音 uː",
+        audio: "food",
+        image: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "food, blue, school",
+        exampleCn: "示例：food, blue, school",
+        distractors: ["/ʊ/", "/ɔː/", "/əʊ/"]
+      },
+      {
+        id: "ph-11",
+        word: "/ə/",
+        phonetic: "schwa",
+        cn: "弱读音 ə",
+        audio: "about",
+        image: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "about, teacher, banana",
+        exampleCn: "示例：about, teacher, banana",
+        distractors: ["/ʌ/", "/ɜː/", "/e/"]
+      },
+      {
+        id: "ph-12",
+        word: "/ɜː/",
+        phonetic: "long er",
+        cn: "长元音 ɜː",
+        audio: "bird",
+        image: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "bird, nurse, word",
+        exampleCn: "示例：bird, nurse, word",
+        distractors: ["/ə/", "/ɔː/", "/ɑː/"]
+      },
+      {
+        id: "ph-13",
+        word: "/θ/",
+        phonetic: "voiceless th",
+        cn: "清辅音 θ",
+        audio: "think",
+        image: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "think, bath, teeth",
+        exampleCn: "示例：think, bath, teeth",
+        distractors: ["/ð/", "/s/", "/t/"]
+      },
+      {
+        id: "ph-14",
+        word: "/ð/",
+        phonetic: "voiced th",
+        cn: "浊辅音 ð",
+        audio: "this",
+        image: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "this, mother, those",
+        exampleCn: "示例：this, mother, those",
+        distractors: ["/θ/", "/z/", "/d/"]
+      },
+      {
+        id: "ph-15",
+        word: "/ʃ/",
+        phonetic: "sh",
+        cn: "辅音 ʃ",
+        audio: "ship",
+        image: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "she, shop, fish",
+        exampleCn: "示例：she, shop, fish",
+        distractors: ["/s/", "/tʃ/", "/ʒ/"]
+      },
+      {
+        id: "ph-16",
+        word: "/tʃ/",
+        phonetic: "ch",
+        cn: "辅音 tʃ",
+        audio: "chair",
+        image: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "chair, chicken, watch",
+        exampleCn: "示例：chair, chicken, watch",
+        distractors: ["/ʃ/", "/dʒ/", "/s/"]
+      },
+      {
+        id: "ph-17",
+        word: "/dʒ/",
+        phonetic: "j",
+        cn: "辅音 dʒ",
+        audio: "job",
+        image: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "job, orange, bridge",
+        exampleCn: "示例：job, orange, bridge",
+        distractors: ["/tʃ/", "/ʒ/", "/g/"]
+      },
+      {
+        id: "ph-18",
+        word: "/ŋ/",
+        phonetic: "ng",
+        cn: "辅音 ŋ",
+        audio: "sing",
+        image: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?q=20&w=1200&auto=format&fit=crop",
+        exampleEn: "sing, long, king",
+        exampleCn: "示例：sing, long, king",
+        distractors: ["/n/", "/g/", "/m/"]
+      }
+    ]
+  }
+
+
 ];
+
+
+const OXFORD_PLACEHOLDER_IMAGES = {
+  B2: "https://images.unsplash.com/photo-1456324504439-367cee3b3c32?q=20&w=1200&auto=format&fit=crop",
+  C1: "https://images.unsplash.com/photo-1491841651911-c44c30c34548?q=20&w=1200&auto=format&fit=crop",
+};
+
+const makeOxfordCategory = (level: "B2" | "C1"): Category => {
+  const items = OXFORD_5000
+    .filter((item) => item.level === level)
+    .map((item, index) => ({
+      id: `ox-${level.toLowerCase()}-${index + 1}`,
+      word: item.word,
+      phonetic: "",
+      cn: `词性 ${item.pos} · ${item.level}`,
+      image: OXFORD_PLACEHOLDER_IMAGES[level],
+      exampleEn: `This is a ${item.level} word: ${item.word}.`,
+      exampleCn: `这是${item.level}词汇：${item.word}。`,
+      distractors: [],
+    }));
+
+  return {
+    id: `oxford_${level.toLowerCase()}`,
+    title: `Oxford 5000 ${level}`,
+    icon: "default",
+    color: level === "B2" ? "bg-amber-600" : "bg-violet-700",
+    cover: OXFORD_PLACEHOLDER_IMAGES[level],
+    items,
+  };
+};
+
+export const VOCAB_DATA: Category[] = [
+  makeOxfordCategory("B2"),
+  makeOxfordCategory("C1"),
+  ...BASE_VOCAB_DATA,
+];
+
+export const ALL_VOCAB_CATEGORY_ID = "all-az";
+
+export const getAllVocabItems = (): VocabItem[] =>
+  VOCAB_DATA.flatMap((category) => category.items);
+
+export const getAllVocabCategory = (): Category => {
+  const items = getAllVocabItems().slice().sort((a, b) => a.word.localeCompare(b.word, "en", { sensitivity: "base" }));
+  return {
+    id: ALL_VOCAB_CATEGORY_ID,
+    title: "A-Z",
+    icon: "default",
+    color: "bg-slate-700",
+    cover: "https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?q=20&w=1200&auto=format&fit=crop",
+    items,
+  };
+};
+
+export const getVocabCategory = (id: string): Category | undefined => {
+  if (id === ALL_VOCAB_CATEGORY_ID) {
+    return getAllVocabCategory();
+  }
+  return VOCAB_DATA.find((category) => category.id === id);
+};

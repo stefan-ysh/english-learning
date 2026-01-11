@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, use } from "react";
-import { VOCAB_DATA } from "@/lib/vocab-data";
+import { getAllVocabItems, getVocabCategory, type VocabItem } from "@/lib/vocab-data";
 import { ArrowLeft, RefreshCw, Trophy } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -23,7 +23,7 @@ interface PageProps {
 
 export default function QuizPage({ params }: PageProps) {
     const { categoryId } = use(params);
-    const category = VOCAB_DATA.find((c) => c.id === categoryId);
+    const category = getVocabCategory(categoryId);
 
     // Hooks should be unconditional
     const setQuizScore = useLearningStore((state) => state.setQuizScore);
@@ -38,7 +38,7 @@ export default function QuizPage({ params }: PageProps) {
     const [isFinished, setIsFinished] = useState(false);
     const [pendingRecord, setPendingRecord] = useState(false);
 
-    const [questions, setQuestions] = useState<{ item: typeof VOCAB_DATA[0]['items'][0], options?: string[] }[]>([]);
+    const [questions, setQuestions] = useState<{ item: VocabItem, options?: string[] }[]>([]);
 
     const [mounted, setMounted] = useState(false);
     useEffect(() => {
@@ -48,12 +48,11 @@ export default function QuizPage({ params }: PageProps) {
 
             // 2. Pre-calculate options for all items to ensure stability
             const prepared = shuffled.map((item) => {
-                const otherItems = VOCAB_DATA
-                    .flatMap(c => c.items)
-                    .filter(i => i.id !== item.id)
+                const otherItems = getAllVocabItems()
+                    .filter((i) => i.id !== item.id)
                     .sort(() => Math.random() - 0.5)
                     .slice(0, 3)
-                    .map(i => i.cn);
+                    .map((i) => i.cn);
 
                 const options = [item.cn, ...otherItems].sort(() => Math.random() - 0.5);
 
@@ -162,7 +161,7 @@ export default function QuizPage({ params }: PageProps) {
                 <Link href={`/vocab/${category.id}`} className="flex items-center gap-2 text-gray-600 hover:text-black dark:text-gray-400 dark:hover:text-white transition-colors bg-white/50 backdrop-blur-sm p-2 rounded-lg">
                     <ArrowLeft className="w-5 h-5" /> {t("btn.back")}
                 </Link>
-                <div className="font-bold text-lg bg-white/50 backdrop-blur-sm px-4 py-1 rounded-full">{category.title}</div>
+                <div className="font-bold text-lg bg-white/50 backdrop-blur-sm px-4 py-1 rounded-full">{t(`cat.${category.id}`)}</div>
             </div>
 
             <div className="w-full max-w-md flex-1 flex flex-col justify-center pb-20">

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { VOCAB_DATA } from "@/lib/vocab-data";
+import { getVocabCategory } from "@/lib/vocab-data";
 import { ArrowLeft, BookOpen, BrainCircuit } from "lucide-react";
 import { notFound } from "next/navigation";
 import { useI18n } from "@/lib/i18n-context";
@@ -15,7 +15,7 @@ interface PageProps {
 
 export default function CategoryPage({ params }: PageProps) {
     const { categoryId } = use(params);
-    const category = VOCAB_DATA.find((c) => c.id === categoryId);
+    const category = getVocabCategory(categoryId);
 
     if (!category) {
         notFound();
@@ -63,5 +63,4 @@ export default function CategoryPage({ params }: PageProps) {
         </main>
     );
 }
-
 

@@ -12,12 +12,14 @@ import { useI18n } from "@/lib/i18n-context";
 interface SwipeContainerProps {
     items: VocabItem[];
     categoryId: string;
+    jumpIndex?: number | null;
 }
 
-export function SwipeContainer({ items, categoryId }: SwipeContainerProps) {
+export function SwipeContainer({ items, categoryId, jumpIndex }: SwipeContainerProps) {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [direction, setDirection] = useState(0); // -1 for left, 1 for right
     const [hasRecorded, setHasRecorded] = useState(false);
+    const [swipeOut, setSwipeOut] = useState<"left" | "right" | null>(null);
     const recordActivity = useActivityStore((state) => state.recordActivity);
     const hasHydrated = useActivityStore((state) => state.hasHydrated);
     const { t } = useI18n();
@@ -34,7 +36,15 @@ export function SwipeContainer({ items, categoryId }: SwipeContainerProps) {
         setHasRecorded(false);
         setCurrentIndex(0);
         setDirection(0);
+        setSwipeOut(null);
     }, [categoryId]);
+
+    useEffect(() => {
+        if (jumpIndex === null || jumpIndex === undefined) return;
+        if (jumpIndex < 0 || jumpIndex >= items.length) return;
+        setDirection(0);
+        setCurrentIndex(jumpIndex);
+    }, [jumpIndex, items.length]);
 
     useEffect(() => {
         if (!hasHydrated) return;
@@ -47,13 +57,25 @@ export function SwipeContainer({ items, categoryId }: SwipeContainerProps) {
     const handleDragEnd = (event: globalThis.MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
         if (info.offset.x < -100) {
             // Swipe Left (Next)
-            setDirection(1);
-            setTimeout(() => nextCard(), 200);
+            triggerSwipe("left");
         } else if (info.offset.x > 100) {
             // Swipe Right (Prev)
-            setDirection(-1);
-            setTimeout(() => prevCard(), 200);
+            triggerSwipe("right");
         }
+    };
+
+    const triggerSwipe = (dir: "left" | "right") => {
+        if (swipeOut) return;
+        setSwipeOut(dir);
+        setDirection(dir === "left" ? 1 : -1);
+        setTimeout(() => {
+            if (dir === "left") {
+                nextCard();
+            } else {
+                prevCard();
+            }
+            setSwipeOut(null);
+        }, 240);
     };
 
     const nextCard = () => {
@@ -71,6 +93,7 @@ export function SwipeContainer({ items, categoryId }: SwipeContainerProps) {
     const reset = () => {
         setCurrentIndex(0);
         setDirection(0);
+        setSwipeOut(null);
     };
 
     return (
@@ -90,13 +113,19 @@ export function SwipeContainer({ items, categoryId }: SwipeContainerProps) {
             </div>
 
             <div className="relative w-full h-[60vh] flex items-center justify-center perspective-1000">
+                <div className="absolute inset-6 rounded-[28px] bg-white/70 dark:bg-slate-800/60 border border-white/60 dark:border-slate-700/60 shadow-lg translate-y-4 rotate-2"></div>
+                <div className="absolute inset-8 rounded-[28px] bg-white/50 dark:bg-slate-900/50 border border-white/50 dark:border-slate-700/50 shadow-md translate-y-7 -rotate-2"></div>
                 <AnimatePresence initial={false} custom={direction} mode="wait">
                     <motion.div
                         key={currentIndex}
                         custom={direction}
                         className="absolute w-full h-full flex items-center justify-center p-4 cursor-grab active:cursor-grabbing"
                         initial={{ opacity: 0, x: direction > 0 ? 300 : -300, rotate: direction > 0 ? 10 : -10 }}
-                        animate={{ opacity: 1, x: 0, rotate: 0 }}
+                        animate={{
+                            opacity: 1,
+                            x: swipeOut === "left" ? -420 : swipeOut === "right" ? 420 : 0,
+                            rotate: swipeOut === "left" ? -20 : swipeOut === "right" ? 20 : 0,
+                        }}
                         exit={{ opacity: 0, x: direction > 0 ? -300 : 300, rotate: direction > 0 ? -10 : 10 }}
                         transition={{ type: "spring", stiffness: 300, damping: 30 }}
                         drag="x"

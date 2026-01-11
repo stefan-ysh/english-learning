@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 
-import { VOCAB_DATA } from "@/lib/vocab-data";
+import { VOCAB_DATA, getAllVocabCategory } from "@/lib/vocab-data";
 import { CategoryCard } from "@/components/home/CategoryCard";
 import { ArrowLeft } from "lucide-react";
 import { BlurFade } from "@/components/ui/blur-fade";
@@ -10,6 +10,7 @@ import { useI18n } from "@/lib/i18n-context";
 
 export default function VocabPage() {
     const { t } = useI18n();
+    const allCategory = getAllVocabCategory();
 
     return (
         <main className="flex min-h-screen flex-col items-center p-4 md:p-24 bg-gray-50 dark:bg-gray-950">
@@ -22,8 +23,11 @@ export default function VocabPage() {
             </div>
 
             <div className="grid w-full max-w-5xl gap-8 sm:grid-cols-2 lg:grid-cols-2">
+                <BlurFade key={allCategory.id} delay={0.05}>
+                    <CategoryCard category={allCategory} />
+                </BlurFade>
                 {VOCAB_DATA.map((category, index) => (
-                    <BlurFade key={category.id} delay={index * 0.1}>
+                    <BlurFade key={category.id} delay={(index + 1) * 0.1}>
                         <CategoryCard category={category} />
                     </BlurFade>
                 ))}
