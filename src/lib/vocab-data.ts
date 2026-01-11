@@ -83,7 +83,7 @@ export const VOCAB_DATA: Category[] = [
         word: "Sponge",
         phonetic: "/spʌndʒ/",
         cn: "海绵",
-        image: "https://images.unsplash.com/photo-1564540583246-934409427776?q=20&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        image: "https://images.unsplash.com/photo-1585657878885-5ef68df08c0d?q=20&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         exampleEn: "Use a sponge to clean the sink.",
         exampleCn: "用海绵清洁水槽。",
         distractors: ["Brush", "Towel", "Glove"]
@@ -93,7 +93,7 @@ export const VOCAB_DATA: Category[] = [
         word: "Gloves",
         phonetic: "/ɡlʌvz/",
         cn: "手套",
-        image: "https://images.unsplash.com/photo-1587300003388-59208cc962cb?q=20&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        image: "https://images.unsplash.com/photo-1584820927498-cfe5211fd8bf?q=10&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         exampleEn: "Wear gloves to protect your hands.",
         exampleCn: "戴手套保护双手。",
         distractors: ["Hat", "Socks", "Scarf"]
@@ -103,7 +103,7 @@ export const VOCAB_DATA: Category[] = [
         word: "Trash Bin",
         phonetic: "/træʃ bɪn/",
         cn: "垃圾桶",
-        image: "https://images.unsplash.com/photo-1523413651479-597eb2da0ad6?q=20&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        image: "https://images.unsplash.com/photo-1611284446314-60a58ac0deb9?q=20&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         exampleEn: "Please empty the trash bin.",
         exampleCn: "请把垃圾桶倒掉。",
         distractors: ["Basket", "Box", "Bag"]
@@ -113,7 +113,7 @@ export const VOCAB_DATA: Category[] = [
         word: "Iron",
         phonetic: "/ˈaɪən/",
         cn: "熨斗",
-        image: "https://images.unsplash.com/photo-1484704849700-f032a568e944?q=20&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        image: "https://images.unsplash.com/photo-1540544093-b0880061e1a5?q=10&w=1004&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         exampleEn: "I need to iron my shirt.",
         exampleCn: "我需要熨衬衫。",
         distractors: ["Dryer", "Washer", "Brush"]
