@@ -8,6 +8,7 @@ import { RotateCcw, ArrowLeft, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { useActivityStore } from "@/lib/use-activity-store";
 import { useI18n } from "@/lib/i18n-context";
+import { stopAllAudio, markUserInteracted } from "@/lib/tts";
 
 interface SwipeContainerProps {
     items: VocabItem[];
@@ -42,6 +43,7 @@ export function SwipeContainer({ items, categoryId, jumpIndex }: SwipeContainerP
     useEffect(() => {
         if (jumpIndex === null || jumpIndex === undefined) return;
         if (jumpIndex < 0 || jumpIndex >= items.length) return;
+        stopAllAudio();
         setDirection(0);
         setCurrentIndex(jumpIndex);
     }, [jumpIndex, items.length]);
@@ -66,6 +68,7 @@ export function SwipeContainer({ items, categoryId, jumpIndex }: SwipeContainerP
 
     const triggerSwipe = (dir: "left" | "right") => {
         if (swipeOut) return;
+        stopAllAudio();
         setSwipeOut(dir);
         setDirection(dir === "left" ? 1 : -1);
         setTimeout(() => {
@@ -80,24 +83,31 @@ export function SwipeContainer({ items, categoryId, jumpIndex }: SwipeContainerP
 
     const nextCard = () => {
         if (currentIndex < items.length - 1) {
+            stopAllAudio();
             setCurrentIndex(prev => prev + 1);
         }
     };
 
     const prevCard = () => {
         if (currentIndex > 0) {
+            stopAllAudio();
             setCurrentIndex(prev => prev - 1);
         }
     };
 
     const reset = () => {
+        stopAllAudio();
         setCurrentIndex(0);
         setDirection(0);
         setSwipeOut(null);
     };
 
     return (
-        <div className="flex flex-col items-center justify-center w-full max-w-md mx-auto h-[80vh] relative">
+        <div
+            className="flex flex-col items-center justify-center w-full max-w-md mx-auto h-[80vh] relative"
+            onClick={markUserInteracted}
+            onTouchStart={markUserInteracted}
+        >
             <div className="absolute top-4 w-full px-4 flex justify-between items-center z-20">
                 <Link href={`/vocab/${categoryId}`} className="p-2 bg-white/50 rounded-full dark:bg-black/50 backdrop-blur-sm">
                     <ArrowLeft className="w-6 h-6" />

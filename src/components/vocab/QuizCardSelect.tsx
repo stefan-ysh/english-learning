@@ -5,27 +5,46 @@ import { VocabItem } from "@/lib/vocab-data";
 import { Volume2, CheckCircle, XCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
-import { speak } from "@/lib/tts";
+import { speak, playAudioUrl, canAutoPlayAudio, markUserInteracted } from "@/lib/tts";
 
 import { useI18n } from "@/lib/i18n-context";
 
 interface QuizCardSelectProps {
     item: VocabItem;
-    options: string[]; // Options are Chinese meanings
+    options: string[];
     onAnswer: (isCorrect: boolean) => void;
     onMistake?: (selected: string) => void;
+    answer?: string;
+    title?: string;
+    showWord?: boolean;
+    showPhonetic?: boolean;
+    promptText?: string;
+    allowHints?: boolean;
 }
 
-export function QuizCardSelect({ item, options, onAnswer, onMistake }: QuizCardSelectProps) {
+export function QuizCardSelect({
+    item,
+    options,
+    onAnswer,
+    onMistake,
+    answer,
+    title,
+    showWord = true,
+    showPhonetic = true,
+    promptText,
+    allowHints = true,
+}: QuizCardSelectProps) {
     const { t } = useI18n();
     const [selectedOption, setSelectedOption] = useState<string | null>(null);
     const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
     const [isSpeaking, setIsSpeaking] = useState(false);
     const [showHint, setShowHint] = useState(false);
+    const [hasInteracted, setHasInteracted] = useState(false);
 
     useEffect(() => {
-        // Play audio on mount
-        playAudio();
+        if (canAutoPlayAudio()) {
+            playAudio();
+        }
         // Reset state when item changes
         setSelectedOption(null);
         setIsCorrect(null);
@@ -34,12 +53,20 @@ export function QuizCardSelect({ item, options, onAnswer, onMistake }: QuizCardS
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [item.id]);
 
+    const handleFirstInteraction = () => {
+        if (!hasInteracted) {
+            setHasInteracted(true);
+        }
+        markUserInteracted();
+    };
+
     const playAudio = () => {
+        handleFirstInteraction();
         if (item.audio && (item.audio.startsWith("http") || item.audio.startsWith("/"))) {
-            const audio = new Audio(item.audio);
-            setIsSpeaking(true);
-            audio.addEventListener("ended", () => setIsSpeaking(false), { once: true });
-            audio.play();
+            playAudioUrl(item.audio, {
+                onStart: () => setIsSpeaking(true),
+                onEnd: () => setIsSpeaking(false),
+            });
             return;
         }
         speak(item.audio || item.word, {
@@ -52,7 +79,8 @@ export function QuizCardSelect({ item, options, onAnswer, onMistake }: QuizCardS
         if (selectedOption) return; // Prevent multiple clicks
 
         setSelectedOption(option);
-        const correct = option === item.cn;
+        const correctAnswer = answer ?? item.cn;
+        const correct = option === correctAnswer;
         setIsCorrect(correct);
         if (!correct && onMistake) {
             onMistake(option);
@@ -75,7 +103,9 @@ export function QuizCardSelect({ item, options, onAnswer, onMistake }: QuizCardS
     return (
         <div className="w-full max-w-md bg-white dark:bg-slate-900 rounded-3xl p-8 shadow-xl border-2 border-gray-100 dark:border-slate-800 flex flex-col items-center">
             <div className="mb-8 text-center">
-                <h2 className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-2">{t("quiz.select_meaning")}</h2>
+                <h2 className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-2">
+                    {title ?? t("quiz.select_meaning")}
+                </h2>
                 <div className="flex flex-col items-center gap-4">
                     <button
                         onClick={playAudio}
@@ -84,8 +114,14 @@ export function QuizCardSelect({ item, options, onAnswer, onMistake }: QuizCardS
                     >
                         <Volume2 className={`w-8 h-8 ${isSpeaking ? "animate-pulse" : ""}`} />
                     </button>
-                    <h3 className="text-4xl font-bold">{item.word}</h3>
-                    <p className="text-gray-400 font-mono">{item.phonetic}</p>
+                    {showWord ? (
+                        <h3 className="text-4xl font-bold">{item.word}</h3>
+                    ) : (
+                        <div className="text-sm text-gray-400 font-medium">
+                            {promptText ?? t("quiz.listen_choose")}
+                        </div>
+                    )}
+                    {showPhonetic ? <p className="text-gray-400 font-mono">{item.phonetic}</p> : null}
                 </div>
             </div>
 
@@ -98,14 +134,16 @@ export function QuizCardSelect({ item, options, onAnswer, onMistake }: QuizCardS
                 </div>
             )}
 
-            <button
-                onClick={() => setShowHint((prev) => !prev)}
-                className="mb-4 px-3 py-1 rounded-full text-xs font-bold bg-gray-100 dark:bg-slate-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-slate-700 active:scale-95 transition-transform"
-            >
-                {showHint ? t("quiz.hide_hint") : t("quiz.show_hint")}
-            </button>
+            {allowHints ? (
+                <button
+                    onClick={() => setShowHint((prev) => !prev)}
+                    className="mb-4 px-3 py-1 rounded-full text-xs font-bold bg-gray-100 dark:bg-slate-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-slate-700 active:scale-95 transition-transform"
+                >
+                    {showHint ? t("quiz.hide_hint") : t("quiz.show_hint")}
+                </button>
+            ) : null}
 
-            {showHint && (
+            {allowHints && showHint && (
                 <div className="mb-4 w-full text-xs text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-slate-800 rounded-xl p-3">
                     {hintLines.map((line) => (
                         <div key={line}>{line}</div>

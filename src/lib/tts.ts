@@ -6,6 +6,58 @@ export interface TTSOptions {
     onEnd?: () => void;
 }
 
+let activeAudio: HTMLAudioElement | null = null;
+let hasUserInteracted = false;
+
+export const markUserInteracted = () => {
+    hasUserInteracted = true;
+};
+
+export const canAutoPlayAudio = () => hasUserInteracted;
+
+export const stopAllAudio = () => {
+    if (activeAudio) {
+        activeAudio.pause();
+        activeAudio.currentTime = 0;
+        activeAudio = null;
+    }
+    if (typeof window !== "undefined" && "speechSynthesis" in window) {
+        window.speechSynthesis.cancel();
+    }
+};
+
+export const playAudioUrl = (url: string, options: TTSOptions = {}) => {
+    if (typeof window === "undefined") {
+        return;
+    }
+    stopAllAudio();
+    const audio = new Audio(url);
+    activeAudio = audio;
+    if (options.onStart) {
+        options.onStart();
+    }
+    audio.addEventListener(
+        "ended",
+        () => {
+            if (activeAudio === audio) {
+                activeAudio = null;
+            }
+            if (options.onEnd) {
+                options.onEnd();
+            }
+        },
+        { once: true }
+    );
+    audio.play().catch(() => {
+        if (activeAudio === audio) {
+            activeAudio = null;
+        }
+        if (options.onEnd) {
+            options.onEnd();
+        }
+    });
+};
+
 export const speak = (text: string, options: TTSOptions = {}) => {
     if (typeof window === "undefined" || !("speechSynthesis" in window)) {
         return;
@@ -20,8 +72,8 @@ export const speak = (text: string, options: TTSOptions = {}) => {
         }
     }
 
-    // Cancel any ongoing speech
-    window.speechSynthesis.cancel();
+    // Cancel any ongoing speech and audio
+    stopAllAudio();
     (window as unknown as { __lastSpeakText?: string; __lastSpeakAt?: number }).__lastSpeakText = text;
     (window as unknown as { __lastSpeakAt?: number }).__lastSpeakAt = now;
 

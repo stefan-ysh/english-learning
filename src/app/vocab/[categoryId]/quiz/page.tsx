@@ -38,16 +38,27 @@ export default function QuizPage({ params }: PageProps) {
     const [isFinished, setIsFinished] = useState(false);
     const [pendingRecord, setPendingRecord] = useState(false);
 
-    const [questions, setQuestions] = useState<{ item: VocabItem, options?: string[] }[]>([]);
+    const [questions, setQuestions] = useState<{ item: VocabItem; options?: string[]; answer?: string }[]>([]);
 
     const [mounted, setMounted] = useState(false);
     useEffect(() => {
         if (category && questions.length === 0) {
+            const isAudioSelectCategory = category.id === "alphabet" || category.id === "phonetics";
             // 1. Shuffle items
             const shuffled = [...category.items].sort(() => Math.random() - 0.5);
 
             // 2. Pre-calculate options for all items to ensure stability
             const prepared = shuffled.map((item) => {
+                if (isAudioSelectCategory) {
+                    const otherItems = category.items
+                        .filter((i) => i.id !== item.id)
+                        .sort(() => Math.random() - 0.5)
+                        .slice(0, 3)
+                        .map((i) => i.word);
+                    const options = [item.word, ...otherItems].sort(() => Math.random() - 0.5);
+                    return { item, options, answer: item.word };
+                }
+
                 const otherItems = getAllVocabItems()
                     .filter((i) => i.id !== item.id)
                     .sort(() => Math.random() - 0.5)
@@ -56,7 +67,7 @@ export default function QuizPage({ params }: PageProps) {
 
                 const options = [item.cn, ...otherItems].sort(() => Math.random() - 0.5);
 
-                return { item, options };
+                return { item, options, answer: item.cn };
             });
             // eslint-disable-next-line react-hooks/set-state-in-effect
             setQuestions(prepared);
@@ -116,7 +127,8 @@ export default function QuizPage({ params }: PageProps) {
     };
 
     // Determine question type (Odd = Input, Even = Select)
-    const questionType = currentIndex % 2 === 0 ? 'select' : 'input';
+    const isAudioSelectCategory = category.id === "alphabet" || category.id === "phonetics";
+    const questionType = isAudioSelectCategory ? "select" : currentIndex % 2 === 0 ? "select" : "input";
 
     if (isFinished) {
         const percentage = Math.round((score / questions.length) * 100);
@@ -182,13 +194,19 @@ export default function QuizPage({ params }: PageProps) {
                             <QuizCardSelect
                                 item={item}
                                 options={currentQuestion.options!}
+                                answer={currentQuestion.answer}
+                                title={isAudioSelectCategory ? t("quiz.listen_choose") : undefined}
+                                showWord={!isAudioSelectCategory}
+                                showPhonetic={!isAudioSelectCategory}
+                                allowHints={!isAudioSelectCategory}
+                                promptText={t("quiz.listen_choose")}
                                 onAnswer={handleAnswer}
                                 onMistake={(selected) =>
                                     recordMistake({
                                         key: `vocab:${item.id}`,
                                         type: "vocab-quiz",
-                                        prompt: item.word,
-                                        correct: item.cn,
+                                        prompt: isAudioSelectCategory ? t("quiz.listen_choose") : item.word,
+                                        correct: currentQuestion.answer ?? item.cn,
                                         userAnswer: selected,
                                     })
                                 }

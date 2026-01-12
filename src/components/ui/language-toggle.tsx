@@ -9,7 +9,7 @@ export function LanguageToggle() {
     return (
         <button
             onClick={toggleLang}
-            className="fixed top-4 right-4 z-50 p-2 bg-white/80 dark:bg-slate-800/80 rounded-full shadow-md backdrop-blur-sm flex items-center gap-2 text-sm font-bold border border-gray-200 dark:border-slate-700 hover:scale-105 transition-transform"
+            className="fixed top-16 right-4 sm:top-4 z-50 p-2 bg-white/80 dark:bg-slate-800/80 rounded-full shadow-md backdrop-blur-sm flex items-center gap-2 text-sm font-bold border border-gray-200 dark:border-slate-700 hover:scale-105 transition-transform"
         >
             <Languages className="w-4 h-4" />
             <span>{lang === "en" ? "EN" : "中"}</span>

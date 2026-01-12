@@ -6,7 +6,7 @@ import { VocabItem } from "@/lib/vocab-data";
 import { Volume2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ShineBorder } from "@/components/ui/shine-border";
-import { speak } from "@/lib/tts";
+import { speak, playAudioUrl, canAutoPlayAudio, markUserInteracted } from "@/lib/tts";
 import Image from "next/image";
 
 interface FlashCardProps {
@@ -17,22 +17,22 @@ interface FlashCardProps {
 export function FlashCard({ item, autoPlay = false }: FlashCardProps) {
     const [isFlipped, setIsFlipped] = useState(false);
     const [isSpeaking, setIsSpeaking] = useState(false);
-
     useEffect(() => {
         setIsFlipped(false);
         setIsSpeaking(false);
-        if (autoPlay) {
+        if (autoPlay && canAutoPlayAudio()) {
             playAudio();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [item]);
 
     const playAudio = () => {
+        markUserInteracted();
         if (item.audio && (item.audio.startsWith("http") || item.audio.startsWith("/"))) {
-            const audio = new Audio(item.audio);
-            setIsSpeaking(true);
-            audio.addEventListener("ended", () => setIsSpeaking(false), { once: true });
-            audio.play();
+            playAudioUrl(item.audio, {
+                onStart: () => setIsSpeaking(true),
+                onEnd: () => setIsSpeaking(false),
+            });
             return;
         }
         speak(item.audio || item.word, {

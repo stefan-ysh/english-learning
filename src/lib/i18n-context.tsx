@@ -54,6 +54,7 @@ const UI_STRINGS: Record<string, Record<Language, string>> = {
     "quiz.loading": { en: "Loading Quiz...", cn: "正在加载测试..." },
     "quiz.question": { en: "Question", cn: "题目" },
     "quiz.select_meaning": { en: "SELECT MEANING", cn: "选择正确含义" },
+    "quiz.listen_choose": { en: "Listen and choose", cn: "听音选择" },
     "quiz.spell_word": { en: "SPELL THE WORD", cn: "拼写单词" },
     "quiz.correct": { en: "Correct!", cn: "答对了！" },
     "quiz.incorrect": { en: "Incorrect", cn: "答错了" },

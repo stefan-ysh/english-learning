@@ -21,6 +21,393 @@ export type Category = {
   items: VocabItem[];
 };
 
+const IPA_AUDIO_BASE = "/audio/ipa/";
+const IPA_AUDIO_MAP: Record<string, string> = {
+  "/iː/": "sound_i.mp3",
+  "/ɪ/": "sound_short_i.mp3",
+  "/e/": "sound_e.mp3",
+  "/æ/": "sound_æ.mp3",
+  "/ʌ/": "sound_ʌ.mp3",
+  "/ɑː/": "sound_long_ɑ.mp3",
+  "/ɒ/": "sound_ɒ.mp3",
+  "/ɔː/": "sound_long_ɔ.mp3",
+  "/ʊ/": "sound_u.mp3",
+  "/uː/": "sound_long_u.mp3",
+  "/ə/": "sound_ə.mp3",
+  "/ɜː/": "sound_long_ə.mp3",
+  "/eə/": "sound_long_e.mp3",
+  "/ɪə/": "sound_ɪə.mp3",
+  "/eɪ/": "sound_eɪ.mp3",
+  "/aʊ/": "sound_aʊ.mp3",
+  "/əʊ/": "sound_əʊ.mp3",
+  "/aɪ/": "sound_aɪ.mp3",
+  "/ʊə/": "sound_ʊə.mp3",
+  "/ɔɪ/": "sound_ɔɪ.mp3",
+  "/f/": "sound_f.mp3",
+  "/v/": "sound_v.mp3",
+  "/θ/": "sound_θ.mp3",
+  "/ð/": "sound_ð.mp3",
+  "/s/": "sound_S.mp3",
+  "/z/": "sound_Z.mp3",
+  "/ʃ/": "sound_ʃ.mp3",
+  "/ʒ/": "sound_ʒ.mp3",
+  "/h/": "sound_h.mp3",
+  "/p/": "sound_p.mp3",
+  "/b/": "sound_b.mp3",
+  "/t/": "sound_t.mp3",
+  "/d/": "sound_d.mp3",
+  "/k/": "sound_k.mp3",
+  "/g/": "sound_g.mp3",
+  "/tʃ/": "sound_ʧ.mp3",
+  "/dʒ/": "sound_ʤ.mp3",
+  "/w/": "sound_w.mp3",
+  "/r/": "sound_r.mp3",
+  "/j/": "sound_j.mp3",
+  "/l/": "sound_l.mp3",
+  "/m/": "sound_m.mp3",
+  "/n/": "sound_n.mp3",
+  "/ŋ/": "sound_ŋ.mp3",
+};
+
+const ipaAudio = (symbol: string) => {
+  const filename = IPA_AUDIO_MAP[symbol];
+  return filename ? `${IPA_AUDIO_BASE}${filename}` : undefined;
+};
+
+const LETTER_AUDIO_BASE = "/audio/letters/";
+const letterAudio = (label: string) => {
+  const letter = label.trim().charAt(0).toUpperCase();
+  return `${LETTER_AUDIO_BASE}${letter}.mp3`;
+};
+
+const PHONETIC_IMAGE =
+  "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?q=20&w=1200&auto=format&fit=crop";
+
+const PHONETIC_DEFS = [
+  { symbol: "/iː/", label: "long ee", cn: "长元音 iː", example: "bean" },
+  { symbol: "/ɪ/", label: "short i", cn: "短元音 ɪ", example: "tip" },
+  { symbol: "/uː/", label: "long oo", cn: "长元音 uː", example: "moon" },
+  { symbol: "/ʊ/", label: "short oo", cn: "短元音 ʊ", example: "shook" },
+  { symbol: "/ə/", label: "schwa", cn: "弱读音 ə", example: "the" },
+  { symbol: "/ɜː/", label: "long er", cn: "长元音 ɜː", example: "sir" },
+  { symbol: "/ɔː/", label: "long o", cn: "长元音 ɔː", example: "shore" },
+  { symbol: "/e/", label: "short e", cn: "短元音 e", example: "met" },
+  { symbol: "/eə/", label: "diphthong eə", cn: "双元音 eə", example: "hair" },
+  { symbol: "/ʌ/", label: "short u", cn: "短元音 ʌ", example: "fun" },
+  { symbol: "/ɒ/", label: "short o", cn: "短元音 ɒ", example: "lock" },
+  { symbol: "/æ/", label: "short a", cn: "短元音 æ", example: "pan" },
+  { symbol: "/ɑː/", label: "long a", cn: "长元音 ɑː", example: "card" },
+  { symbol: "/ɪə/", label: "diphthong ɪə", cn: "双元音 ɪə", example: "dear" },
+  { symbol: "/eɪ/", label: "diphthong eɪ", cn: "双元音 eɪ", example: "same" },
+  { symbol: "/aʊ/", label: "diphthong aʊ", cn: "双元音 aʊ", example: "loud" },
+  { symbol: "/əʊ/", label: "diphthong əʊ", cn: "双元音 əʊ", example: "go" },
+  { symbol: "/aɪ/", label: "diphthong aɪ", cn: "双元音 aɪ", example: "hide" },
+  { symbol: "/ʊə/", label: "diphthong ʊə", cn: "双元音 ʊə", example: "curious" },
+  { symbol: "/ɔɪ/", label: "diphthong ɔɪ", cn: "双元音 ɔɪ", example: "choice" },
+  { symbol: "/f/", label: "consonant f", cn: "辅音 f", example: "first" },
+  { symbol: "/v/", label: "consonant v", cn: "辅音 v", example: "van" },
+  { symbol: "/θ/", label: "voiceless th", cn: "清辅音 θ", example: "thick" },
+  { symbol: "/ð/", label: "voiced th", cn: "浊辅音 ð", example: "these" },
+  { symbol: "/s/", label: "consonant s", cn: "辅音 s", example: "saw" },
+  { symbol: "/z/", label: "consonant z", cn: "辅音 z", example: "zen" },
+  { symbol: "/ʃ/", label: "consonant ʃ", cn: "辅音 ʃ", example: "she" },
+  { symbol: "/ʒ/", label: "consonant ʒ", cn: "辅音 ʒ", example: "casual" },
+  { symbol: "/h/", label: "consonant h", cn: "辅音 h", example: "hard" },
+  { symbol: "/p/", label: "consonant p", cn: "辅音 p", example: "pick" },
+  { symbol: "/b/", label: "consonant b", cn: "辅音 b", example: "bed" },
+  { symbol: "/t/", label: "consonant t", cn: "辅音 t", example: "team" },
+  { symbol: "/d/", label: "consonant d", cn: "辅音 d", example: "dine" },
+  { symbol: "/k/", label: "consonant k", cn: "辅音 k", example: "code" },
+  { symbol: "/g/", label: "consonant g", cn: "辅音 g", example: "get" },
+  { symbol: "/tʃ/", label: "consonant tʃ", cn: "辅音 tʃ", example: "choose" },
+  { symbol: "/dʒ/", label: "consonant dʒ", cn: "辅音 dʒ", example: "jet" },
+  { symbol: "/w/", label: "consonant w", cn: "辅音 w", example: "watch" },
+  { symbol: "/r/", label: "consonant r", cn: "辅音 r", example: "rug" },
+  { symbol: "/j/", label: "consonant j", cn: "辅音 j", example: "yet" },
+  { symbol: "/l/", label: "consonant l", cn: "辅音 l", example: "look" },
+  { symbol: "/m/", label: "consonant m", cn: "辅音 m", example: "mode" },
+  { symbol: "/n/", label: "consonant n", cn: "辅音 n", example: "neck" },
+  { symbol: "/ŋ/", label: "consonant ŋ", cn: "辅音 ŋ", example: "song" },
+];
+
+const PHONETIC_ITEMS: VocabItem[] = PHONETIC_DEFS.map((item, index) => ({
+  id: `ph-${index + 1}`,
+  word: item.symbol,
+  phonetic: item.label,
+  cn: item.cn,
+  audio: ipaAudio(item.symbol),
+  image: PHONETIC_IMAGE,
+  exampleEn: item.example,
+  exampleCn: `示例：${item.example}`,
+  distractors: [],
+}));
+
+const ALPHABET_ITEMS: VocabItem[] = [
+  {
+    id: "alpha-1",
+    word: "A",
+    phonetic: "/eɪ/",
+    cn: "字母 A",
+    image: "https://images.unsplash.com/photo-1511548774318-563182fe8d03?q=10&w=1169&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    exampleEn: "A is for apple.",
+    exampleCn: "A 代表苹果。",
+    distractors: ["B", "C", "D"]
+  },
+  {
+    id: "alpha-2",
+    word: "B",
+    phonetic: "/biː/",
+    cn: "字母 B",
+    image: "https://images.unsplash.com/photo-1758384076914-049dd2e220b6?q=10&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    exampleEn: "B is for book.",
+    exampleCn: "B 代表书。",
+    distractors: ["A", "C", "D"]
+  },
+  {
+    id: "alpha-3",
+    word: "C",
+    phonetic: "/siː/",
+    cn: "字母 C",
+    image: "https://images.unsplash.com/photo-1527957557037-d079c24f24be?q=10&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    exampleEn: "C is for cat.",
+    exampleCn: "C 代表猫。",
+    distractors: ["A", "B", "D"]
+  },
+  {
+    id: "alpha-4",
+    word: "D",
+    phonetic: "/diː/",
+    cn: "字母 D",
+    image: "https://images.unsplash.com/photo-1649147433713-af1eed038f6a?q=10&w=1364&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    exampleEn: "D is for dog.",
+    exampleCn: "D 代表狗。",
+    distractors: ["A", "B", "C"]
+  },
+  {
+    id: "alpha-5",
+    word: "E",
+    phonetic: "/iː/",
+    cn: "字母 E",
+    image: "https://images.unsplash.com/photo-1589779137147-3d388746b765?q=10&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    exampleEn: "E is for egg.",
+    exampleCn: "E 代表鸡蛋。",
+    distractors: ["F", "G", "H"]
+  },
+  {
+    id: "alpha-6",
+    word: "F",
+    phonetic: "/ef/",
+    cn: "字母 F",
+    image: "https://images.unsplash.com/photo-1542903660-35ec8f6fda7b?q=10&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    exampleEn: "F is for fish.",
+    exampleCn: "F 代表鱼。",
+    distractors: ["E", "G", "H"]
+  },
+  {
+    id: "alpha-7",
+    word: "G",
+    phonetic: "/dʒiː/",
+    cn: "字母 G",
+    image: "https://images.unsplash.com/photo-1594652634010-275456c808d0?q=10&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    exampleEn: "G is for goat.",
+    exampleCn: "G 代表山羊。",
+    distractors: ["F", "H", "I"]
+  },
+  {
+    id: "alpha-8",
+    word: "H",
+    phonetic: "/eɪtʃ/",
+    cn: "字母 H",
+    image: "https://images.unsplash.com/photo-1541963463532-d68292c34b19?q=10&w=1180&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    exampleEn: "H is for hat.",
+    exampleCn: "H 代表帽子。",
+    distractors: ["G", "I", "J"]
+  },
+  {
+    id: "alpha-9",
+    word: "I",
+    phonetic: "/aɪ/",
+    cn: "字母 I",
+    image: "https://images.unsplash.com/photo-1501594907352-04cda38ebc29?q=10&w=1200&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    exampleEn: "I is for ice.",
+    exampleCn: "I 代表冰。",
+    distractors: ["H", "J", "K"]
+  },
+  {
+    id: "alpha-10",
+    word: "J",
+    phonetic: "/dʒeɪ/",
+    cn: "字母 J",
+    image: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=10&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    exampleEn: "J is for jam.",
+    exampleCn: "J 代表果酱。",
+    distractors: ["I", "K", "L"]
+  },
+  {
+    id: "alpha-11",
+    word: "K",
+    phonetic: "/keɪ/",
+    cn: "字母 K",
+    image: "https://images.unsplash.com/photo-1524498250077-390f9e378fc0?q=10&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    exampleEn: "K is for kite.",
+    exampleCn: "K 代表风筝。",
+    distractors: ["J", "L", "M"]
+  },
+  {
+    id: "alpha-12",
+    word: "L",
+    phonetic: "/el/",
+    cn: "字母 L",
+    image: "https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?q=10&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    exampleEn: "L is for lion.",
+    exampleCn: "L 代表狮子。",
+    distractors: ["K", "M", "N"]
+  },
+  {
+    id: "alpha-13",
+    word: "M",
+    phonetic: "/em/",
+    cn: "字母 M",
+    image: "https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=10&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    exampleEn: "M is for mouse.",
+    exampleCn: "M 代表老鼠。",
+    distractors: ["L", "N", "O"]
+  },
+  {
+    id: "alpha-14",
+    word: "N",
+    phonetic: "/en/",
+    cn: "字母 N",
+    image: "https://images.unsplash.com/photo-1489515217757-5fd1be406fef?q=10&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    exampleEn: "N is for nest.",
+    exampleCn: "N 代表鸟巢。",
+    distractors: ["M", "O", "P"]
+  },
+  {
+    id: "alpha-15",
+    word: "O",
+    phonetic: "/əʊ/",
+    cn: "字母 O",
+    image: "https://images.unsplash.com/photo-1509023464722-18d996393ca8?q=10&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    exampleEn: "O is for orange.",
+    exampleCn: "O 代表橙子。",
+    distractors: ["N", "P", "Q"]
+  },
+  {
+    id: "alpha-16",
+    word: "P",
+    phonetic: "/piː/",
+    cn: "字母 P",
+    image: "https://images.unsplash.com/photo-1489515217757-5fd1be406fef?q=10&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    exampleEn: "P is for pen.",
+    exampleCn: "P 代表笔。",
+    distractors: ["O", "Q", "R"]
+  },
+  {
+    id: "alpha-17",
+    word: "Q",
+    phonetic: "/kjuː/",
+    cn: "字母 Q",
+    image: "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?q=10&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    exampleEn: "Q is for queen.",
+    exampleCn: "Q 代表女王。",
+    distractors: ["P", "R", "S"]
+  },
+  {
+    id: "alpha-18",
+    word: "R",
+    phonetic: "/ɑː/",
+    cn: "字母 R",
+    image: "https://images.unsplash.com/photo-1517841905240-472988babdf9?q=10&w=1200&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    exampleEn: "R is for rabbit.",
+    exampleCn: "R 代表兔子。",
+    distractors: ["Q", "S", "T"]
+  },
+  {
+    id: "alpha-19",
+    word: "S",
+    phonetic: "/es/",
+    cn: "字母 S",
+    image: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=10&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    exampleEn: "S is for sun.",
+    exampleCn: "S 代表太阳。",
+    distractors: ["R", "T", "U"]
+  },
+  {
+    id: "alpha-20",
+    word: "T",
+    phonetic: "/tiː/",
+    cn: "字母 T",
+    image: "https://images.unsplash.com/photo-1501594907352-04cda38ebc29?q=10&w=1200&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    exampleEn: "T is for tiger.",
+    exampleCn: "T 代表老虎。",
+    distractors: ["S", "U", "V"]
+  },
+  {
+    id: "alpha-21",
+    word: "U",
+    phonetic: "/juː/",
+    cn: "字母 U",
+    image: "https://images.unsplash.com/photo-1471879832106-c7ab9e0cee23?q=10&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    exampleEn: "U is for umbrella.",
+    exampleCn: "U 代表雨伞。",
+    distractors: ["T", "V", "W"]
+  },
+  {
+    id: "alpha-22",
+    word: "V",
+    phonetic: "/viː/",
+    cn: "字母 V",
+    image: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=10&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    exampleEn: "V is for violin.",
+    exampleCn: "V 代表小提琴。",
+    distractors: ["U", "W", "X"]
+  },
+  {
+    id: "alpha-23",
+    word: "W",
+    phonetic: "/ˈdʌbəljuː/",
+    cn: "字母 W",
+    image: "https://images.unsplash.com/photo-1471879832106-c7ab9e0cee23?q=10&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    exampleEn: "W is for whale.",
+    exampleCn: "W 代表鲸鱼。",
+    distractors: ["V", "X", "Y"]
+  },
+  {
+    id: "alpha-24",
+    word: "X",
+    phonetic: "/eks/",
+    cn: "字母 X",
+    image: "https://images.unsplash.com/photo-1489515217757-5fd1be406fef?q=10&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    exampleEn: "X is for xylophone.",
+    exampleCn: "X 代表木琴。",
+    distractors: ["W", "Y", "Z"]
+  },
+  {
+    id: "alpha-25",
+    word: "Y",
+    phonetic: "/waɪ/",
+    cn: "字母 Y",
+    image: "https://images.unsplash.com/photo-1501594907352-04cda38ebc29?q=10&w=1200&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    exampleEn: "Y is for yacht.",
+    exampleCn: "Y 代表游艇。",
+    distractors: ["X", "Z", "A"]
+  },
+  {
+    id: "alpha-26",
+    word: "Z",
+    phonetic: "/zed/",
+    cn: "字母 Z",
+    image: "https://images.unsplash.com/photo-1600869517025-2bb47d1ca659?q=10&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    exampleEn: "Z is for zebra.",
+    exampleCn: "Z 代表斑马。",
+    distractors: ["X", "Y", "A"]
+  },
+].map((item) => ({
+  ...item,
+  audio: letterAudio(item.word),
+}));
+
 const BASE_VOCAB_DATA: Category[] = [
   {
     id: "housekeeping",
@@ -2296,268 +2683,7 @@ const BASE_VOCAB_DATA: Category[] = [
     icon: "default",
     color: "bg-fuchsia-500",
     cover: "https://images.unsplash.com/photo-1517841905240-472988babdf9?q=20&w=1200&auto=format&fit=crop",
-    items: [
-      {
-        id: "alpha-1",
-        word: "A",
-        phonetic: "/eɪ/",
-        cn: "字母 A",
-        image: "https://images.unsplash.com/photo-1511548774318-563182fe8d03?q=10&w=1169&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-        exampleEn: "A is for apple.",
-        exampleCn: "A 代表苹果。",
-        distractors: ["B", "C", "D"]
-      },
-      {
-        id: "alpha-2",
-        word: "B",
-        phonetic: "/biː/",
-        cn: "字母 B",
-        image: "https://images.unsplash.com/photo-1758384076914-049dd2e220b6?q=10&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-        exampleEn: "B is for book.",
-        exampleCn: "B 代表书。",
-        distractors: ["A", "C", "D"]
-      },
-      {
-        id: "alpha-3",
-        word: "C",
-        phonetic: "/siː/",
-        cn: "字母 C",
-        image: "https://images.unsplash.com/photo-1527957557037-d079c24f24be?q=10&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-        exampleEn: "C is for cat.",
-        exampleCn: "C 代表猫。",
-        distractors: ["A", "B", "D"]
-      },
-      {
-        id: "alpha-4",
-        word: "D d",
-        phonetic: "/diː/",
-        cn: "字母 D",
-        image: "https://images.unsplash.com/photo-1649147433713-af1eed038f6a?q=10&w=1364&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-        exampleEn: "D is for dog.",
-        exampleCn: "D 代表狗。",
-        distractors: ["A", "B", "C"]
-      },
-      {
-        id: "alpha-5",
-        word: "E",
-        phonetic: "/iː/",
-        cn: "字母 E",
-        image: "https://images.unsplash.com/photo-1589779137147-3d388746b765?q=10&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-        exampleEn: "E is for egg.",
-        exampleCn: "E 代表鸡蛋。",
-        distractors: ["F", "G", "H"]
-      },
-      {
-        id: "alpha-6",
-        word: "F",
-        phonetic: "/ef/",
-        cn: "字母 F",
-        image: "https://images.unsplash.com/photo-1547387557-21339915455f?q=10&w=1335&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-        exampleEn: "F is for fish.",
-        exampleCn: "F 代表鱼。",
-        distractors: ["E", "G", "H"]
-      },
-      {
-        id: "alpha-7",
-        word: "G",
-        phonetic: "/dʒiː/",
-        cn: "字母 G",
-        image: "https://images.unsplash.com/photo-1545601445-9242104e5d79?q=10&w=1335&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-        exampleEn: "G is for game.",
-        exampleCn: "G 代表游戏。",
-        distractors: ["F", "H", "I"]
-      },
-      {
-        id: "alpha-8",
-        word: "H",
-        phonetic: "/eɪtʃ/",
-        cn: "字母 H",
-        image: "https://images.unsplash.com/photo-1520520684368-858301bc90da?q=10&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-        exampleEn: "H is for house.",
-        exampleCn: "H 代表房子。",
-        distractors: ["F", "G", "I"]
-      },
-      {
-        id: "alpha-9",
-        word: "I",
-        phonetic: "/aɪ/",
-        cn: "字母 I",
-        image: "https://images.unsplash.com/photo-1627641674091-12f5ef523f95?q=10&w=2667&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-        exampleEn: "I is for ice.",
-        exampleCn: "I 代表冰。",
-        distractors: ["H", "J", "K"]
-      },
-      {
-        id: "alpha-10",
-        word: "J",
-        phonetic: "/dʒeɪ/",
-        cn: "字母 J",
-        image: "https://images.unsplash.com/photo-1667842439048-8467075e8dc0?q=10&w=1760&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-        exampleEn: "J is for jam.",
-        exampleCn: "J 代表果酱。",
-        distractors: ["I", "K", "L"]
-      },
-      {
-        id: "alpha-11",
-        word: "K",
-        phonetic: "/keɪ/",
-        cn: "字母 K",
-        image: "https://images.unsplash.com/photo-1614893565772-931853451397?q=10&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-        exampleEn: "K is for kite.",
-        exampleCn: "K 代表风筝。",
-        distractors: ["J", "L", "M"]
-      },
-      {
-        id: "alpha-12",
-        word: "L",
-        phonetic: "/el/",
-        cn: "字母 L",
-        image: "https://images.unsplash.com/photo-1650926888011-124cd4b28519?q=10&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-        exampleEn: "L is for lamp.",
-        exampleCn: "L 代表台灯。",
-        distractors: ["K", "M", "N"]
-      },
-      {
-        id: "alpha-13",
-        word: "M",
-        phonetic: "/em/",
-        cn: "字母 M",
-        image: "https://images.unsplash.com/photo-1509218079444-d511376ba8be?q=10&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-        exampleEn: "M is for milk.",
-        exampleCn: "M 代表牛奶。",
-        distractors: ["L", "N", "O"]
-      },
-      {
-        id: "alpha-14",
-        word: "N",
-        phonetic: "/en/",
-        cn: "字母 N",
-        image: "https://images.unsplash.com/photo-1627873649417-c67f701f1949?q=10&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-        exampleEn: "N is for nest.",
-        exampleCn: "N 代表鸟巢。",
-        distractors: ["M", "O", "P"]
-      },
-      {
-        id: "alpha-15",
-        word: "O",
-        phonetic: "/əʊ/",
-        cn: "字母 O",
-        image: "https://images.unsplash.com/photo-1613905392914-2ca5fbab0923?q=10&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-        exampleEn: "O is for orange.",
-        exampleCn: "O 代表橙子。",
-        distractors: ["N", "P", "Q"]
-      },
-      {
-        id: "alpha-16",
-        word: "P",
-        phonetic: "/piː/",
-        cn: "字母 P",
-        image: "https://images.unsplash.com/photo-1604608619749-7dc84887834f?q=10&w=2608&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-        exampleEn: "P is for pen.",
-        exampleCn: "P 代表钢笔。",
-        distractors: ["O", "Q", "R"]
-      },
-      {
-        id: "alpha-17",
-        word: "Q",
-        phonetic: "/kjuː/",
-        cn: "字母 Q",
-        image: "https://images.unsplash.com/photo-1599344941304-e766751011ec?q=10&w=2207&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-        exampleEn: "Q is for queen.",
-        exampleCn: "Q 代表女王。",
-        distractors: ["P", "R", "S"]
-      },
-      {
-        id: "alpha-18",
-        word: "R",
-        phonetic: "/ɑː/",
-        cn: "字母 R",
-        image: "https://images.unsplash.com/photo-1697282027835-007785735652?q=10&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-        exampleEn: "R is for rabbit.",
-        exampleCn: "R 代表兔子。",
-        distractors: ["Q", "S", "T"]
-      },
-      {
-        id: "alpha-19",
-        word: "S",
-        phonetic: "/es/",
-        cn: "字母 S",
-        image: "https://images.unsplash.com/photo-1598942352906-6b6c7051b6dd?q=10&w=1364&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-        exampleEn: "S is for sun.",
-        exampleCn: "S 代表太阳。",
-        distractors: ["R", "T", "U"]
-      },
-      {
-        id: "alpha-20",
-        word: "T",
-        phonetic: "/tiː/",
-        cn: "字母 T",
-        image: "https://images.unsplash.com/photo-1558522189-cf1b298644c9?q=10&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-        exampleEn: "T is for tree.",
-        exampleCn: "T 代表树。",
-        distractors: ["S", "U", "V"]
-      },
-      {
-        id: "alpha-21",
-        word: "U",
-        phonetic: "/juː/",
-        cn: "字母 U",
-        image: "https://images.unsplash.com/photo-1604854577019-d96a524e60c8?q=10&w=1227&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-        exampleEn: "U is for umbrella.",
-        exampleCn: "U 代表雨伞。",
-        distractors: ["T", "V", "W"]
-      },
-      {
-        id: "alpha-22",
-        word: "V",
-        phonetic: "/viː/",
-        cn: "字母 V",
-        image: "https://images.unsplash.com/photo-1584985839340-d95cbff1ed2c?q=10&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-        exampleEn: "V is for violin.",
-        exampleCn: "V 代表小提琴。",
-        distractors: ["U", "W", "X"]
-      },
-      {
-        id: "alpha-23",
-        word: "W",
-        phonetic: "/ˈdʌbəljuː/",
-        cn: "字母 W",
-        image: "https://images.unsplash.com/photo-1582836187212-8e11b734fb71?q=10&w=1335&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-        exampleEn: "W is for water.",
-        exampleCn: "W 代表水。",
-        distractors: ["V", "X", "Y"]
-      },
-      {
-        id: "alpha-24",
-        word: "X",
-        phonetic: "/eks/",
-        cn: "字母 X",
-        image: "https://images.unsplash.com/photo-1690138871282-b84c8bb4244d?q=10&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-        exampleEn: "X is for xylophone.",
-        exampleCn: "X 代表木琴。",
-        distractors: ["W", "Y", "Z"]
-      },
-      {
-        id: "alpha-25",
-        word: "Y",
-        phonetic: "/waɪ/",
-        cn: "字母 Y",
-        image: "https://images.unsplash.com/photo-1703571935210-0435d952ba49?q=10&w=1334&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-        exampleEn: "Y is for yellow.",
-        exampleCn: "Y 代表黄色。",
-        distractors: ["X", "Z", "W"]
-      },
-      {
-        id: "alpha-26",
-        word: "Z",
-        phonetic: "/zed/",
-        cn: "字母 Z",
-        image: "https://images.unsplash.com/photo-1600869517025-2bb47d1ca659?q=10&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-        exampleEn: "Z is for zebra.",
-        exampleCn: "Z 代表斑马。",
-        distractors: ["X", "Y", "A"]
-      }
-    ]
+    items: ALPHABET_ITEMS,
   },
   {
     id: "phonetics",
@@ -2565,209 +2691,8 @@ const BASE_VOCAB_DATA: Category[] = [
     icon: "default",
     color: "bg-indigo-600",
     cover: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?q=20&w=1200&auto=format&fit=crop",
-    items: [
-      {
-        id: "ph-1",
-        word: "/iː/",
-        phonetic: "long ee",
-        cn: "长元音 iː",
-        audio: "see",
-        image: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?q=20&w=1200&auto=format&fit=crop",
-        exampleEn: "see, meet, green",
-        exampleCn: "示例：see, meet, green",
-        distractors: ["/ɪ/", "/e/", "/æ/"]
-      },
-      {
-        id: "ph-2",
-        word: "/ɪ/",
-        phonetic: "short i",
-        cn: "短元音 ɪ",
-        audio: "sit",
-        image: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?q=20&w=1200&auto=format&fit=crop",
-        exampleEn: "sit, big, fish",
-        exampleCn: "示例：sit, big, fish",
-        distractors: ["/iː/", "/ʊ/", "/e/"]
-      },
-      {
-        id: "ph-3",
-        word: "/e/",
-        phonetic: "short e",
-        cn: "短元音 e",
-        audio: "bed",
-        image: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?q=20&w=1200&auto=format&fit=crop",
-        exampleEn: "bed, ten, red",
-        exampleCn: "示例：bed, ten, red",
-        distractors: ["/ɪ/", "/æ/", "/ʌ/"]
-      },
-      {
-        id: "ph-4",
-        word: "/æ/",
-        phonetic: "short a",
-        cn: "短元音 æ",
-        audio: "cat",
-        image: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?q=20&w=1200&auto=format&fit=crop",
-        exampleEn: "cat, hat, map",
-        exampleCn: "示例：cat, hat, map",
-        distractors: ["/e/", "/ʌ/", "/ɑː/"]
-      },
-      {
-        id: "ph-5",
-        word: "/ʌ/",
-        phonetic: "short u",
-        cn: "短元音 ʌ",
-        audio: "cup",
-        image: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?q=20&w=1200&auto=format&fit=crop",
-        exampleEn: "cup, luck, sun",
-        exampleCn: "示例：cup, luck, sun",
-        distractors: ["/ɑː/", "/ɒ/", "/ə/"]
-      },
-      {
-        id: "ph-6",
-        word: "/ɑː/",
-        phonetic: "long a",
-        cn: "长元音 ɑː",
-        audio: "car",
-        image: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?q=20&w=1200&auto=format&fit=crop",
-        exampleEn: "car, start, palm",
-        exampleCn: "示例：car, start, palm",
-        distractors: ["/æ/", "/ʌ/", "/ɒ/"]
-      },
-      {
-        id: "ph-7",
-        word: "/ɒ/",
-        phonetic: "short o",
-        cn: "短元音 ɒ",
-        audio: "hot",
-        image: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?q=20&w=1200&auto=format&fit=crop",
-        exampleEn: "hot, box, dog",
-        exampleCn: "示例：hot, box, dog",
-        distractors: ["/ɔː/", "/ʌ/", "/ɑː/"]
-      },
-      {
-        id: "ph-8",
-        word: "/ɔː/",
-        phonetic: "long o",
-        cn: "长元音 ɔː",
-        audio: "door",
-        image: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?q=20&w=1200&auto=format&fit=crop",
-        exampleEn: "door, small, talk",
-        exampleCn: "示例：door, small, talk",
-        distractors: ["/ɒ/", "/ʊ/", "/əʊ/"]
-      },
-      {
-        id: "ph-9",
-        word: "/ʊ/",
-        phonetic: "short oo",
-        cn: "短元音 ʊ",
-        audio: "book",
-        image: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?q=20&w=1200&auto=format&fit=crop",
-        exampleEn: "book, good, foot",
-        exampleCn: "示例：book, good, foot",
-        distractors: ["/uː/", "/ɒ/", "/ɔː/"]
-      },
-      {
-        id: "ph-10",
-        word: "/uː/",
-        phonetic: "long oo",
-        cn: "长元音 uː",
-        audio: "food",
-        image: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?q=20&w=1200&auto=format&fit=crop",
-        exampleEn: "food, blue, school",
-        exampleCn: "示例：food, blue, school",
-        distractors: ["/ʊ/", "/ɔː/", "/əʊ/"]
-      },
-      {
-        id: "ph-11",
-        word: "/ə/",
-        phonetic: "schwa",
-        cn: "弱读音 ə",
-        audio: "about",
-        image: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?q=20&w=1200&auto=format&fit=crop",
-        exampleEn: "about, teacher, banana",
-        exampleCn: "示例：about, teacher, banana",
-        distractors: ["/ʌ/", "/ɜː/", "/e/"]
-      },
-      {
-        id: "ph-12",
-        word: "/ɜː/",
-        phonetic: "long er",
-        cn: "长元音 ɜː",
-        audio: "bird",
-        image: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?q=20&w=1200&auto=format&fit=crop",
-        exampleEn: "bird, nurse, word",
-        exampleCn: "示例：bird, nurse, word",
-        distractors: ["/ə/", "/ɔː/", "/ɑː/"]
-      },
-      {
-        id: "ph-13",
-        word: "/θ/",
-        phonetic: "voiceless th",
-        cn: "清辅音 θ",
-        audio: "think",
-        image: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?q=20&w=1200&auto=format&fit=crop",
-        exampleEn: "think, bath, teeth",
-        exampleCn: "示例：think, bath, teeth",
-        distractors: ["/ð/", "/s/", "/t/"]
-      },
-      {
-        id: "ph-14",
-        word: "/ð/",
-        phonetic: "voiced th",
-        cn: "浊辅音 ð",
-        audio: "this",
-        image: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?q=20&w=1200&auto=format&fit=crop",
-        exampleEn: "this, mother, those",
-        exampleCn: "示例：this, mother, those",
-        distractors: ["/θ/", "/z/", "/d/"]
-      },
-      {
-        id: "ph-15",
-        word: "/ʃ/",
-        phonetic: "sh",
-        cn: "辅音 ʃ",
-        audio: "ship",
-        image: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?q=20&w=1200&auto=format&fit=crop",
-        exampleEn: "she, shop, fish",
-        exampleCn: "示例：she, shop, fish",
-        distractors: ["/s/", "/tʃ/", "/ʒ/"]
-      },
-      {
-        id: "ph-16",
-        word: "/tʃ/",
-        phonetic: "ch",
-        cn: "辅音 tʃ",
-        audio: "chair",
-        image: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?q=20&w=1200&auto=format&fit=crop",
-        exampleEn: "chair, chicken, watch",
-        exampleCn: "示例：chair, chicken, watch",
-        distractors: ["/ʃ/", "/dʒ/", "/s/"]
-      },
-      {
-        id: "ph-17",
-        word: "/dʒ/",
-        phonetic: "j",
-        cn: "辅音 dʒ",
-        audio: "job",
-        image: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?q=20&w=1200&auto=format&fit=crop",
-        exampleEn: "job, orange, bridge",
-        exampleCn: "示例：job, orange, bridge",
-        distractors: ["/tʃ/", "/ʒ/", "/g/"]
-      },
-      {
-        id: "ph-18",
-        word: "/ŋ/",
-        phonetic: "ng",
-        cn: "辅音 ŋ",
-        audio: "sing",
-        image: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?q=20&w=1200&auto=format&fit=crop",
-        exampleEn: "sing, long, king",
-        exampleCn: "示例：sing, long, king",
-        distractors: ["/n/", "/g/", "/m/"]
-      }
-    ]
+    items: PHONETIC_ITEMS,
   }
-
-
 ];
 
 
@@ -2812,7 +2737,11 @@ export const getAllVocabItems = (): VocabItem[] =>
   VOCAB_DATA.flatMap((category) => category.items);
 
 export const getAllVocabCategory = (): Category => {
-  const items = getAllVocabItems().slice().sort((a, b) => a.word.localeCompare(b.word, "en", { sensitivity: "base" }));
+  const items = VOCAB_DATA
+    .filter((category) => category.id !== "phonetics")
+    .flatMap((category) => category.items)
+    .slice()
+    .sort((a, b) => a.word.localeCompare(b.word, "en", { sensitivity: "base" }));
   return {
     id: ALL_VOCAB_CATEGORY_ID,
     title: "A-Z",
