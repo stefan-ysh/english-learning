@@ -3,11 +3,10 @@
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { ArrowLeft, Timer, Trophy } from "lucide-react";
-import { VOCAB_DATA } from "@/lib/vocab-data";
-import { PHRASE_CATEGORIES } from "@/lib/phrases-data";
 import { useI18n } from "@/lib/i18n-context";
 import { QuizCardSelect } from "@/components/vocab/QuizCardSelect";
 import { usePracticeStore } from "@/lib/practice-store";
+import { generateQuickQuestions } from "../actions";
 
 type QuickQuestion = {
     id: string;
@@ -16,68 +15,49 @@ type QuickQuestion = {
     phonetic?: string;
     options: string[];
     type: "vocab" | "phrase";
-};
-
-const pickRandom = <T,>(list: T[], count: number) => {
-    const shuffled = [...list].sort(() => Math.random() - 0.5);
-    return shuffled.slice(0, count);
+    image: string;
 };
 
 export default function QuickQuizPage() {
     const { t } = useI18n();
     const recordMistake = usePracticeStore((state) => state.recordMistake);
+
+    const [duration, setDuration] = useState<120 | 180 | 300>(180);
     const [questions, setQuestions] = useState<QuickQuestion[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [score, setScore] = useState(0);
-    const [duration, setDuration] = useState<120 | 180 | 300>(180);
     const [timeLeft, setTimeLeft] = useState(180);
     const [finished, setFinished] = useState(false);
 
     useEffect(() => {
-        const vocabPool = VOCAB_DATA.flatMap((c) => c.items);
-        const phrasePool = PHRASE_CATEGORIES.flatMap((c) => c.items);
+        const init = async () => {
+            setIsLoading(true);
+            const data = await generateQuickQuestions(180);
+            setQuestions(data);
+            setIsLoading(false);
+        };
+        init();
+    }, []);
 
-        const questionCount = duration === 120 ? 6 : duration === 300 ? 12 : 8;
-        const vocabCount = Math.floor(questionCount / 2);
-        const phraseCount = questionCount - vocabCount;
+    // Reset game when duration changes
+    const handleDurationChange = async (newDuration: 120 | 180 | 300) => {
+        setIsLoading(true);
+        setDuration(newDuration);
 
-        const vocabQuestions = pickRandom(vocabPool, vocabCount).map((item) => {
-            const other = pickRandom(
-                vocabPool.filter((v) => v.id !== item.id).map((v) => v.cn),
-                3
-            );
-            const options = pickRandom([item.cn, ...other], 4);
-            return {
-                id: item.id,
-                word: item.word,
-                cn: item.cn,
-                phonetic: item.phonetic,
-                options,
-                type: "vocab",
-            } as QuickQuestion;
-        });
-
-        const phraseQuestions = pickRandom(phrasePool, phraseCount).map((item) => {
-            const other = pickRandom(
-                phrasePool.filter((p) => p.id !== item.id).map((p) => p.cn),
-                3
-            );
-            const options = pickRandom([item.cn, ...other], 4);
-            return {
-                id: item.id,
-                word: item.english,
-                cn: item.cn,
-                options,
-                type: "phrase",
-            } as QuickQuestion;
-        });
-
-        setQuestions(pickRandom([...vocabQuestions, ...phraseQuestions], questionCount));
+        // Reset state immediately
         setCurrentIndex(0);
         setScore(0);
         setFinished(false);
-        setTimeLeft(duration);
-    }, [duration]);
+        setTimeLeft(newDuration);
+
+        // Fetch new questions
+        const data = await generateQuickQuestions(newDuration);
+        setQuestions(data);
+        setIsLoading(false);
+    };
+
+
 
     useEffect(() => {
         if (finished) return;
@@ -111,7 +91,7 @@ export default function QuickQuizPage() {
         }
     };
 
-    if (!questions.length) {
+    if (isLoading || !questions.length) {
         return (
             <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-950">
                 <div className="w-full max-w-md p-6 bg-white dark:bg-slate-900 rounded-3xl border border-gray-100 dark:border-slate-800 animate-pulse">
@@ -159,7 +139,7 @@ export default function QuickQuizPage() {
                 {[120, 180, 300].map((secs) => (
                     <button
                         key={secs}
-                        onClick={() => setDuration(secs as 120 | 180 | 300)}
+                        onClick={() => handleDurationChange(secs as 120 | 180 | 300)}
                         className={`px-3 py-1 rounded-full text-xs font-bold border ${duration === secs ? "bg-black text-white dark:bg-white dark:text-black" : "bg-white dark:bg-slate-900 text-gray-500 dark:text-gray-400"}`}
                     >
                         {t("practice.duration", { minutes: Math.round(secs / 60) })}

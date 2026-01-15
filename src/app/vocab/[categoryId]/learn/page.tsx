@@ -19,8 +19,8 @@ export default function LearnPage({ params }: PageProps) {
     const { categoryId } = use(params);
     const { t } = useI18n();
     const [mounted, setMounted] = useState(false);
-    const [order, setOrder] = useState<"default" | "az">("default");
-    const [oxfordLevel, setOxfordLevel] = useState<"B2" | "C1">("B2");
+    const [order, setOrder] = useState<"default" | "az">(() => (categoryId.startsWith("oxford_") || categoryId === "all-az") ? "az" : "default");
+    const [oxfordLevel, setOxfordLevel] = useState<"B2" | "C1">(() => categoryId.endsWith("c1") ? "C1" : "B2");
     const [jumpIndex, setJumpIndex] = useState<number | null>(null);
 
     useEffect(() => {
@@ -30,18 +30,14 @@ export default function LearnPage({ params }: PageProps) {
 
     const category = getVocabCategory(categoryId);
     const isOxfordCategory = categoryId.startsWith("oxford_");
+
     const activeOxfordId = `oxford_${oxfordLevel.toLowerCase()}`;
     const activeCategory = isOxfordCategory ? getVocabCategory(activeOxfordId) : category;
 
     useEffect(() => {
-        if (isOxfordCategory) {
-            setOxfordLevel(categoryId.endsWith("c1") ? "C1" : "B2");
-            setOrder("az");
-        } else {
-            setOrder("default");
-        }
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setJumpIndex(null);
-    }, [categoryId, isOxfordCategory]);
+    }, [categoryId]);
 
     if (!activeCategory) {
         notFound();
@@ -128,7 +124,7 @@ export default function LearnPage({ params }: PageProps) {
                     categoryId={activeCategory.id}
                     jumpIndex={jumpIndex}
                 />
-                {isOxfordCategory && (
+                {order === "az" && (
                     <div className="absolute right-1 top-10 bottom-10 flex flex-col items-center justify-center gap-1 text-[10px] font-bold text-gray-400">
                         {Array.from({ length: 26 }, (_, i) => String.fromCharCode(65 + i)).map((letter) => {
                             const idx = letterIndex.get(letter);

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import Link from "next/link";
 import { ArrowLeft, CheckCircle2, XCircle } from "lucide-react";
 import { PATTERN_DATA } from "@/lib/pattern-data";
@@ -15,14 +15,10 @@ const pickRandom = <T,>(list: T[], count: number) => {
 export default function PatternPracticePage() {
     const { t, lang } = useI18n();
     const recordMistake = usePracticeStore((state) => state.recordMistake);
-    const [items, setItems] = useState<typeof PATTERN_DATA>([]);
+    const [items] = useState<typeof PATTERN_DATA>(() => pickRandom(PATTERN_DATA, 6));
     const [currentIndex, setCurrentIndex] = useState(0);
     const [selected, setSelected] = useState<string | null>(null);
     const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
-
-    useEffect(() => {
-        setItems(pickRandom(PATTERN_DATA, 6));
-    }, []);
 
     const current = items[currentIndex];
     const progress = useMemo(() => {

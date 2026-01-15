@@ -33,36 +33,37 @@ export default function PhraseQuizPage({ params }: PageProps) {
     const [pendingRecord, setPendingRecord] = useState(false);
 
 
-    const [questions, setQuestions] = useState<{ item: typeof PHRASE_CATEGORIES[0]['items'][0], options?: string[] }[]>([]);
+    // Prepare questions with useState lazy initializer to ensure stability without side effects
+    const [questions] = useState(() => {
+        if (!category) return [];
+
+        // 1. Shuffle items
+        const shuffled = [...category.items].sort(() => Math.random() - 0.5);
+
+        // 2. Pre-calculate options
+        return shuffled.map((item) => {
+            const otherItems = PHRASE_CATEGORIES
+                .flatMap(c => c.items)
+                .filter(i => i.id !== item.id)
+                .sort(() => Math.random() - 0.5)
+                .slice(0, 3)
+                .map(i => i.cn);
+
+            const options = [item.cn, ...otherItems].sort(() => Math.random() - 0.5);
+
+            return { item, options };
+        });
+    });
 
     useEffect(() => {
-        if (category && questions.length === 0) {
-            // 1. Shuffle items
-            const shuffled = [...category.items].sort(() => Math.random() - 0.5);
-
-            // 2. Pre-calculate options
-            const prepared = shuffled.map((item) => {
-                const otherItems = PHRASE_CATEGORIES
-                    .flatMap(c => c.items)
-                    .filter(i => i.id !== item.id)
-                    .sort(() => Math.random() - 0.5)
-                    .slice(0, 3)
-                    .map(i => i.cn);
-
-                const options = [item.cn, ...otherItems].sort(() => Math.random() - 0.5);
-
-                return { item, options };
-            });
-            // eslint-disable-next-line react-hooks/set-state-in-effect
-            setQuestions(prepared);
-        }
         // eslint-disable-next-line react-hooks/set-state-in-effect
         setMounted(true);
-    }, [category, questions.length]);
+    }, []);
 
     useEffect(() => {
         if (hasHydrated && pendingRecord) {
             recordActivity();
+            // eslint-disable-next-line react-hooks/set-state-in-effect
             setPendingRecord(false);
         }
     }, [hasHydrated, pendingRecord, recordActivity]);

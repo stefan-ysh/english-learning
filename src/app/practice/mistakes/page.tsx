@@ -10,6 +10,7 @@ export default function MistakesPage() {
     const mistakes = usePracticeStore((state) => state.mistakes);
     const clearMistakes = usePracticeStore((state) => state.clearMistakes);
     const removeMistake = usePracticeStore((state) => state.removeMistake);
+    const hasHydrated = usePracticeStore((state) => state.hasHydrated);
 
     const entries = Object.values(mistakes).sort((a, b) => b.count - a.count);
     const grouped = entries.reduce<Record<string, typeof entries>>((acc, entry) => {
@@ -17,6 +18,18 @@ export default function MistakesPage() {
         acc[entry.type].push(entry);
         return acc;
     }, {});
+
+    if (!hasHydrated) {
+        return (
+            <main className="flex min-h-screen flex-col items-center p-4 md:p-24 bg-gray-50 dark:bg-gray-950">
+                <div className="w-full max-w-3xl space-y-4">
+                    <div className="bg-white dark:bg-slate-900 rounded-3xl p-8 border border-gray-100 dark:border-slate-800 text-center text-gray-500 animate-pulse">
+                        loading...
+                    </div>
+                </div>
+            </main>
+        );
+    }
 
     return (
         <main className="flex min-h-screen flex-col items-center p-4 md:p-24 bg-gray-50 dark:bg-gray-950">

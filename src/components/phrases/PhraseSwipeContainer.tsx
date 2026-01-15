@@ -22,9 +22,7 @@ export function PhraseSwipeContainer({ items }: PhraseSwipeContainerProps) {
     const { t } = useI18n();
 
     // Safety check for empty items
-    if (!items || items.length === 0) {
-        return <div>No phrases found.</div>;
-    }
+
 
     const currentItem = items[currentIndex];
     const progress = ((currentIndex + 1) / items.length) * 100;
@@ -33,9 +31,14 @@ export function PhraseSwipeContainer({ items }: PhraseSwipeContainerProps) {
         if (!hasHydrated) return;
         if (!hasRecorded && currentIndex === items.length - 1) {
             recordActivity();
+            // eslint-disable-next-line react-hooks/set-state-in-effect
             setHasRecorded(true);
         }
     }, [currentIndex, hasRecorded, hasHydrated, items.length, recordActivity]);
+
+    if (!items || items.length === 0) {
+        return <div>No phrases found.</div>;
+    }
 
     const handleDragEnd = (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
         if (info.offset.x < -100) {

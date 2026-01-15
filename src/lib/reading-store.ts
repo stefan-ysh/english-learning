@@ -5,17 +5,20 @@ type ReadingState = {
     bookmarks: string[];
     readArticles: string[];
     lastReadAt: Record<string, string>;
+    hasHydrated: boolean;
     toggleBookmark: (id: string) => void;
     markRead: (id: string) => void;
     resetReading: () => void;
+    setHasHydrated: (state: boolean) => void;
 };
 
 export const useReadingStore = create<ReadingState>()(
     persist(
-        (set, get) => ({
+        (set) => ({
             bookmarks: [],
             readArticles: [],
             lastReadAt: {},
+            hasHydrated: false,
             toggleBookmark: (id) =>
                 set((state) => {
                     const isBookmarked = state.bookmarks.includes(id);
@@ -36,7 +39,13 @@ export const useReadingStore = create<ReadingState>()(
                     },
                 })),
             resetReading: () => set({ bookmarks: [], readArticles: [], lastReadAt: {} }),
+            setHasHydrated: (state) => set({ hasHydrated: state }),
         }),
-        { name: "reading-storage" }
+        {
+            name: "reading-storage",
+            onRehydrateStorage: (state) => {
+                return () => state?.setHasHydrated(true);
+            },
+        }
     )
 );

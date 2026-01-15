@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import Link from "next/link";
 import { ArrowLeft, Volume2, CheckCircle2, XCircle } from "lucide-react";
 import { PHRASE_CATEGORIES } from "@/lib/phrases-data";
@@ -24,17 +24,12 @@ const normalizeAnswer = (text: string) => {
 export default function DictationPage() {
     const { t } = useI18n();
     const recordMistake = usePracticeStore((state) => state.recordMistake);
-    const [items, setItems] = useState<typeof PHRASE_CATEGORIES[0]["items"]>([]);
+    const [items] = useState<typeof PHRASE_CATEGORIES[0]["items"]>(() => pickRandom(PHRASE_CATEGORIES.flatMap((c) => c.items), 6));
     const [currentIndex, setCurrentIndex] = useState(0);
     const [answer, setAnswer] = useState("");
     const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
     const [isPlaying, setIsPlaying] = useState(false);
     const [showAnswer, setShowAnswer] = useState(false);
-
-    useEffect(() => {
-        const all = PHRASE_CATEGORIES.flatMap((c) => c.items);
-        setItems(pickRandom(all, 6));
-    }, []);
 
     const current = items[currentIndex];
 

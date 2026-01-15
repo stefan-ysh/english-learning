@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, use } from "react";
-import { getAllVocabItems, getVocabCategory, type VocabItem } from "@/lib/vocab-data";
+import { getAllVocabItems, getVocabCategory } from "@/lib/vocab-data";
 import { ArrowLeft, RefreshCw, Trophy } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -38,47 +38,50 @@ export default function QuizPage({ params }: PageProps) {
     const [isFinished, setIsFinished] = useState(false);
     const [pendingRecord, setPendingRecord] = useState(false);
 
-    const [questions, setQuestions] = useState<{ item: VocabItem; options?: string[]; answer?: string }[]>([]);
-
     const [mounted, setMounted] = useState(false);
-    useEffect(() => {
-        if (category && questions.length === 0) {
-            const isAudioSelectCategory = category.id === "alphabet" || category.id === "phonetics";
-            // 1. Shuffle items
-            const shuffled = [...category.items].sort(() => Math.random() - 0.5);
 
-            // 2. Pre-calculate options for all items to ensure stability
-            const prepared = shuffled.map((item) => {
-                if (isAudioSelectCategory) {
-                    const otherItems = category.items
-                        .filter((i) => i.id !== item.id)
-                        .sort(() => Math.random() - 0.5)
-                        .slice(0, 3)
-                        .map((i) => i.word);
-                    const options = [item.word, ...otherItems].sort(() => Math.random() - 0.5);
-                    return { item, options, answer: item.word };
-                }
+    // Prepare questions with useMemo to ensure stability without side effects
+    // Prepare questions with useState lazy initializer to ensure stability and only run once
+    const [questions] = useState(() => {
+        if (!category) return [];
 
-                const otherItems = getAllVocabItems()
+        const isAudioSelectCategory = category.id === "alphabet" || category.id === "phonetics";
+        // 1. Shuffle items
+        const shuffled = [...category.items].sort(() => Math.random() - 0.5);
+
+        // 2. Pre-calculate options for all items to ensure stability
+        return shuffled.map((item) => {
+            if (isAudioSelectCategory) {
+                const otherItems = category.items
                     .filter((i) => i.id !== item.id)
                     .sort(() => Math.random() - 0.5)
                     .slice(0, 3)
-                    .map((i) => i.cn);
+                    .map((i) => i.word);
+                const options = [item.word, ...otherItems].sort(() => Math.random() - 0.5);
+                return { item, options, answer: item.word };
+            }
 
-                const options = [item.cn, ...otherItems].sort(() => Math.random() - 0.5);
+            const otherItems = getAllVocabItems()
+                .filter((i) => i.id !== item.id)
+                .sort(() => Math.random() - 0.5)
+                .slice(0, 3)
+                .map((i) => i.cn);
 
-                return { item, options, answer: item.cn };
-            });
-            // eslint-disable-next-line react-hooks/set-state-in-effect
-            setQuestions(prepared);
-        }
+            const options = [item.cn, ...otherItems].sort(() => Math.random() - 0.5);
+
+            return { item, options, answer: item.cn };
+        });
+    });
+
+    useEffect(() => {
         // eslint-disable-next-line react-hooks/set-state-in-effect
         setMounted(true);
-    }, [category, questions.length]);
+    }, []);
 
     useEffect(() => {
         if (hasHydrated && pendingRecord) {
             recordActivity();
+            // eslint-disable-next-line react-hooks/set-state-in-effect
             setPendingRecord(false);
         }
     }, [hasHydrated, pendingRecord, recordActivity]);

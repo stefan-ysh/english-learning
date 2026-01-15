@@ -1,8 +1,15 @@
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { ArrowRight, Utensils, Carrot, Sparkles, BookOpen, Home, GraduationCap, Briefcase, Stethoscope, Plane, Cpu } from "lucide-react";
-import { Category } from "@/lib/vocab-data";
 import { useI18n } from "@/lib/i18n-context";
+
+export interface CategorySummary {
+    id: string;
+    icon: string;
+    color: string;
+    cover: string;
+    itemCount: number;
+}
 
 // Map string icon names to Lucide components
 const IconMap: Record<string, React.ReactNode> = {
@@ -19,7 +26,7 @@ const IconMap: Record<string, React.ReactNode> = {
 };
 
 interface CategoryCardProps {
-    category: Category;
+    category: CategorySummary;
 }
 
 export function CategoryCard({ category }: CategoryCardProps) {
@@ -50,7 +57,7 @@ export function CategoryCard({ category }: CategoryCardProps) {
                     <h3 className="mt-4 text-xl font-semibold sm:text-2xl drop-shadow-sm">{t(`cat.${category.id}`)}</h3>
 
                     <p className="mt-4 text-sm sm:text-base text-white/80">
-                        {category.items.length} {t("vocab.learn_count")}
+                        {category.itemCount} {t("vocab.learn_count")}
                     </p>
 
                     <p className="mt-8 inline-flex items-center gap-2 text-white text-sm font-bold bg-white/15 px-3 py-1.5 rounded-full">

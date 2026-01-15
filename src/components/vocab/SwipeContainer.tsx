@@ -8,7 +8,7 @@ import { RotateCcw, ArrowLeft, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { useActivityStore } from "@/lib/use-activity-store";
 import { useI18n } from "@/lib/i18n-context";
-import { stopAllAudio, markUserInteracted } from "@/lib/tts";
+import { stopAllAudio, markUserInteracted, canAutoPlayAudio } from "@/lib/tts";
 
 interface SwipeContainerProps {
     items: VocabItem[];
@@ -21,29 +21,29 @@ export function SwipeContainer({ items, categoryId, jumpIndex }: SwipeContainerP
     const [direction, setDirection] = useState(0); // -1 for left, 1 for right
     const [hasRecorded, setHasRecorded] = useState(false);
     const [swipeOut, setSwipeOut] = useState<"left" | "right" | null>(null);
+    const [showSwipeHint, setShowSwipeHint] = useState(true);
     const recordActivity = useActivityStore((state) => state.recordActivity);
     const hasHydrated = useActivityStore((state) => state.hasHydrated);
     const { t } = useI18n();
 
-    if (!items || items.length === 0) {
-        return <div>No items found.</div>;
-    }
 
-    const currentItem = items[currentIndex];
+
+    const currentItem = items?.[currentIndex];
+
+    // Safety check moved after hooks
+
+
+    // Calculate completion percentage
     // Calculate completion percentage
     const progress = ((currentIndex + 1) / items.length) * 100;
 
-    useEffect(() => {
-        setHasRecorded(false);
-        setCurrentIndex(0);
-        setDirection(0);
-        setSwipeOut(null);
-    }, [categoryId]);
+
 
     useEffect(() => {
         if (jumpIndex === null || jumpIndex === undefined) return;
         if (jumpIndex < 0 || jumpIndex >= items.length) return;
         stopAllAudio();
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setDirection(0);
         setCurrentIndex(jumpIndex);
     }, [jumpIndex, items.length]);
@@ -52,9 +52,24 @@ export function SwipeContainer({ items, categoryId, jumpIndex }: SwipeContainerP
         if (!hasHydrated) return;
         if (!hasRecorded && currentIndex === items.length - 1) {
             recordActivity();
+            // eslint-disable-next-line react-hooks/set-state-in-effect
             setHasRecorded(true);
         }
     }, [currentIndex, hasRecorded, hasHydrated, items.length, recordActivity]);
+
+    useEffect(() => {
+        if (currentIndex !== 0) {
+            // eslint-disable-next-line react-hooks/set-state-in-effect
+            setShowSwipeHint(false);
+            return;
+        }
+        const timer = window.setTimeout(() => setShowSwipeHint(false), 2500);
+        return () => window.clearTimeout(timer);
+    }, [currentIndex]);
+
+    if (!items || items.length === 0) {
+        return <div>No items found.</div>;
+    }
 
     const handleDragEnd = (event: globalThis.MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
         if (info.offset.x < -100) {
@@ -125,6 +140,23 @@ export function SwipeContainer({ items, categoryId, jumpIndex }: SwipeContainerP
             <div className="relative w-full h-[60vh] flex items-center justify-center perspective-1000">
                 <div className="absolute inset-6 rounded-[28px] bg-white/70 dark:bg-slate-800/60 border border-white/60 dark:border-slate-700/60 shadow-lg translate-y-4 rotate-2"></div>
                 <div className="absolute inset-8 rounded-[28px] bg-white/50 dark:bg-slate-900/50 border border-white/50 dark:border-slate-700/50 shadow-md translate-y-7 -rotate-2"></div>
+                {!canAutoPlayAudio() && (
+                    <div className="absolute top-2 left-1/2 -translate-x-1/2 text-[11px] px-3 py-1 rounded-full bg-black/70 text-white z-20">
+                        {t("audio.tap_to_enable")}
+                    </div>
+                )}
+                {showSwipeHint && (
+                    <motion.div
+                        initial={{ opacity: 0, y: 6 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 6 }}
+                        className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-2 text-xs font-semibold text-gray-500 dark:text-gray-300"
+                    >
+                        <span className="animate-pulse">←</span>
+                        {t("learn.swipe_hint")}
+                        <span className="animate-pulse">→</span>
+                    </motion.div>
+                )}
                 <AnimatePresence initial={false} custom={direction} mode="wait">
                     <motion.div
                         key={currentIndex}

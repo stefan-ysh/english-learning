@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { VocabItem } from "@/lib/vocab-data";
 import { Volume2, CheckCircle, XCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -40,6 +40,9 @@ export function QuizCardSelect({
     const [isSpeaking, setIsSpeaking] = useState(false);
     const [showHint, setShowHint] = useState(false);
     const [hasInteracted, setHasInteracted] = useState(false);
+    const [audioError, setAudioError] = useState(false);
+    const [audioProgress, setAudioProgress] = useState<number | null>(null);
+    const progressStroke = useMemo(() => 2 * Math.PI * 28, []);
 
     useEffect(() => {
         if (canAutoPlayAudio()) {
@@ -50,6 +53,8 @@ export function QuizCardSelect({
         setIsCorrect(null);
         setIsSpeaking(false);
         setShowHint(false);
+        setAudioError(false);
+        setAudioProgress(null);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [item.id]);
 
@@ -62,16 +67,26 @@ export function QuizCardSelect({
 
     const playAudio = () => {
         handleFirstInteraction();
+        setAudioError(false);
+        setAudioProgress(null);
         if (item.audio && (item.audio.startsWith("http") || item.audio.startsWith("/"))) {
             playAudioUrl(item.audio, {
                 onStart: () => setIsSpeaking(true),
-                onEnd: () => setIsSpeaking(false),
+                onEnd: () => {
+                    setIsSpeaking(false);
+                    setAudioProgress(null);
+                },
+                onError: () => setAudioError(true),
+                onProgress: (progress) => setAudioProgress(progress),
             });
             return;
         }
         speak(item.audio || item.word, {
             onStart: () => setIsSpeaking(true),
-            onEnd: () => setIsSpeaking(false),
+            onEnd: () => {
+                setIsSpeaking(false);
+                setAudioProgress(null);
+            },
         });
     };
 
@@ -110,10 +125,31 @@ export function QuizCardSelect({
                     <button
                         onClick={playAudio}
                         aria-pressed={isSpeaking}
-                        className={`w-16 h-16 rounded-full bg-pink-100 dark:bg-pink-900/30 flex items-center justify-center text-pink-500 hover:scale-110 active:scale-95 transition-transform ${isSpeaking ? "ring-2 ring-pink-300" : ""}`}
+                        title={audioError ? "Audio failed to load" : "Play audio"}
+                        className={`relative w-16 h-16 rounded-full bg-pink-100 dark:bg-pink-900/30 flex items-center justify-center hover:scale-110 active:scale-95 transition-transform ${isSpeaking ? "ring-2 ring-pink-300" : ""} ${audioError ? "ring-2 ring-red-400" : ""}`}
                     >
-                        <Volume2 className={`w-8 h-8 ${isSpeaking ? "animate-pulse" : ""}`} />
+                        {isSpeaking && (
+                            <svg
+                                className={`absolute inset-0 w-full h-full -rotate-90 pointer-events-none ${audioProgress === null ? "animate-spin" : ""}`}
+                                viewBox="0 0 64 64"
+                            >
+                                <circle
+                                    cx="32"
+                                    cy="32"
+                                    r="28"
+                                    fill="none"
+                                    stroke={audioError ? "#f87171" : "#ec4899"}
+                                    strokeWidth="4"
+                                    strokeDasharray={progressStroke}
+                                    strokeDashoffset={audioProgress === null ? progressStroke * 0.25 : progressStroke * (1 - audioProgress)}
+                                />
+                            </svg>
+                        )}
+                        <Volume2 className={`w-8 h-8 z-10 ${audioError ? "text-red-500" : "text-pink-500"} ${isSpeaking ? "animate-pulse" : ""}`} />
                     </button>
+                    {audioError && (
+                        <div className="text-xs font-semibold text-red-500">{t("audio.load_failed")}</div>
+                    )}
                     {showWord ? (
                         <h3 className="text-4xl font-bold">{item.word}</h3>
                     ) : (

@@ -4,6 +4,8 @@ export interface TTSOptions {
     volume?: number;
     onStart?: () => void;
     onEnd?: () => void;
+    onError?: () => void;
+    onProgress?: (progress: number) => void;
 }
 
 let activeAudio: HTMLAudioElement | null = null;
@@ -17,9 +19,11 @@ export const canAutoPlayAudio = () => hasUserInteracted;
 
 export const stopAllAudio = () => {
     if (activeAudio) {
-        activeAudio.pause();
-        activeAudio.currentTime = 0;
+        const audio = activeAudio;
         activeAudio = null;
+        audio.pause();
+        audio.currentTime = 0;
+        audio.dispatchEvent(new Event("ended"));
     }
     if (typeof window !== "undefined" && "speechSynthesis" in window) {
         window.speechSynthesis.cancel();
@@ -33,8 +37,17 @@ export const playAudioUrl = (url: string, options: TTSOptions = {}) => {
     stopAllAudio();
     const audio = new Audio(url);
     activeAudio = audio;
+    if (options.onProgress) {
+        options.onProgress(0);
+    }
     if (options.onStart) {
         options.onStart();
+    }
+    if (options.onProgress) {
+        audio.addEventListener("timeupdate", () => {
+            if (!audio.duration || Number.isNaN(audio.duration)) return;
+            options.onProgress?.(audio.currentTime / audio.duration);
+        });
     }
     audio.addEventListener(
         "ended",
@@ -42,18 +55,29 @@ export const playAudioUrl = (url: string, options: TTSOptions = {}) => {
             if (activeAudio === audio) {
                 activeAudio = null;
             }
+            if (options.onProgress) {
+                options.onProgress(1);
+            }
             if (options.onEnd) {
                 options.onEnd();
             }
         },
         { once: true }
     );
-    audio.play().catch(() => {
+    audio.play().catch((error) => {
+        if (error && typeof error === "object" && "name" in error) {
+            if ((error as { name?: string }).name === "AbortError") {
+                return;
+            }
+        }
         if (activeAudio === audio) {
             activeAudio = null;
         }
         if (options.onEnd) {
             options.onEnd();
+        }
+        if (options.onError) {
+            options.onError();
         }
     });
 };

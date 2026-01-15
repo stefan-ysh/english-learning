@@ -97,55 +97,55 @@ export default function GrammarPage() {
                                                             const isCnVisible = revealState[key]?.cn ?? false;
                                                             const isExpVisible = revealState[key]?.exp ?? false;
                                                             return (
-                                                            <motion.div
-                                                                key={i}
-                                                                initial={{ opacity: 0, y: 8 }}
-                                                                animate={{ opacity: 1, y: 0 }}
-                                                                transition={{ duration: 0.2, delay: i * 0.05 }}
-                                                                className="bg-gray-50 dark:bg-slate-800 p-4 rounded-xl border border-gray-100 dark:border-slate-700"
-                                                            >
-                                                                <div className="flex items-center justify-between mb-1">
-                                                                    <span className="font-bold text-indigo-600 dark:text-indigo-400">{ex.en}</span>
-                                                                    <Book className="w-4 h-4 text-gray-300" />
-                                                                </div>
-                                                                <div className="flex flex-wrap gap-2 mb-3">
-                                                                    <button
-                                                                        onClick={() => {
-                                                                            setSpeakingKey(key);
-                                                                            speak(ex.en, {
-                                                                                onEnd: () => setSpeakingKey(null),
-                                                                                onStart: () => setSpeakingKey(key),
-                                                                            });
-                                                                        }}
-                                                                        aria-pressed={speakingKey === key}
-                                                                        disabled={speakingKey === key}
-                                                                        className="px-3 py-1 rounded-full text-xs font-bold bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-700 text-gray-700 dark:text-gray-200 hover:border-indigo-400 transition-colors flex items-center gap-1 disabled:opacity-60"
-                                                                    >
-                                                                        <Volume2 className={`w-3 h-3 ${speakingKey === key ? "animate-pulse" : ""}`} />
-                                                                        {t("grammar.listen")}
-                                                                    </button>
-                                                                    <button
-                                                                        onClick={() => toggleReveal(key, "cn")}
-                                                                        className="px-3 py-1 rounded-full text-xs font-bold bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-700 text-gray-700 dark:text-gray-200 hover:border-indigo-400 transition-colors flex items-center gap-1"
-                                                                    >
-                                                                        {isCnVisible ? <EyeOff className="w-3 h-3" /> : <Eye className="w-3 h-3" />}
-                                                                        {isCnVisible ? t("grammar.hide_translation") : t("grammar.show_translation")}
-                                                                    </button>
-                                                                    <button
-                                                                        onClick={() => toggleReveal(key, "exp")}
-                                                                        className="px-3 py-1 rounded-full text-xs font-bold bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-700 text-gray-700 dark:text-gray-200 hover:border-indigo-400 transition-colors flex items-center gap-1"
-                                                                    >
-                                                                        {isExpVisible ? <EyeOff className="w-3 h-3" /> : <Eye className="w-3 h-3" />}
-                                                                        {isExpVisible ? t("grammar.hide_analysis") : t("grammar.show_analysis")}
-                                                                    </button>
-                                                                </div>
-                                                                <div className="text-gray-500 text-sm mb-2">
-                                                                    {isCnVisible ? ex.cn : t("grammar.tap_reveal_cn")}
-                                                                </div>
-                                                                <div className="text-xs text-orange-500 font-mono bg-orange-50 dark:bg-orange-900/20 inline-block px-2 py-1 rounded">
-                                                                    {isExpVisible ? (lang === 'cn' ? (ex.explanationCn || ex.explanation) : ex.explanation) : t("grammar.tap_reveal_exp")}
-                                                                </div>
-                                                            </motion.div>
+                                                                <motion.div
+                                                                    key={i}
+                                                                    initial={{ opacity: 0, y: 8 }}
+                                                                    animate={{ opacity: 1, y: 0 }}
+                                                                    transition={{ duration: 0.2, delay: i * 0.05 }}
+                                                                    className="bg-gray-50 dark:bg-slate-800 p-4 rounded-xl border border-gray-100 dark:border-slate-700"
+                                                                >
+                                                                    <div className="flex items-center justify-between mb-1">
+                                                                        <span className="font-bold text-indigo-600 dark:text-indigo-400">{ex.en}</span>
+                                                                        <Book className="w-4 h-4 text-gray-300" />
+                                                                    </div>
+                                                                    <div className="flex flex-wrap gap-2 mb-3">
+                                                                        <button
+                                                                            onClick={() => {
+                                                                                setSpeakingKey(key);
+                                                                                speak(ex.en, {
+                                                                                    onEnd: () => setSpeakingKey(null),
+                                                                                    onStart: () => setSpeakingKey(key),
+                                                                                });
+                                                                            }}
+                                                                            aria-pressed={speakingKey === key}
+                                                                            disabled={speakingKey === key}
+                                                                            className="px-3 py-1 rounded-full text-xs font-bold bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-700 text-gray-700 dark:text-gray-200 hover:border-indigo-400 transition-colors flex items-center gap-1 disabled:opacity-60"
+                                                                        >
+                                                                            <Volume2 className={`w-3 h-3 ${speakingKey === key ? "animate-pulse" : ""}`} />
+                                                                            {t("grammar.listen")}
+                                                                        </button>
+                                                                        <button
+                                                                            onClick={() => toggleReveal(key, "cn")}
+                                                                            className="px-3 py-1 rounded-full text-xs font-bold bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-700 text-gray-700 dark:text-gray-200 hover:border-indigo-400 transition-colors flex items-center gap-1"
+                                                                        >
+                                                                            {isCnVisible ? <EyeOff className="w-3 h-3" /> : <Eye className="w-3 h-3" />}
+                                                                            {isCnVisible ? t("grammar.hide_translation") : t("grammar.show_translation")}
+                                                                        </button>
+                                                                        <button
+                                                                            onClick={() => toggleReveal(key, "exp")}
+                                                                            className="px-3 py-1 rounded-full text-xs font-bold bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-700 text-gray-700 dark:text-gray-200 hover:border-indigo-400 transition-colors flex items-center gap-1"
+                                                                        >
+                                                                            {isExpVisible ? <EyeOff className="w-3 h-3" /> : <Eye className="w-3 h-3" />}
+                                                                            {isExpVisible ? t("grammar.hide_analysis") : t("grammar.show_analysis")}
+                                                                        </button>
+                                                                    </div>
+                                                                    <div className="text-gray-500 text-sm mb-2">
+                                                                        {isCnVisible ? ex.cn : t("grammar.tap_reveal_cn")}
+                                                                    </div>
+                                                                    <div className="text-xs text-orange-500 font-mono bg-orange-50 dark:bg-orange-900/20 inline-block px-2 py-1 rounded">
+                                                                        {isExpVisible ? (lang === 'cn' ? (ex.explanationCn || ex.explanation) : ex.explanation) : t("grammar.tap_reveal_exp")}
+                                                                    </div>
+                                                                </motion.div>
                                                             );
                                                         })}
 
@@ -153,7 +153,7 @@ export default function GrammarPage() {
                                                             topicId={topic.id}
                                                             prompt={topic.examples[0]?.en || ""}
                                                             correct={topic.examples[0]?.cn || ""}
-                                                            allOptions={GRAMMAR_DATA.flatMap((t) => t.examples.map((ex) => ex.cn))}
+                                                            allOptions={ALL_OPTIONS}
                                                             selection={practiceSelection[topic.id] ?? null}
                                                             onSelect={(value) =>
                                                                 setPracticeSelection((prev) => ({ ...prev, [topic.id]: value }))
@@ -175,6 +175,8 @@ export default function GrammarPage() {
     );
 }
 
+const ALL_OPTIONS = GRAMMAR_DATA.flatMap((t) => t.examples.map((ex) => ex.cn));
+
 function GrammarPractice({
     topicId,
     prompt,
@@ -192,12 +194,17 @@ function GrammarPractice({
     onSelect: (value: string) => void;
     t: (key: string, vars?: Record<string, string | number>) => string;
 }) {
-    if (!prompt || !correct) return null;
-    const distractors = allOptions.filter((opt) => opt !== correct);
-    const options = [correct, ...distractors.sort(() => Math.random() - 0.5).slice(0, 2)].sort(
-        () => Math.random() - 0.5
-    );
+    const [options] = useState<string[]>(() => {
+        if (!prompt || !correct) return [];
+        const distractors = allOptions.filter((opt) => opt !== correct);
+        const shuffledDistractors = [...distractors].sort(() => Math.random() - 0.5).slice(0, 2);
+        return [correct, ...shuffledDistractors].sort(() => Math.random() - 0.5);
+    });
+
     const isCorrect = selection ? selection === correct : null;
+
+    if (!prompt || !correct) return null;
+    if (options.length === 0) return null;
 
     return (
         <div className="mt-6 border-t border-gray-100 dark:border-slate-800 pt-4">

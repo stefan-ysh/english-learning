@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { VocabItem } from "@/lib/vocab-data";
 import { Lightbulb, RefreshCcw } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -29,12 +29,7 @@ export function QuizCardInput({ item, onAnswer, onMistake }: QuizCardInputProps)
     const [isCompleted, setIsCompleted] = useState(false);
     const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
 
-    useEffect(() => {
-        setShuffledLetters(buildShuffledLetters(item.word));
-        setUserInput([]);
-        setIsCompleted(false);
-        setIsCorrect(null);
-    }, [item]);
+
 
     const checkCompletion = (input: string[]) => {
         if (input.length === item.word.length) {

@@ -6,6 +6,7 @@ import { ArrowLeft, ArrowRight, MessageCircle } from "lucide-react";
 import { BlurFade } from "@/components/ui/blur-fade";
 import { useI18n } from "@/lib/i18n-context";
 import { cn } from "@/lib/utils";
+import NextImage from "next/image";
 
 export default function PhrasesPage() {
     const { t, lang } = useI18n();
@@ -32,7 +33,13 @@ export default function PhrasesPage() {
                             )}>
                                 {/* Image Background with Overlay */}
                                 <div className="absolute inset-0 z-0">
-                                    <img src={category.image} alt={category.title} className="w-full h-full object-cover opacity-20 md:group-hover:opacity-30 transition-opacity" />
+                                    <NextImage
+                                        src={category.image}
+                                        alt={category.title}
+                                        fill
+                                        sizes="(max-width: 768px) 100vw, 50vw"
+                                        className="object-cover opacity-20 md:group-hover:opacity-30 transition-opacity"
+                                    />
                                     <div className={cn("absolute inset-0 opacity-20 md:group-hover:opacity-30 transition-opacity", category.color)}></div>
                                 </div>
 

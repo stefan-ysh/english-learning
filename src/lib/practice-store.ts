@@ -15,15 +15,18 @@ export type MistakeEntry = {
 
 interface PracticeState {
     mistakes: Record<string, MistakeEntry>;
+    hasHydrated: boolean;
     recordMistake: (entry: Omit<MistakeEntry, "count" | "lastAt">) => void;
     clearMistakes: () => void;
     removeMistake: (key: string) => void;
+    setHasHydrated: (state: boolean) => void;
 }
 
 export const usePracticeStore = create<PracticeState>()(
     persist(
         (set) => ({
             mistakes: {},
+            hasHydrated: false,
             recordMistake: (entry) =>
                 set((state) => {
                     const now = new Date().toISOString();
@@ -46,7 +49,13 @@ export const usePracticeStore = create<PracticeState>()(
                     delete next[key];
                     return { mistakes: next };
                 }),
+            setHasHydrated: (state) => set({ hasHydrated: state }),
         }),
-        { name: "practice-storage" }
+        {
+            name: "practice-storage",
+            onRehydrateStorage: (state) => {
+                return () => state?.setHasHydrated(true);
+            },
+        }
     )
 );
