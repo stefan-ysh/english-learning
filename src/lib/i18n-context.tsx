@@ -8,6 +8,7 @@ interface I18nContextType {
     lang: Language;
     toggleLang: () => void;
     t: (key: string, vars?: Record<string, string | number>) => string;
+    hasHydrated: boolean;
 }
 
 const UI_STRINGS: Record<string, Record<Language, string>> = {
@@ -31,6 +32,7 @@ const UI_STRINGS: Record<string, Record<Language, string>> = {
     "learn.swipe_hint": { en: "Swipe to continue", cn: "左右滑动继续" },
     "audio.tap_to_enable": { en: "Tap to enable sound", cn: "点击启用声音" },
     "audio.load_failed": { en: "Audio failed to load", cn: "音频加载失败" },
+    "audio.listen_again": { en: "Listen Again", cn: "再听一遍" },
     "quiz.test": { en: "Test your knowledge", cn: "测试你的知识" },
     "syntax.subject": { en: "Subject", cn: "主语" },
     "syntax.verb": { en: "Verb", cn: "谓语" },
@@ -127,6 +129,17 @@ const UI_STRINGS: Record<string, Record<Language, string>> = {
     "phonetics.desc": { en: "Master core IPA sounds", cn: "掌握核心音标发音" },
     "vocab.learn_count": { en: "words to learn", cn: "个词汇待学习" },
     "common.loading": { en: "Loading...", cn: "加载中..." },
+    "common.loading_dots": { en: "Loading...", cn: "加载中..." },
+    "nav.prev": { en: "Previous", cn: "上一条" },
+    "nav.next": { en: "Next", cn: "下一条" },
+    "nav.reset": { en: "Reset", cn: "重置" },
+    "calendar.weekday_sun": { en: "S", cn: "日" },
+    "calendar.weekday_mon": { en: "M", cn: "一" },
+    "calendar.weekday_tue": { en: "T", cn: "二" },
+    "calendar.weekday_wed": { en: "W", cn: "三" },
+    "calendar.weekday_thu": { en: "T", cn: "四" },
+    "calendar.weekday_fri": { en: "F", cn: "五" },
+    "calendar.weekday_sat": { en: "S", cn: "六" },
     "learn.grammar_hint": { en: "Tap words to see grammar analysis", cn: "点击单词查看语法分析" },
     "learn.order_default": { en: "Default", cn: "默认顺序" },
     "learn.order_az": { en: "A-Z", cn: "字母顺序" },
@@ -168,10 +181,25 @@ const UI_STRINGS: Record<string, Record<Language, string>> = {
 const I18nContext = createContext<I18nContextType | undefined>(undefined);
 
 export function I18nProvider({ children }: { children: ReactNode }) {
-    const [lang, setLang] = useState<Language>("cn"); // Default to Chinese as requested
+    const [lang, setLang] = useState<Language>("cn");
+    const [hasHydrated, setHasHydrated] = useState(false);
+
+    React.useEffect(() => {
+        const stored = window.localStorage.getItem("lang");
+        if (stored === "en" || stored === "cn") {
+            setLang(stored);
+        }
+        setHasHydrated(true);
+    }, []);
 
     const toggleLang = () => {
-        setLang((prev) => (prev === "en" ? "cn" : "en"));
+        setLang((prev) => {
+            const next = prev === "en" ? "cn" : "en";
+            if (typeof window !== "undefined") {
+                window.localStorage.setItem("lang", next);
+            }
+            return next;
+        });
     };
 
     const t = (key: string, vars?: Record<string, string | number>) => {
@@ -185,7 +213,7 @@ export function I18nProvider({ children }: { children: ReactNode }) {
     };
 
     return (
-        <I18nContext.Provider value={{ lang, toggleLang, t }}>
+        <I18nContext.Provider value={{ lang, toggleLang, t, hasHydrated }}>
             {children}
         </I18nContext.Provider>
     );

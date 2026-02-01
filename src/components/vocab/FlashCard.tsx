@@ -145,7 +145,7 @@ export function FlashCard({ item, autoPlay = false }: FlashCardProps) {
                         aria-pressed={isSpeaking}
                         className={`mt-8 flex items-center gap-2 text-pink-500 font-bold active:scale-95 transition-transform ${isSpeaking ? "opacity-80" : ""}`}
                     >
-                        <Volume2 className={`w-5 h-5 ${isSpeaking ? "animate-pulse" : ""}`} /> Listen Again
+                        <Volume2 className={`w-5 h-5 ${isSpeaking ? "animate-pulse" : ""}`} /> {t("audio.listen_again")}
                     </button>
                 </div>
             </motion.div>

@@ -24,7 +24,7 @@ export default function MistakesPage() {
             <main className="flex min-h-screen flex-col items-center p-4 md:p-24 bg-gray-50 dark:bg-gray-950">
                 <div className="w-full max-w-3xl space-y-4">
                     <div className="bg-white dark:bg-slate-900 rounded-3xl p-8 border border-gray-100 dark:border-slate-800 text-center text-gray-500 animate-pulse">
-                        loading...
+                        {t("common.loading")}
                     </div>
                 </div>
             </main>

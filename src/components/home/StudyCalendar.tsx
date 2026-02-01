@@ -46,7 +46,15 @@ export function StudyCalendar() {
 
             {/* Calendar Grid */}
             <div className="grid grid-cols-7 gap-1 text-center mb-2">
-                {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((d, i) => (
+                {[
+                    t("calendar.weekday_sun"),
+                    t("calendar.weekday_mon"),
+                    t("calendar.weekday_tue"),
+                    t("calendar.weekday_wed"),
+                    t("calendar.weekday_thu"),
+                    t("calendar.weekday_fri"),
+                    t("calendar.weekday_sat"),
+                ].map((d, i) => (
                     <div key={`${d}-${i}`} className="text-xs text-gray-400 font-bold mb-2">{d}</div>
                 ))}
 

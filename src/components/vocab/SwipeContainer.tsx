@@ -124,7 +124,11 @@ export function SwipeContainer({ items, categoryId, jumpIndex }: SwipeContainerP
             onTouchStart={markUserInteracted}
         >
             <div className="absolute top-4 w-full px-4 flex justify-between items-center z-20">
-                <Link href={`/vocab/${categoryId}`} className="p-2 bg-white/50 rounded-full dark:bg-black/50 backdrop-blur-sm">
+                <Link
+                    href={`/vocab/${categoryId}`}
+                    aria-label={t("btn.back")}
+                    className="p-2 bg-white/50 rounded-full dark:bg-black/50 backdrop-blur-sm"
+                >
                     <ArrowLeft className="w-6 h-6" />
                 </Link>
                 <div className="bg-white/80 dark:bg-black/80 px-4 py-2 rounded-full text-sm font-bold backdrop-blur-sm">
@@ -201,6 +205,7 @@ export function SwipeContainer({ items, categoryId, jumpIndex }: SwipeContainerP
                 <button
                     onClick={() => { setDirection(-1); prevCard(); }}
                     disabled={currentIndex === 0}
+                    aria-label={t("nav.prev")}
                     className="w-14 h-14 rounded-full bg-white dark:bg-slate-800 shadow-lg flex items-center justify-center disabled:opacity-50 text-gray-600 dark:text-gray-300"
                 >
                     <ArrowLeft className="w-6 h-6" />
@@ -208,6 +213,7 @@ export function SwipeContainer({ items, categoryId, jumpIndex }: SwipeContainerP
 
                 <button
                     onClick={reset}
+                    aria-label={t("nav.reset")}
                     className="w-10 h-10 rounded-full bg-gray-100 dark:bg-slate-900 flex items-center justify-center text-gray-500"
                 >
                     <RotateCcw className="w-4 h-4" />
@@ -216,6 +222,7 @@ export function SwipeContainer({ items, categoryId, jumpIndex }: SwipeContainerP
                 <button
                     onClick={() => { setDirection(1); nextCard(); }}
                     disabled={currentIndex === items.length - 1} // Disable if last card
+                    aria-label={t("nav.next")}
                     className="w-14 h-14 rounded-full bg-black dark:bg-white shadow-lg flex items-center justify-center disabled:opacity-50 text-white dark:text-black"
                 >
                     <ArrowRight className="w-6 h-6" />
