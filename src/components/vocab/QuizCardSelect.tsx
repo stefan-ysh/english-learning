@@ -190,7 +190,7 @@ export function QuizCardSelect({
             <div className="w-full space-y-3">
                 {options.map((option, index) => {
                     const isSelected = selectedOption === option;
-                    const isTarget = option === item.cn;
+                    const isTarget = option === (answer ?? item.cn);
 
                     // Determine button style based on state
                     let buttonStyle = "bg-gray-50 dark:bg-slate-800 border-gray-200 dark:border-slate-700 hover:border-pink-500 hover:bg-pink-50 dark:hover:bg-slate-700";
