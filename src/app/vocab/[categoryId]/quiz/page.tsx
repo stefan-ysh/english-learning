@@ -1,238 +1,50 @@
-"use client";
-
-import { useState, useEffect, use } from "react";
 import { getAllVocabItems, getVocabCategory } from "@/lib/vocab-data";
-import { ArrowLeft, RefreshCw, Trophy } from "lucide-react";
-import Link from "next/link";
 import { notFound } from "next/navigation";
-import { QuizCardSelect } from "@/components/vocab/QuizCardSelect";
-import { QuizCardInput } from "@/components/vocab/QuizCardInput";
-import { useLearningStore } from "@/lib/store";
-import { useI18n } from "@/lib/i18n-context";
-import { motion, AnimatePresence } from "framer-motion";
-import confetti from "canvas-confetti";
-import { useActivityStore } from "@/lib/use-activity-store";
-import { usePracticeStore } from "@/lib/practice-store";
+import VocabQuizClient from "./VocabQuizClient";
 
+export const dynamic = "force-dynamic";
 
-interface PageProps {
-    params: Promise<{
-        categoryId: string;
-    }>;
-}
+type QuizQuestion = {
+    item: ReturnType<typeof getAllVocabItems>[number];
+    options: string[];
+    answer: string;
+};
 
-export default function QuizPage({ params }: PageProps) {
-    const { categoryId } = use(params);
+const shuffle = <T,>(list: T[]) => [...list].sort(() => Math.random() - 0.5);
+
+export default async function QuizPage({ params }: { params: { categoryId: string } | Promise<{ categoryId: string }> }) {
+    const { categoryId } = await params;
     const category = getVocabCategory(categoryId);
 
-    // Hooks should be unconditional
-    const setQuizScore = useLearningStore((state) => state.setQuizScore);
-    const recordActivity = useActivityStore((state) => state.recordActivity);
-    const hasHydrated = useActivityStore((state) => state.hasHydrated);
-    const recordMistake = usePracticeStore((state) => state.recordMistake);
-    const { t } = useI18n();
+    if (!category) {
+        notFound();
+    }
 
-    // Stable Quiz State
-    const [currentIndex, setCurrentIndex] = useState(0);
-    const [score, setScore] = useState(0);
-    const [isFinished, setIsFinished] = useState(false);
-    const [pendingRecord, setPendingRecord] = useState(false);
+    const isAudioSelectCategory = category.id === "alphabet" || category.id === "phonetics";
+    const allItems = getAllVocabItems();
+    const shuffled = shuffle(category.items);
 
-    const [mounted, setMounted] = useState(false);
-
-    // Prepare questions with useMemo to ensure stability without side effects
-    // Prepare questions with useState lazy initializer to ensure stability and only run once
-    const [questions] = useState(() => {
-        if (!category) return [];
-
-        const isAudioSelectCategory = category.id === "alphabet" || category.id === "phonetics";
-        // 1. Shuffle items
-        const shuffled = [...category.items].sort(() => Math.random() - 0.5);
-
-        // 2. Pre-calculate options for all items to ensure stability
-        return shuffled.map((item) => {
-            if (isAudioSelectCategory) {
-                const otherItems = category.items
-                    .filter((i) => i.id !== item.id)
-                    .sort(() => Math.random() - 0.5)
-                    .slice(0, 3)
-                    .map((i) => i.word);
-                const options = [item.word, ...otherItems].sort(() => Math.random() - 0.5);
-                return { item, options, answer: item.word };
-            }
-
-            const otherItems = getAllVocabItems()
-                .filter((i) => i.id !== item.id)
-                .sort(() => Math.random() - 0.5)
+    const questions: QuizQuestion[] = shuffled.map((item) => {
+        if (isAudioSelectCategory) {
+            const otherItems = shuffle(category.items.filter((i) => i.id !== item.id))
                 .slice(0, 3)
-                .map((i) => i.cn);
+                .map((i) => i.word);
+            const options = shuffle([item.word, ...otherItems]);
+            return { item, options, answer: item.word };
+        }
 
-            const options = [item.cn, ...otherItems].sort(() => Math.random() - 0.5);
-
-            return { item, options, answer: item.cn };
-        });
+        const otherItems = shuffle(allItems.filter((i) => i.id !== item.id))
+            .slice(0, 3)
+            .map((i) => i.cn);
+        const options = shuffle([item.cn, ...otherItems]);
+        return { item, options, answer: item.cn };
     });
 
-    useEffect(() => {
-        // eslint-disable-next-line react-hooks/set-state-in-effect
-        setMounted(true);
-    }, []);
-
-    useEffect(() => {
-        if (hasHydrated && pendingRecord) {
-            recordActivity();
-            // eslint-disable-next-line react-hooks/set-state-in-effect
-            setPendingRecord(false);
-        }
-    }, [hasHydrated, pendingRecord, recordActivity]);
-
-    if (!category) {
-        return notFound();
-    }
-
-    if (!mounted || questions.length === 0) {
-        return <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-950">
-            <div className="animate-pulse text-gray-400">{t("quiz.loading")}</div>
-        </div>;
-    }
-
-    const currentQuestion = questions[currentIndex];
-    const item = currentQuestion.item;
-
-    const handleAnswer = (isCorrect: boolean) => {
-        if (isCorrect) {
-            setScore((prev) => prev + 1);
-        }
-
-        if (currentIndex < questions.length - 1) {
-            setCurrentIndex((prev) => prev + 1);
-        } else {
-            finishQuiz(score + (isCorrect ? 1 : 0));
-        }
-    };
-
-    const finishQuiz = (finalScore: number) => {
-        setIsFinished(true);
-        setQuizScore(categoryId, finalScore);
-        if (hasHydrated) {
-            recordActivity();
-        } else {
-            setPendingRecord(true);
-        }
-
-        if (finalScore === questions.length) {
-            confetti({
-                particleCount: 100,
-                spread: 70,
-                origin: { y: 0.6 }
-            });
-        }
-    };
-
-    // Determine question type (Odd = Input, Even = Select)
-    const isAudioSelectCategory = category.id === "alphabet" || category.id === "phonetics";
-    const questionType = isAudioSelectCategory ? "select" : currentIndex % 2 === 0 ? "select" : "input";
-
-    if (isFinished) {
-        const percentage = Math.round((score / questions.length) * 100);
-        return (
-            <main className="flex min-h-screen flex-col items-center justify-center p-4 bg-gray-50 dark:bg-gray-950">
-                <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl shadow-xl border border-gray-100 dark:border-slate-800 text-center max-w-md w-full">
-                    <div className="w-20 h-20 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                        <Trophy className="w-10 h-10 text-yellow-500" />
-                    </div>
-                    <h1 className="text-3xl font-bold mb-2">{t("quiz.complete")}</h1>
-                    <p className="text-gray-500 mb-6">{t("quiz.score")}: {score} / {questions.length}</p>
-
-                    <div className="text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-500 mb-8">
-                        {percentage}%
-                    </div>
-
-                    <div className="space-y-4">
-                        <button
-                            onClick={() => window.location.reload()}
-                            className="w-full py-4 bg-black text-white hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200 rounded-xl font-bold flex items-center justify-center gap-2 transition-colors"
-                        >
-                            <RefreshCw className="w-5 h-5" /> {t("btn.tryAgain")}
-                        </button>
-                        <Link
-                            href={`/vocab/${category.id}`}
-                            className="block w-full py-4 bg-gray-100 text-gray-900 hover:bg-gray-200 dark:bg-slate-800 dark:text-white dark:hover:bg-slate-700 rounded-xl font-bold transition-colors"
-                        >
-                            {t("btn.back")}
-                        </Link>
-                    </div>
-                </div>
-            </main>
-        );
-    }
-
-
     return (
-        <main className="flex min-h-screen flex-col items-center bg-gray-50 dark:bg-gray-950 overflow-hidden relative p-4">
-
-            {/* Header */}
-            <div className="z-10 w-full max-w-md flex items-center justify-between font-mono text-sm mb-8 mt-4">
-                <Link href={`/vocab/${category.id}`} className="flex items-center gap-2 text-gray-600 hover:text-black dark:text-gray-400 dark:hover:text-white transition-colors bg-white/50 backdrop-blur-sm p-2 rounded-lg">
-                    <ArrowLeft className="w-5 h-5" /> {t("btn.back")}
-                </Link>
-                <div className="font-bold text-lg bg-white/50 backdrop-blur-sm px-4 py-1 rounded-full">{t(`cat.${category.id}`)}</div>
-            </div>
-
-            <div className="w-full max-w-md flex-1 flex flex-col justify-center pb-20">
-                <AnimatePresence mode="wait">
-                    <motion.div
-                        key={currentIndex}
-                        initial={{ x: 50, opacity: 0 }}
-                        animate={{ x: 0, opacity: 1 }}
-                        exit={{ x: -50, opacity: 0 }}
-                        transition={{ duration: 0.3 }}
-                        className="w-full"
-                    >
-                        <div className="text-center mb-4 text-gray-400 font-mono text-sm">
-                            {t("quiz.question")} {currentIndex + 1} / {questions.length}
-                        </div>
-
-                        {questionType === 'select' ? (
-                            <QuizCardSelect
-                                item={item}
-                                options={currentQuestion.options!}
-                                answer={currentQuestion.answer}
-                                title={isAudioSelectCategory ? t("quiz.listen_choose") : undefined}
-                                showWord={!isAudioSelectCategory}
-                                showPhonetic={!isAudioSelectCategory}
-                                allowHints={!isAudioSelectCategory}
-                                promptText={t("quiz.listen_choose")}
-                                onAnswer={handleAnswer}
-                                onMistake={(selected) =>
-                                    recordMistake({
-                                        key: `vocab:${item.id}`,
-                                        type: "vocab-quiz",
-                                        prompt: isAudioSelectCategory ? t("quiz.listen_choose") : item.word,
-                                        correct: currentQuestion.answer ?? item.cn,
-                                        userAnswer: selected,
-                                    })
-                                }
-                            />
-                        ) : (
-                            <QuizCardInput
-                                key={item.id}
-                                item={item}
-                                onAnswer={handleAnswer}
-                                onMistake={(answer) =>
-                                    recordMistake({
-                                        key: `vocab:${item.id}:spell`,
-                                        type: "vocab-quiz",
-                                        prompt: item.cn,
-                                        correct: item.word,
-                                        userAnswer: answer,
-                                    })
-                                }
-                            />
-                        )}
-                    </motion.div>
-                </AnimatePresence>
-            </div>
-        </main>
+        <VocabQuizClient
+            categoryId={category.id}
+            isAudioSelectCategory={isAudioSelectCategory}
+            questions={questions}
+        />
     );
 }
