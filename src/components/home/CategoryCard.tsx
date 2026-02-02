@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { ArrowRight, Utensils, Carrot, Sparkles, BookOpen, Home, GraduationCap, Briefcase, Stethoscope, Plane, Cpu } from "lucide-react";
 import { useI18n } from "@/lib/i18n-context";
@@ -41,9 +42,16 @@ export function CategoryCard({ category }: CategoryCardProps) {
             <span className="absolute inset-0 border-2 border-dashed border-black dark:border-white"></span>
 
             <div className={cn(
-                "relative flex h-full transform items-end border-2 border-black bg-white transition-transform md:group-hover:-translate-x-2 md:group-hover:-translate-y-2 text-left",
+                "relative flex h-full transform items-end border-2 border-black bg-white transition-transform md:group-hover:-translate-x-2 md:group-hover:-translate-y-2 text-left overflow-hidden",
                 "dark:bg-slate-900 dark:border-white"
-            )} style={{ backgroundImage: `url(${category.cover})`, backgroundSize: "cover", backgroundPosition: "center" }}>
+            )}>
+                <Image
+                    src={category.cover}
+                    alt={t(`cat.${category.id}`)}
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    className="object-cover"
+                />
                 <div className="absolute inset-0 bg-black/25 md:bg-black/0 md:group-hover:bg-black/35 transition-colors"></div>
                 <div className={cn("absolute top-6 right-6 p-3 rounded-full shadow-sm z-10", category.color)}>
                     {Icon}
