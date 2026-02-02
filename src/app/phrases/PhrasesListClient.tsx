@@ -25,12 +25,12 @@ export default function PhrasesListClient({ categories }: PhrasesListClientProps
                 className="max-w-5xl"
             />
 
-            <div className="grid w-full max-w-5xl gap-8 sm:grid-cols-2 lg:grid-cols-2">
+            <div className="grid w-full max-w-5xl gap-6 sm:gap-8 sm:grid-cols-2 lg:grid-cols-2">
                 {categories.map((category, index) => (
                     <BlurFade key={category.id} delay={index * 0.1}>
                         <Link
                             href={`/phrases/${category.id}`}
-                            className="group relative block h-64 sm:h-80 w-full active:scale-[0.99] transition-transform"
+                            className="group relative block h-64 sm:h-80 w-full active:scale-[0.99] transition-transform focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
                         >
                             <span className="absolute inset-0 border-2 border-dashed border-black dark:border-white rounded-3xl"></span>
 

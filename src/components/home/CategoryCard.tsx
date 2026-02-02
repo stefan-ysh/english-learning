@@ -34,7 +34,10 @@ export function CategoryCard({ category }: CategoryCardProps) {
     const Icon = IconMap[category.icon] || IconMap.default;
 
     return (
-        <Link href={`/vocab/${category.id}`} className="group relative block h-64 sm:h-80 lg:h-96">
+        <Link
+            href={`/vocab/${category.id}`}
+            className="group relative block h-64 sm:h-80 lg:h-96 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
+        >
             <span className="absolute inset-0 border-2 border-dashed border-black dark:border-white"></span>
 
             <div className={cn(

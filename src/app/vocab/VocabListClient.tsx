@@ -22,7 +22,7 @@ export default function VocabListClient({ allCategory, categories }: VocabListCl
                 className="max-w-5xl"
             />
 
-            <div className="grid w-full max-w-5xl gap-8 sm:grid-cols-2 lg:grid-cols-2">
+            <div className="grid w-full max-w-5xl gap-6 sm:gap-8 sm:grid-cols-2 lg:grid-cols-2">
                 <BlurFade key={allCategory.id} delay={0.05}>
                     <CategoryCard category={allCategory} />
                 </BlurFade>

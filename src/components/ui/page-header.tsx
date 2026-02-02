@@ -17,7 +17,7 @@ export function PageHeader({ backHref, backLabel, title, rightSlot, className }:
         <div className={cn("z-10 w-full flex items-center justify-between gap-3 text-sm mb-8", className)}>
             <Link
                 href={backHref}
-                className="flex items-center gap-2 text-gray-600 hover:text-black dark:text-gray-400 dark:hover:text-white transition-colors"
+                className="flex items-center gap-2 text-gray-600 hover:text-black dark:text-gray-400 dark:hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 rounded-full px-2 py-1"
             >
                 <ArrowLeft className="w-5 h-5" /> {backLabel}
             </Link>

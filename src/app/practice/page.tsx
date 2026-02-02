@@ -45,12 +45,12 @@ export default function PracticeHubPage() {
                 className="max-w-5xl"
             />
 
-            <div className="grid w-full max-w-5xl gap-6 sm:grid-cols-2">
+            <div className="grid w-full max-w-5xl gap-6 sm:gap-8 sm:grid-cols-2">
                 {cards.map((card, index) => (
                     <BlurFade key={card.href} delay={index * 0.1}>
                         <Link
                             href={card.href}
-                            className="group relative block rounded-3xl border-2 border-black dark:border-white bg-white dark:bg-slate-900 p-6 transition-transform md:hover:-translate-y-1 active:scale-[0.99]"
+                            className="group relative block rounded-3xl border-2 border-black dark:border-white bg-white dark:bg-slate-900 p-6 transition-transform md:hover:-translate-y-1 active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
                         >
                             <div className="flex items-start gap-4">
                                 <div className="p-3 rounded-2xl bg-gray-100 dark:bg-slate-800">

@@ -56,7 +56,7 @@ export default function ReadingListClient({ articles }: ReadingListClientProps) 
                 className="max-w-5xl"
             />
 
-            <div className="w-full max-w-5xl flex flex-wrap gap-2 mb-6">
+            <div className="w-full max-w-5xl flex flex-wrap gap-2 mb-6 rounded-2xl border border-gray-200 dark:border-slate-800 bg-white/80 dark:bg-slate-900/80 p-3">
                 <button
                     onClick={() => setLevelFilter("all")}
                     className={`px-3 py-1 rounded-full text-xs font-bold border ${levelFilter === "all" ? "bg-black text-white dark:bg-white dark:text-black" : "bg-white dark:bg-slate-900 text-gray-500 dark:text-gray-400"}`}
@@ -92,7 +92,7 @@ export default function ReadingListClient({ articles }: ReadingListClientProps) 
                         <BlurFade key={article.id} delay={index * 0.1}>
                             <Link
                                 href={`/reading/${article.id}`}
-                                className="group relative block rounded-3xl border-2 border-black dark:border-white bg-white dark:bg-slate-900 p-6 transition-transform md:hover:-translate-y-1 active:scale-[0.99]"
+                                className="group relative block rounded-3xl border-2 border-black dark:border-white bg-white dark:bg-slate-900 p-6 transition-transform md:hover:-translate-y-1 active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
                             >
                                 <div className="flex items-start justify-between mb-4">
                                     <div className="p-3 rounded-2xl bg-amber-100 dark:bg-amber-900/30 text-amber-600">
