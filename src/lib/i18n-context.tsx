@@ -24,6 +24,7 @@ const UI_STRINGS: Record<string, Record<Language, string>> = {
     "quiz.complete": { en: "Quiz Complete!", cn: "挑战完成！" },
     "quiz.score": { en: "You scored", cn: "你的得分" },
     "btn.tryAgain": { en: "Try Again", cn: "再试一次" },
+    "btn.load_more": { en: "Load More", cn: "加载更多" },
     "mode.learn": { en: "Learn", cn: "学习模式" },
     "mode.quiz": { en: "Quiz", cn: "测试模式" },
     "grammar.desc": { en: "Visual syntax guides", cn: "可视化语法结构分析" },

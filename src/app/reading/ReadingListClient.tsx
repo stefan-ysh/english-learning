@@ -29,6 +29,7 @@ export default function ReadingListClient({ articles }: ReadingListClientProps) 
     const hasHydrated = useReadingStore((state) => state.hasHydrated);
     const [levelFilter, setLevelFilter] = useState<"all" | "A1" | "A2" | "B1">("all");
     const [statusFilter, setStatusFilter] = useState<"all" | "read" | "bookmarked">("all");
+    const [visibleCount, setVisibleCount] = useState(12);
 
     const filtered = useMemo(() => {
         return articles.filter((article) => {
@@ -47,6 +48,14 @@ export default function ReadingListClient({ articles }: ReadingListClientProps) 
         });
     }, [levelFilter, statusFilter, readArticles, bookmarks, articles]);
 
+    const visible = useMemo(() => filtered.slice(0, visibleCount), [filtered, visibleCount]);
+
+    const handleFilterChange = (nextLevel: typeof levelFilter, nextStatus: typeof statusFilter) => {
+        setLevelFilter(nextLevel);
+        setStatusFilter(nextStatus);
+        setVisibleCount(12);
+    };
+
     return (
         <main className="flex min-h-screen flex-col items-center p-4 md:p-24 bg-gray-50 dark:bg-gray-950">
             <PageHeader
@@ -58,7 +67,7 @@ export default function ReadingListClient({ articles }: ReadingListClientProps) 
 
             <div className="w-full max-w-5xl flex flex-wrap gap-2 mb-6 rounded-2xl border border-gray-200 dark:border-slate-800 bg-white/80 dark:bg-slate-900/80 p-3">
                 <button
-                    onClick={() => setLevelFilter("all")}
+                    onClick={() => handleFilterChange("all", statusFilter)}
                     className={`px-3 py-1 rounded-full text-xs font-bold border ${levelFilter === "all" ? "bg-black text-white dark:bg-white dark:text-black" : "bg-white dark:bg-slate-900 text-gray-500 dark:text-gray-400"}`}
                 >
                     {t("reading.filter_all")}
@@ -66,7 +75,7 @@ export default function ReadingListClient({ articles }: ReadingListClientProps) 
                 {(["A1", "A2", "B1"] as const).map((lvl) => (
                     <button
                         key={lvl}
-                        onClick={() => setLevelFilter(lvl)}
+                        onClick={() => handleFilterChange(lvl, statusFilter)}
                         className={`px-3 py-1 rounded-full text-xs font-bold border ${levelFilter === lvl ? "bg-black text-white dark:bg-white dark:text-black" : "bg-white dark:bg-slate-900 text-gray-500 dark:text-gray-400"}`}
                     >
                         {lvl}
@@ -76,7 +85,7 @@ export default function ReadingListClient({ articles }: ReadingListClientProps) 
                 {(["all", "read", "bookmarked"] as const).map((status) => (
                     <button
                         key={status}
-                        onClick={() => setStatusFilter(status)}
+                        onClick={() => handleFilterChange(levelFilter, status)}
                         className={`px-3 py-1 rounded-full text-xs font-bold border ${statusFilter === status ? "bg-black text-white dark:bg-white dark:text-black" : "bg-white dark:bg-slate-900 text-gray-500 dark:text-gray-400"}`}
                     >
                         {t(`reading.filter_${status}`)}
@@ -85,7 +94,7 @@ export default function ReadingListClient({ articles }: ReadingListClientProps) 
             </div>
 
             <div className="grid w-full max-w-5xl gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                {filtered.map((article, index) => {
+                {visible.map((article, index) => {
                     const isBookmarked = bookmarks.includes(article.id);
                     const isRead = readArticles.includes(article.id);
                     return (
@@ -125,6 +134,17 @@ export default function ReadingListClient({ articles }: ReadingListClientProps) 
                     );
                 })}
             </div>
+
+            {visibleCount < filtered.length && (
+                <div className="mt-8">
+                    <button
+                        onClick={() => setVisibleCount((prev) => prev + 12)}
+                        className="px-6 py-2 rounded-full bg-black text-white dark:bg-white dark:text-black font-bold text-sm hover:opacity-90 active:scale-[0.98]"
+                    >
+                        {t("btn.load_more")}
+                    </button>
+                </div>
+            )}
         </main>
     );
 }
