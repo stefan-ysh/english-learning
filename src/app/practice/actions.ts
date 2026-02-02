@@ -1,6 +1,7 @@
 "use server";
 import { VOCAB_DATA } from "@/lib/vocab-data";
 import { PHRASE_CATEGORIES } from "@/lib/phrases-data";
+import { pickRandom } from "@/lib/utils";
 
 type QuickQuestion = {
     id: string;
@@ -10,11 +11,6 @@ type QuickQuestion = {
     options: string[];
     type: "vocab" | "phrase";
     image: string; // Added image 
-};
-
-const pickRandom = <T,>(list: T[], count: number) => {
-    const shuffled = [...list].sort(() => Math.random() - 0.5);
-    return shuffled.slice(0, count);
 };
 
 export async function generateQuickQuestions(targetDuration: number): Promise<QuickQuestion[]> {

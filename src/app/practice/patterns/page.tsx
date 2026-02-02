@@ -6,11 +6,7 @@ import { PATTERN_DATA } from "@/lib/pattern-data";
 import { useI18n } from "@/lib/i18n-context";
 import { usePracticeStore } from "@/lib/practice-store";
 import { PageHeader } from "@/components/ui/page-header";
-
-const pickRandom = <T,>(list: T[], count: number) => {
-    const shuffled = [...list].sort(() => Math.random() - 0.5);
-    return shuffled.slice(0, count);
-};
+import { pickRandom } from "@/lib/utils";
 
 export default function PatternPracticePage() {
     const { t, lang } = useI18n();

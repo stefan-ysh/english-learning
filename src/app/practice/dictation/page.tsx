@@ -6,12 +6,8 @@ import { PHRASE_CATEGORIES } from "@/lib/phrases-data";
 import { useI18n } from "@/lib/i18n-context";
 import { speak } from "@/lib/tts";
 import { usePracticeStore } from "@/lib/practice-store";
+import { pickRandom } from "@/lib/utils";
 import { PageHeader } from "@/components/ui/page-header";
-
-const pickRandom = <T,>(list: T[], count: number) => {
-    const shuffled = [...list].sort(() => Math.random() - 0.5);
-    return shuffled.slice(0, count);
-};
 
 const normalizeAnswer = (text: string) => {
     return text
