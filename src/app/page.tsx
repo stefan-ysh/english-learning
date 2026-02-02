@@ -11,23 +11,38 @@ export default function Home() {
 
   return (
     <main className="relative flex min-h-screen flex-col items-center p-4 md:p-24 bg-gray-50 dark:bg-gray-950 overflow-hidden">
-      <div className="absolute -top-24 -right-24 w-80 h-80 bg-pink-200/30 rounded-full blur-3xl pointer-events-none"></div>
-      <div className="absolute top-40 -left-24 w-72 h-72 bg-blue-200/30 rounded-full blur-3xl pointer-events-none"></div>
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex mb-12">
-        <div className="w-full text-center my-8">
-          <h1 className="text-4xl font-bold text-primary bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500">
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute -top-32 -right-32 w-96 h-96 bg-amber-200/30 rounded-full blur-3xl"></div>
+        <div className="absolute top-40 -left-24 w-80 h-80 bg-teal-200/30 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 right-10 w-72 h-72 bg-rose-200/20 rounded-full blur-3xl"></div>
+      </div>
+
+      <div className="z-10 max-w-6xl w-full items-center justify-between text-sm lg:flex mb-8">
+        <div className="w-full text-center my-6">
+          <h1 className="text-4xl sm:text-5xl font-black tracking-tight text-primary bg-clip-text text-transparent bg-gradient-to-r from-amber-600 via-rose-500 to-teal-500">
             {t("app.title")}
           </h1>
           <p className="text-sm sm:text-base text-gray-500 dark:text-gray-400 mt-3">
             {t("home.subtitle")}
           </p>
+          <div className="mt-5 flex flex-wrap items-center justify-center gap-2">
+            <span className="px-3 py-1 rounded-full text-xs font-semibold bg-white/80 dark:bg-slate-900/80 border border-gray-200 dark:border-slate-800">
+              {t("module.vocab")}
+            </span>
+            <span className="px-3 py-1 rounded-full text-xs font-semibold bg-white/80 dark:bg-slate-900/80 border border-gray-200 dark:border-slate-800">
+              {t("module.phrases")}
+            </span>
+            <span className="px-3 py-1 rounded-full text-xs font-semibold bg-white/80 dark:bg-slate-900/80 border border-gray-200 dark:border-slate-800">
+              {t("module.grammar")}
+            </span>
+          </div>
         </div>
       </div>
 
       <div className="grid w-full max-w-6xl gap-6 sm:gap-8 sm:grid-cols-2 lg:grid-cols-3">
         {/* Alphabet Module */}
         <BlurFade delay={0.1}>
-          <Link href="/vocab/alphabet" className="group relative block h-64 sm:h-80 lg:h-96 active:scale-[0.99] transition-transform">
+          <Link href="/vocab/alphabet" className="group relative block h-56 sm:h-72 lg:h-80 active:scale-[0.99] transition-transform focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400">
             <span className="absolute inset-0 border border-gray-200 dark:border-slate-700 sm:border-2 sm:border-dashed sm:border-black sm:dark:border-white rounded-3xl"></span>
             <div className="relative flex h-full items-center justify-center border-2 border-black bg-white dark:bg-slate-900 dark:border-white rounded-3xl transition-transform md:group-hover:-translate-x-2 md:group-hover:-translate-y-2 md:group-hover:shadow-2xl">
               <div className="text-center p-5 sm:p-8">
@@ -36,7 +51,7 @@ export default function Home() {
                 </div>
                 <h2 className="text-xl sm:text-3xl font-bold mb-2">{t("module.alphabet")}</h2>
                 <p className="text-xs sm:text-base text-gray-500 dark:text-gray-400">{t("alphabet.desc")}</p>
-                <div className="mt-5 sm:mt-8 inline-flex items-center gap-2 px-4 py-2 sm:px-5 sm:py-2.5 bg-black text-white dark:bg-white dark:text-black rounded-full text-xs sm:text-sm font-bold">
+                <div className="mt-4 sm:mt-6 inline-flex items-center gap-2 px-4 py-2 sm:px-5 sm:py-2.5 bg-black text-white dark:bg-white dark:text-black rounded-full text-xs sm:text-sm font-bold">
                   {t("btn.start")} <ArrowRight className="w-4 h-4" />
                 </div>
               </div>
@@ -46,7 +61,7 @@ export default function Home() {
 
         {/* Phonetics Module */}
         <BlurFade delay={0.2}>
-          <Link href="/vocab/phonetics" className="group relative block h-64 sm:h-80 lg:h-96 active:scale-[0.99] transition-transform">
+          <Link href="/vocab/phonetics" className="group relative block h-56 sm:h-72 lg:h-80 active:scale-[0.99] transition-transform focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400">
             <span className="absolute inset-0 border border-gray-200 dark:border-slate-700 sm:border-2 sm:border-dashed sm:border-black sm:dark:border-white rounded-3xl"></span>
             <div className="relative flex h-full items-center justify-center border-2 border-black bg-white dark:bg-slate-900 dark:border-white rounded-3xl transition-transform md:group-hover:-translate-x-2 md:group-hover:-translate-y-2 md:group-hover:shadow-2xl">
               <div className="text-center p-5 sm:p-8">
@@ -55,7 +70,7 @@ export default function Home() {
                 </div>
                 <h2 className="text-xl sm:text-3xl font-bold mb-2">{t("module.phonetics")}</h2>
                 <p className="text-xs sm:text-base text-gray-500 dark:text-gray-400">{t("phonetics.desc")}</p>
-                <div className="mt-5 sm:mt-8 inline-flex items-center gap-2 px-4 py-2 sm:px-5 sm:py-2.5 bg-black text-white dark:bg-white dark:text-black rounded-full text-xs sm:text-sm font-bold">
+                <div className="mt-4 sm:mt-6 inline-flex items-center gap-2 px-4 py-2 sm:px-5 sm:py-2.5 bg-black text-white dark:bg-white dark:text-black rounded-full text-xs sm:text-sm font-bold">
                   {t("btn.start")} <ArrowRight className="w-4 h-4" />
                 </div>
               </div>
@@ -65,7 +80,7 @@ export default function Home() {
 
         {/* Vocabulary Module - Active */}
         <BlurFade delay={0.3}>
-          <Link href="/vocab" className="group relative block h-64 sm:h-80 lg:h-96 active:scale-[0.99] transition-transform">
+          <Link href="/vocab" className="group relative block h-56 sm:h-72 lg:h-80 active:scale-[0.99] transition-transform focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pink-400">
             <span className="absolute inset-0 border border-gray-200 dark:border-slate-700 sm:border-2 sm:border-dashed sm:border-black sm:dark:border-white rounded-3xl"></span>
             <div className="relative flex h-full items-center justify-center border-2 border-black bg-white dark:bg-slate-900 dark:border-white rounded-3xl transition-transform md:group-hover:-translate-x-2 md:group-hover:-translate-y-2 md:group-hover:shadow-2xl">
               <div className="text-center p-5 sm:p-8">
@@ -74,7 +89,7 @@ export default function Home() {
                 </div>
                 <h2 className="text-xl sm:text-3xl font-bold mb-2">{t("module.vocab")}</h2>
                 <p className="text-xs sm:text-base text-gray-500 dark:text-gray-400">{t("vocab.desc")}</p>
-                <div className="mt-5 sm:mt-8 inline-flex items-center gap-2 px-4 py-2 sm:px-5 sm:py-2.5 bg-black text-white dark:bg-white dark:text-black rounded-full text-xs sm:text-sm font-bold">
+                <div className="mt-4 sm:mt-6 inline-flex items-center gap-2 px-4 py-2 sm:px-5 sm:py-2.5 bg-black text-white dark:bg-white dark:text-black rounded-full text-xs sm:text-sm font-bold">
                   {t("btn.start")} <ArrowRight className="w-4 h-4" />
                 </div>
               </div>
@@ -84,7 +99,7 @@ export default function Home() {
 
         {/* Phrases Module - Active */}
         <BlurFade delay={0.4}>
-          <Link href="/phrases" className="group relative block h-64 sm:h-80 lg:h-96 active:scale-[0.99] transition-transform">
+          <Link href="/phrases" className="group relative block h-56 sm:h-72 lg:h-80 active:scale-[0.99] transition-transform focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400">
             <span className="absolute inset-0 border border-gray-200 dark:border-slate-700 sm:border-2 sm:border-dashed sm:border-black sm:dark:border-white rounded-3xl"></span>
             <div className="relative flex h-full items-center justify-center border-2 border-black bg-white dark:bg-slate-900 dark:border-white rounded-3xl transition-transform md:group-hover:-translate-x-2 md:group-hover:-translate-y-2 md:group-hover:shadow-2xl">
               <div className="text-center p-5 sm:p-8">
@@ -93,7 +108,7 @@ export default function Home() {
                 </div>
                 <h2 className="text-xl sm:text-3xl font-bold mb-2">{t("module.phrases")}</h2>
                 <p className="text-xs sm:text-base text-gray-500 dark:text-gray-400">{t("phrases.desc")}</p>
-                <div className="mt-5 sm:mt-8 inline-flex items-center gap-2 px-4 py-2 sm:px-5 sm:py-2.5 bg-black text-white dark:bg-white dark:text-black rounded-full text-xs sm:text-sm font-bold">
+                <div className="mt-4 sm:mt-6 inline-flex items-center gap-2 px-4 py-2 sm:px-5 sm:py-2.5 bg-black text-white dark:bg-white dark:text-black rounded-full text-xs sm:text-sm font-bold">
                   {t("btn.start")} <ArrowRight className="w-4 h-4" />
                 </div>
               </div>
@@ -103,7 +118,7 @@ export default function Home() {
 
         {/* Grammar Module - Active */}
         <BlurFade delay={0.5}>
-          <Link href="/grammar" className="group relative block h-64 sm:h-80 lg:h-96 active:scale-[0.99] transition-transform">
+          <Link href="/grammar" className="group relative block h-56 sm:h-72 lg:h-80 active:scale-[0.99] transition-transform focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400">
             <span className="absolute inset-0 border border-gray-200 dark:border-slate-700 sm:border-2 sm:border-dashed sm:border-black sm:dark:border-white rounded-3xl"></span>
             <div className="relative flex h-full items-center justify-center border-2 border-black bg-white dark:bg-slate-900 dark:border-white rounded-3xl transition-transform md:group-hover:-translate-x-2 md:group-hover:-translate-y-2 md:group-hover:shadow-2xl">
               <div className="text-center p-5 sm:p-8">
@@ -112,7 +127,7 @@ export default function Home() {
                 </div>
                 <h2 className="text-xl sm:text-3xl font-bold mb-2">{t("module.grammar")}</h2>
                 <p className="text-xs sm:text-base text-gray-500 dark:text-gray-400">{t("grammar.desc")}</p>
-                <div className="mt-5 sm:mt-8 inline-flex items-center gap-2 px-4 py-2 sm:px-5 sm:py-2.5 bg-black text-white dark:bg-white dark:text-black rounded-full text-xs sm:text-sm font-bold">
+                <div className="mt-4 sm:mt-6 inline-flex items-center gap-2 px-4 py-2 sm:px-5 sm:py-2.5 bg-black text-white dark:bg-white dark:text-black rounded-full text-xs sm:text-sm font-bold">
                   {t("btn.start")} <ArrowRight className="w-4 h-4" />
                 </div>
               </div>
@@ -122,7 +137,7 @@ export default function Home() {
 
         {/* Reading Module */}
         <BlurFade delay={0.6}>
-          <Link href="/reading" className="group relative block h-64 sm:h-80 lg:h-96 active:scale-[0.99] transition-transform">
+          <Link href="/reading" className="group relative block h-56 sm:h-72 lg:h-80 active:scale-[0.99] transition-transform focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400">
             <span className="absolute inset-0 border border-gray-200 dark:border-slate-700 sm:border-2 sm:border-dashed sm:border-black sm:dark:border-white rounded-3xl"></span>
             <div className="relative flex h-full items-center justify-center border-2 border-black bg-white dark:bg-slate-900 dark:border-white rounded-3xl transition-transform md:group-hover:-translate-x-2 md:group-hover:-translate-y-2 md:group-hover:shadow-2xl">
               <div className="text-center p-5 sm:p-8">
@@ -131,7 +146,7 @@ export default function Home() {
                 </div>
                 <h2 className="text-xl sm:text-3xl font-bold mb-2">{t("reading.title")}</h2>
                 <p className="text-xs sm:text-base text-gray-500 dark:text-gray-400">{t("reading.desc")}</p>
-                <div className="mt-5 sm:mt-8 inline-flex items-center gap-2 px-4 py-2 sm:px-5 sm:py-2.5 bg-black text-white dark:bg-white dark:text-black rounded-full text-xs sm:text-sm font-bold">
+                <div className="mt-4 sm:mt-6 inline-flex items-center gap-2 px-4 py-2 sm:px-5 sm:py-2.5 bg-black text-white dark:bg-white dark:text-black rounded-full text-xs sm:text-sm font-bold">
                   {t("btn.start")} <ArrowRight className="w-4 h-4" />
                 </div>
               </div>
@@ -140,7 +155,7 @@ export default function Home() {
         </BlurFade>
       </div>
 
-      <div className="w-full max-w-5xl mt-12">
+      <div className="w-full max-w-5xl mt-10">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-xl font-bold">{t("practice.title")}</h2>
           <Link href="/practice" className="text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
