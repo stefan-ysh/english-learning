@@ -2,11 +2,12 @@
 
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import { ArrowLeft, Timer, Trophy } from "lucide-react";
+import { Timer, Trophy } from "lucide-react";
 import { useI18n } from "@/lib/i18n-context";
 import { QuizCardSelect } from "@/components/vocab/QuizCardSelect";
 import { usePracticeStore } from "@/lib/practice-store";
 import { generateQuickQuestions } from "../actions";
+import { PageHeader } from "@/components/ui/page-header";
 
 type QuickQuestion = {
     id: string;
@@ -125,15 +126,18 @@ export default function QuickQuizPage() {
 
     return (
         <main className="flex min-h-screen flex-col items-center p-4 md:p-24 bg-gray-50 dark:bg-gray-950">
-            <div className="z-10 max-w-md w-full flex items-center justify-between font-mono text-sm lg:flex mb-6">
-                <Link href="/practice" className="flex items-center gap-2 text-gray-600 hover:text-black dark:text-gray-400 dark:hover:text-white transition-colors">
-                    <ArrowLeft className="w-5 h-5" /> {t("btn.back")}
-                </Link>
-                <div className="flex items-center gap-2 text-gray-500">
-                    <Timer className="w-4 h-4" />
-                    {timeLeft}s
-                </div>
-            </div>
+            <PageHeader
+                backHref="/practice"
+                backLabel={t("btn.back")}
+                title={t("practice.quick")}
+                className="max-w-md mb-6"
+                rightSlot={
+                    <div className="flex items-center gap-2 text-gray-500">
+                        <Timer className="w-4 h-4" />
+                        {timeLeft}s
+                    </div>
+                }
+            />
 
             <div className="w-full max-w-md mb-4 flex items-center gap-2">
                 {[120, 180, 300].map((secs) => (

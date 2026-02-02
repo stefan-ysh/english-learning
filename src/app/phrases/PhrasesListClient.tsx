@@ -1,12 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowLeft, ArrowRight, MessageCircle } from "lucide-react";
+import { ArrowRight, MessageCircle } from "lucide-react";
 import { BlurFade } from "@/components/ui/blur-fade";
 import { useI18n } from "@/lib/i18n-context";
 import { cn } from "@/lib/utils";
 import NextImage from "next/image";
 import type { PhraseCategory } from "@/lib/phrases-data";
+import { PageHeader } from "@/components/ui/page-header";
 
 interface PhrasesListClientProps {
     categories: PhraseCategory[];
@@ -17,16 +18,12 @@ export default function PhrasesListClient({ categories }: PhrasesListClientProps
 
     return (
         <main className="flex min-h-screen flex-col items-center p-4 md:p-24 bg-gray-50 dark:bg-gray-950">
-            <div className="z-10 max-w-5xl w-full flex items-center justify-between font-mono text-sm lg:flex mb-12">
-                <Link
-                    href="/"
-                    className="flex items-center gap-2 text-gray-600 hover:text-black dark:text-gray-400 dark:hover:text-white transition-colors"
-                >
-                    <ArrowLeft className="w-5 h-5" /> {t("btn.back")}
-                </Link>
-                <h1 className="text-2xl font-bold">{t("phrases.title")}</h1>
-                <div className="w-16"></div>
-            </div>
+            <PageHeader
+                backHref="/"
+                backLabel={t("btn.back")}
+                title={t("phrases.title")}
+                className="max-w-5xl"
+            />
 
             <div className="grid w-full max-w-5xl gap-8 sm:grid-cols-2 lg:grid-cols-2">
                 {categories.map((category, index) => (

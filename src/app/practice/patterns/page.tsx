@@ -1,11 +1,11 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import Link from "next/link";
-import { ArrowLeft, CheckCircle2, XCircle } from "lucide-react";
+import { CheckCircle2, XCircle } from "lucide-react";
 import { PATTERN_DATA } from "@/lib/pattern-data";
 import { useI18n } from "@/lib/i18n-context";
 import { usePracticeStore } from "@/lib/practice-store";
+import { PageHeader } from "@/components/ui/page-header";
 
 const pickRandom = <T,>(list: T[], count: number) => {
     const shuffled = [...list].sort(() => Math.random() - 0.5);
@@ -63,13 +63,12 @@ export default function PatternPracticePage() {
 
     return (
         <main className="flex min-h-screen flex-col items-center p-4 md:p-24 bg-gray-50 dark:bg-gray-950">
-            <div className="z-10 max-w-3xl w-full flex items-center justify-between font-mono text-sm lg:flex mb-8">
-                <Link href="/practice" className="flex items-center gap-2 text-gray-600 hover:text-black dark:text-gray-400 dark:hover:text-white transition-colors">
-                    <ArrowLeft className="w-5 h-5" /> {t("btn.back")}
-                </Link>
-                <div className="text-sm font-bold">{t("practice.patterns")}</div>
-                <div className="w-16"></div>
-            </div>
+            <PageHeader
+                backHref="/practice"
+                backLabel={t("btn.back")}
+                title={t("practice.patterns")}
+                className="max-w-3xl"
+            />
 
             <div className="w-full max-w-md bg-white dark:bg-slate-900 rounded-3xl p-6 shadow-xl border border-gray-100 dark:border-slate-800">
                 <div className="flex items-center justify-between mb-4 text-xs font-bold text-gray-400">

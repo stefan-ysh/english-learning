@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { ArrowLeft, RefreshCw, Trophy } from "lucide-react";
+import { RefreshCw, Trophy } from "lucide-react";
 import { QuizCardSelect } from "@/components/vocab/QuizCardSelect";
 import { useI18n } from "@/lib/i18n-context";
 import { motion, AnimatePresence } from "framer-motion";
@@ -10,6 +10,7 @@ import confetti from "canvas-confetti";
 import { useActivityStore } from "@/lib/use-activity-store";
 import { usePracticeStore } from "@/lib/practice-store";
 import type { PhraseItem } from "@/lib/phrases-data";
+import { PageHeader } from "@/components/ui/page-header";
 
 type QuizQuestion = {
     item: PhraseItem;
@@ -139,17 +140,12 @@ export default function PhraseQuizClient({ category, questions }: PhraseQuizClie
     return (
         <main className="flex min-h-screen flex-col items-center bg-gray-50 dark:bg-gray-950 overflow-hidden relative p-4">
             {/* Header */}
-            <div className="z-10 w-full max-w-md flex items-center justify-between font-mono text-sm mb-8 mt-4">
-                <Link
-                    href={`/phrases/${category.id}`}
-                    className="flex items-center gap-2 text-gray-600 hover:text-black dark:text-gray-400 dark:hover:text-white transition-colors bg-white/50 backdrop-blur-sm p-2 rounded-lg"
-                >
-                    <ArrowLeft className="w-5 h-5" /> {t("btn.back")}
-                </Link>
-                <div className="font-bold text-lg bg-white/50 backdrop-blur-sm px-4 py-1 rounded-full">
-                    {lang === "cn" ? category.cnTitle : category.title}
-                </div>
-            </div>
+            <PageHeader
+                backHref={`/phrases/${category.id}`}
+                backLabel={t("btn.back")}
+                title={lang === "cn" ? category.cnTitle : category.title}
+                className="max-w-md mt-4"
+            />
 
             <div className="w-full max-w-md flex-1 flex flex-col justify-center pb-20">
                 <AnimatePresence mode="wait">

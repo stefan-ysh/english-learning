@@ -1,11 +1,10 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
 import { useI18n } from "@/lib/i18n-context";
 import { SwipeContainer } from "@/components/vocab/SwipeContainer";
 import type { Category } from "@/lib/vocab-data";
+import { PageHeader } from "@/components/ui/page-header";
 
 interface VocabLearnClientProps {
     category: Category;
@@ -84,47 +83,44 @@ export default function VocabLearnClient({
                 <div className="absolute top-40 -left-20 w-72 h-72 bg-blue-200/30 rounded-full blur-3xl"></div>
             </div>
 
-            <div className="z-10 w-full p-4 flex flex-wrap items-center justify-between gap-3 font-mono text-sm mb-4">
-                <Link
-                    href={`/vocab/${activeCategory.id}`}
-                    className="flex items-center gap-2 text-gray-600 hover:text-black dark:text-gray-400 dark:hover:text-white transition-colors bg-white/50 backdrop-blur-sm p-2 rounded-lg"
-                >
-                    <ArrowLeft className="w-5 h-5" /> {t("btn.back")}
-                </Link>
-                <div className="font-bold text-lg bg-white/50 backdrop-blur-sm px-4 py-1 rounded-full">
-                    {t(`cat.${activeCategory.id}`)}
-                </div>
-                <div className="flex flex-wrap items-center gap-2 bg-white/60 dark:bg-black/40 backdrop-blur-sm rounded-full p-1">
-                    {isOxfordCategory && (
-                        <>
-                            <button
-                                onClick={() => setOxfordLevel("B2")}
-                                className={`px-3 py-1 text-xs rounded-full font-bold ${oxfordLevel === "B2" ? "bg-black text-white dark:bg-white dark:text-black" : "text-gray-500 dark:text-gray-300"}`}
-                            >
-                                B2
-                            </button>
-                            <button
-                                onClick={() => setOxfordLevel("C1")}
-                                className={`px-3 py-1 text-xs rounded-full font-bold ${oxfordLevel === "C1" ? "bg-black text-white dark:bg-white dark:text-black" : "text-gray-500 dark:text-gray-300"}`}
-                            >
-                                C1
-                            </button>
-                        </>
-                    )}
-                    <button
-                        onClick={() => setOrder("default")}
-                        className={`px-3 py-1 text-xs rounded-full font-bold ${order === "default" ? "bg-black text-white dark:bg-white dark:text-black" : "text-gray-500 dark:text-gray-300"}`}
-                    >
-                        {t("learn.order_default")}
-                    </button>
-                    <button
-                        onClick={() => setOrder("az")}
-                        className={`px-3 py-1 text-xs rounded-full font-bold ${order === "az" ? "bg-black text-white dark:bg-white dark:text-black" : "text-gray-500 dark:text-gray-300"}`}
-                    >
-                        {t("learn.order_az")}
-                    </button>
-                </div>
-            </div>
+            <PageHeader
+                backHref={`/vocab/${activeCategory.id}`}
+                backLabel={t("btn.back")}
+                title={t(`cat.${activeCategory.id}`)}
+                className="max-w-5xl px-4 pt-4"
+                rightSlot={
+                    <div className="flex flex-wrap items-center gap-2 bg-white/60 dark:bg-black/40 backdrop-blur-sm rounded-full p-1">
+                        {isOxfordCategory && (
+                            <>
+                                <button
+                                    onClick={() => setOxfordLevel("B2")}
+                                    className={`px-3 py-1 text-xs rounded-full font-bold ${oxfordLevel === "B2" ? "bg-black text-white dark:bg-white dark:text-black" : "text-gray-500 dark:text-gray-300"}`}
+                                >
+                                    B2
+                                </button>
+                                <button
+                                    onClick={() => setOxfordLevel("C1")}
+                                    className={`px-3 py-1 text-xs rounded-full font-bold ${oxfordLevel === "C1" ? "bg-black text-white dark:bg-white dark:text-black" : "text-gray-500 dark:text-gray-300"}`}
+                                >
+                                    C1
+                                </button>
+                            </>
+                        )}
+                        <button
+                            onClick={() => setOrder("default")}
+                            className={`px-3 py-1 text-xs rounded-full font-bold ${order === "default" ? "bg-black text-white dark:bg-white dark:text-black" : "text-gray-500 dark:text-gray-300"}`}
+                        >
+                            {t("learn.order_default")}
+                        </button>
+                        <button
+                            onClick={() => setOrder("az")}
+                            className={`px-3 py-1 text-xs rounded-full font-bold ${order === "az" ? "bg-black text-white dark:bg-white dark:text-black" : "text-gray-500 dark:text-gray-300"}`}
+                        >
+                            {t("learn.order_az")}
+                        </button>
+                    </div>
+                }
+            />
 
             <div className="z-10 w-full max-w-md flex-1 flex flex-col items-center justify-center p-4 relative">
                 <SwipeContainer

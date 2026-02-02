@@ -1,11 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowLeft, BookOpen, BookmarkCheck, Clock3, Eye } from "lucide-react";
+import { BookOpen, BookmarkCheck, Clock3, Eye } from "lucide-react";
 import { BlurFade } from "@/components/ui/blur-fade";
 import { useI18n } from "@/lib/i18n-context";
 import { useReadingStore } from "@/lib/reading-store";
 import { useMemo, useState } from "react";
+import { PageHeader } from "@/components/ui/page-header";
 
 export type ReadingArticleSummary = {
     id: string;
@@ -48,13 +49,12 @@ export default function ReadingListClient({ articles }: ReadingListClientProps) 
 
     return (
         <main className="flex min-h-screen flex-col items-center p-4 md:p-24 bg-gray-50 dark:bg-gray-950">
-            <div className="z-10 max-w-5xl w-full flex items-center justify-between font-mono text-sm lg:flex mb-12">
-                <Link href="/" className="flex items-center gap-2 text-gray-600 hover:text-black dark:text-gray-400 dark:hover:text-white transition-colors">
-                    <ArrowLeft className="w-5 h-5" /> {t("btn.back")}
-                </Link>
-                <h1 className="text-2xl font-bold">{t("reading.title")}</h1>
-                <div className="w-16"></div>
-            </div>
+            <PageHeader
+                backHref="/"
+                backLabel={t("btn.back")}
+                title={t("reading.title")}
+                className="max-w-5xl"
+            />
 
             <div className="w-full max-w-5xl flex flex-wrap gap-2 mb-6">
                 <button

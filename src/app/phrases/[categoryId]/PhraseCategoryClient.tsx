@@ -1,8 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowLeft, BookOpen, BrainCircuit } from "lucide-react";
+import { BookOpen, BrainCircuit } from "lucide-react";
 import { useI18n } from "@/lib/i18n-context";
+import { PageHeader } from "@/components/ui/page-header";
 
 interface PhraseCategoryClientProps {
     category: {
@@ -17,16 +18,12 @@ export default function PhraseCategoryClient({ category }: PhraseCategoryClientP
 
     return (
         <main className="flex min-h-screen flex-col items-center p-4 md:p-24 bg-gray-50 dark:bg-gray-950">
-            <div className="z-10 max-w-5xl w-full flex items-center justify-between font-mono text-sm lg:flex mb-12">
-                <Link
-                    href="/phrases"
-                    className="flex items-center gap-2 text-gray-600 hover:text-black dark:text-gray-400 dark:hover:text-white transition-colors"
-                >
-                    <ArrowLeft className="w-5 h-5" /> {t("btn.back")}
-                </Link>
-                <h1 className="text-2xl font-bold">{lang === "cn" ? category.cnTitle : category.title}</h1>
-                <div className="w-16"></div>
-            </div>
+            <PageHeader
+                backHref="/phrases"
+                backLabel={t("btn.back")}
+                title={lang === "cn" ? category.cnTitle : category.title}
+                className="max-w-5xl"
+            />
 
             <div className="grid w-full max-w-xl gap-6">
                 <Link

@@ -1,11 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
 import { PhraseSwipeContainer } from "@/components/phrases/PhraseSwipeContainer";
 import { useI18n } from "@/lib/i18n-context";
 import type { PhraseCategory } from "@/lib/phrases-data";
+import { PageHeader } from "@/components/ui/page-header";
 
 interface PhraseLearnClientProps {
     category: PhraseCategory;
@@ -39,18 +38,12 @@ export default function PhraseLearnClient({ category }: PhraseLearnClientProps) 
                 <div className="absolute top-40 -left-20 w-72 h-72 bg-indigo-200/30 rounded-full blur-3xl"></div>
             </div>
 
-            <div className="z-10 w-full p-4 flex items-center justify-between font-mono text-sm mb-4">
-                <Link
-                    href={`/phrases/${category.id}`}
-                    className="flex items-center gap-2 text-gray-600 hover:text-black dark:text-gray-400 dark:hover:text-white transition-colors bg-white/50 backdrop-blur-sm p-2 rounded-lg"
-                >
-                    <ArrowLeft className="w-5 h-5" /> {t("btn.back")}
-                </Link>
-                <div className="font-bold text-lg bg-white/50 backdrop-blur-sm px-4 py-1 rounded-full">
-                    {lang === "cn" ? category.cnTitle : category.title}
-                </div>
-                <div className="w-16"></div>
-            </div>
+            <PageHeader
+                backHref={`/phrases/${category.id}`}
+                backLabel={t("btn.back")}
+                title={lang === "cn" ? category.cnTitle : category.title}
+                className="max-w-5xl px-4 pt-4"
+            />
 
             <div className="z-10 w-full max-w-md flex-1 flex flex-col items-center justify-center p-4">
                 <PhraseSwipeContainer items={category.items} />

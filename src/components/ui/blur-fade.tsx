@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { motion, HTMLMotionProps } from "framer-motion";
+import { motion, HTMLMotionProps, useReducedMotion } from "framer-motion";
 
 interface BlurFadeProps extends HTMLMotionProps<"div"> {
     delay?: number;
@@ -17,11 +17,15 @@ export function BlurFade({
     blur = "10px",
     ...props
 }: BlurFadeProps) {
+    const reduceMotion = useReducedMotion();
+    const initial = reduceMotion ? { opacity: 1, filter: "blur(0px)", y: 0 } : { opacity: 0, filter: `blur(${blur})`, y: 10 };
+    const animate = reduceMotion ? { opacity: 1, filter: "blur(0px)", y: 0 } : { opacity: 1, filter: "blur(0px)", y: 0 };
+    const transition = reduceMotion ? { duration: 0 } : { duration, delay, ease: "easeOut" };
     return (
         <motion.div
-            initial={{ opacity: 0, filter: `blur(${blur})`, y: 10 }}
-            animate={{ opacity: 1, filter: "blur(0px)", y: 0 }}
-            transition={{ duration, delay, ease: "easeOut" }}
+            initial={initial}
+            animate={animate}
+            transition={transition}
             className={cn(className)}
             {...props}
         >

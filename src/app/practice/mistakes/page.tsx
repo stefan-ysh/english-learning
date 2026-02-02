@@ -1,9 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowLeft, Trash2 } from "lucide-react";
+import { Trash2 } from "lucide-react";
 import { usePracticeStore } from "@/lib/practice-store";
 import { useI18n } from "@/lib/i18n-context";
+import { PageHeader } from "@/components/ui/page-header";
 
 export default function MistakesPage() {
     const { t } = useI18n();
@@ -33,18 +34,20 @@ export default function MistakesPage() {
 
     return (
         <main className="flex min-h-screen flex-col items-center p-4 md:p-24 bg-gray-50 dark:bg-gray-950">
-            <div className="z-10 max-w-3xl w-full flex items-center justify-between font-mono text-sm lg:flex mb-8">
-                <Link href="/practice" className="flex items-center gap-2 text-gray-600 hover:text-black dark:text-gray-400 dark:hover:text-white transition-colors">
-                    <ArrowLeft className="w-5 h-5" /> {t("btn.back")}
-                </Link>
-                <div className="text-sm font-bold">{t("practice.mistakes")}</div>
-                <button
-                    onClick={clearMistakes}
-                    className="text-xs font-bold text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
-                >
-                    {t("practice.clear_all")}
-                </button>
-            </div>
+            <PageHeader
+                backHref="/practice"
+                backLabel={t("btn.back")}
+                title={t("practice.mistakes")}
+                className="max-w-3xl"
+                rightSlot={
+                    <button
+                        onClick={clearMistakes}
+                        className="text-xs font-bold text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+                    >
+                        {t("practice.clear_all")}
+                    </button>
+                }
+            />
 
             <div className="w-full max-w-3xl space-y-4">
                 {entries.length === 0 && (
